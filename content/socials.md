@@ -7,7 +7,7 @@
 - YouTube: TODO
 - Instagram / TikTok: TODO
 - GitHub: https://github.com/altradits/bitcoin-kisumu
-- Website: TODO (deploy URL — earns 15 pts)
+- Website: https://bitcoin-kisumu.vercel.app/
 - Email: TODO
 
 Update `app/lib/site.js` with the same links so the website footer matches.
