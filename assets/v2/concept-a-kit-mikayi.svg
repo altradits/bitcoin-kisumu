@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Concept A — Kit Mikayi dawn mark">
+  <!-- birds -->
+  <g fill="none" stroke="#1F2937" stroke-width="8" stroke-linecap="round" opacity="0.65">
+    <path d="M104 128 Q 116 116, 128 128 Q 140 116, 152 128"/>
+    <path d="M360 96 Q 370 86, 380 96 Q 390 86, 400 96"/>
+  </g>
+
+  <!-- rising sun + rays -->
+  <g stroke="#E9A319" stroke-width="14" stroke-linecap="round">
+    <line x1="256" y1="110" x2="256" y2="86"/>
+    <line x1="220.5" y1="118" x2="210.4" y2="96"/>
+    <line x1="291.5" y1="118" x2="301.6" y2="96"/>
+    <line x1="191.7" y1="140" x2="173.3" y2="124.6"/>
+    <line x1="320.3" y1="140" x2="338.7" y2="124.6"/>
+    <line x1="174.9" y1="172.3" x2="151.7" y2="166"/>
+    <line x1="337.1" y1="172.3" x2="360.3" y2="166"/>
+  </g>
+  <circle cx="256" cy="196" r="64" fill="#E9A319"/>
+
+  <!-- Kit Mikayi balancing rocks -->
+  <ellipse cx="256" cy="149" rx="60" ry="37" fill="#1E3A2A"/>
+  <rect x="238" y="182" width="36" height="70" rx="12" fill="#1E3A2A"/>
+  <path d="M160 248 H352 Q366 248 370 262 L384 330 Q386 348 368 348 H144 Q126 348 128 330 L142 262 Q146 248 160 248 Z" fill="#B4431F"/>
+  <path d="M172 282 H202 L192 322 H166 Z" fill="#FAF5EB" opacity="0.25"/>
+
+  <!-- open book foundation -->
+  <path d="M256 372 L136 344 L136 400 L256 428 Z" fill="#1E3A2A"/>
+  <path d="M256 372 L376 344 L376 400 L256 428 Z" fill="#1E3A2A"/>
+  <path d="M256 380 L152 356 L152 392 L256 416 Z" fill="#FAF5EB"/>
+  <path d="M256 380 L360 356 L360 392 L256 416 Z" fill="#FAF5EB"/>
+  <line x1="256" y1="372" x2="256" y2="428" stroke="#1E3A2A" stroke-width="6"/>
+  <g stroke="#1E3A2A" stroke-width="5" stroke-linecap="round" opacity="0.3">
+    <line x1="176" y1="372" x2="232" y2="384"/>
+    <line x1="280" y1="384" x2="336" y2="372"/>
+  </g>
+</svg>

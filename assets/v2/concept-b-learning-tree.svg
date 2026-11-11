@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Concept B — Learning tree mark">
+  <!-- acacia canopy -->
+  <path d="M80 200 Q90 150 180 148 Q220 120 300 126 Q390 124 430 152 Q442 196 400 210 Q380 228 300 228 Q180 230 110 218 Q84 214 80 200 Z" fill="#1E3A2A"/>
+  <path d="M122 188 Q162 168 242 168 Q340 166 398 186" fill="none" stroke="#FAF5EB" stroke-width="8" stroke-linecap="round" opacity="0.18"/>
+
+  <!-- fruits of knowledge -->
+  <g fill="#E9A319">
+    <circle cx="170" cy="193" r="11"/>
+    <circle cx="238" cy="177" r="11"/>
+    <circle cx="308" cy="179" r="11"/>
+    <circle cx="366" cy="195" r="11"/>
+  </g>
+
+  <!-- learner-trunk with raised arms -->
+  <g stroke="#B4431F" stroke-width="22" stroke-linecap="round" fill="none">
+    <line x1="256" y1="306" x2="256" y2="368"/>
+    <line x1="256" y1="310" x2="212" y2="230"/>
+    <line x1="256" y1="310" x2="300" y2="230"/>
+  </g>
+  <circle cx="256" cy="282" r="21" fill="#B4431F"/>
+
+  <!-- roots feeding the book -->
+  <g fill="none" stroke="#1E3A2A" stroke-width="10" stroke-linecap="round">
+    <path d="M256 366 Q 238 378, 218 392"/>
+    <path d="M256 366 L256 396"/>
+    <path d="M256 366 Q 274 378, 294 392"/>
+  </g>
+
+  <!-- open book -->
+  <path d="M256 384 L146 358 L146 412 L256 438 Z" fill="#1E3A2A"/>
+  <path d="M256 384 L366 358 L366 412 L256 438 Z" fill="#1E3A2A"/>
+  <path d="M256 392 L162 370 L162 404 L256 426 Z" fill="#FAF5EB"/>
+  <path d="M256 392 L350 370 L350 404 L256 426 Z" fill="#FAF5EB"/>
+  <line x1="256" y1="384" x2="256" y2="438" stroke="#1E3A2A" stroke-width="6"/>
+
+  <!-- ground shadow -->
+  <ellipse cx="256" cy="454" rx="110" ry="11" fill="#1F2937" opacity="0.1"/>
+</svg>

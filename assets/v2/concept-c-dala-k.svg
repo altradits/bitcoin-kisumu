@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Concept C — Dala K monogram">
+  <!-- stem -->
+  <rect x="140" y="140" width="52" height="244" rx="26" fill="#1E3A2A"/>
+
+  <!-- reaching arm -->
+  <line x1="196" y1="252" x2="306" y2="162" stroke="#1E3A2A" stroke-width="48" stroke-linecap="round"/>
+  <!-- grounded path -->
+  <line x1="196" y1="252" x2="332" y2="368" stroke="#B4431F" stroke-width="48" stroke-linecap="round"/>
+  <!-- joint -->
+  <circle cx="192" cy="252" r="25" fill="#1E3A2A"/>
+
+  <!-- sun of knowledge, held aloft -->
+  <circle cx="330" cy="138" r="38" fill="#E9A319"/>
+</svg>
