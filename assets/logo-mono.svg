@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Bitcoin Kisumu mono mark">
+  <!-- single-colour version for print / stamps / footer -->
+  <circle cx="256" cy="256" r="248" fill="none" stroke="currentColor" stroke-width="16"/>
+  <text x="256" y="290" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="200" font-weight="900" fill="currentColor">₿</text>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="18">
+    <path d="M70 360 Q 140 334, 210 360 T 350 360 T 490 360"/>
+    <path d="M70 410 Q 140 384, 210 410 T 350 410 T 490 410" opacity="0.6"/>
+  </g>
+</svg>

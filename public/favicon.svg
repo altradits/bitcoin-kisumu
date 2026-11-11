@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bitcoin Kisumu favicon">
+  <circle cx="32" cy="32" r="30" fill="#F7931A"/>
+  <circle cx="32" cy="32" r="27" fill="#0A1931"/>
+  <circle cx="32" cy="26" r="13" fill="#F7931A"/>
+  <text x="32" y="34" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900" fill="#ffffff">₿</text>
+  <g fill="none" stroke-linecap="round" stroke-width="3">
+    <path d="M8 42 Q 16 39, 24 42 T 40 42 T 56 42" stroke="#0799B6"/>
+    <path d="M8 49 Q 16 46, 24 49 T 40 49 T 56 49" stroke="#3fb6cf"/>
+  </g>
+</svg>

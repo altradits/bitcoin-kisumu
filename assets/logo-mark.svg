@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Bitcoin Kisumu logo mark">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A1931"/>
+      <stop offset="55%" stop-color="#12325e"/>
+      <stop offset="100%" stop-color="#0A3D62"/>
+    </linearGradient>
+    <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFB347"/>
+      <stop offset="100%" stop-color="#F7931A"/>
+    </linearGradient>
+    <clipPath id="circleClip">
+      <circle cx="256" cy="256" r="232"/>
+    </clipPath>
+  </defs>
+
+  <!-- outer ring -->
+  <circle cx="256" cy="256" r="248" fill="#F7931A"/>
+  <circle cx="256" cy="256" r="232" fill="url(#sky)"/>
+
+  <g clip-path="url(#circleClip)">
+    <!-- setting sun over the lake -->
+    <circle cx="256" cy="218" r="92" fill="url(#sunset)"/>
+    <circle cx="256" cy="218" r="92" fill="#F7931A" opacity="0.25"/>
+
+    <!-- sun reflection path -->
+    <rect x="238" y="300" width="36" height="120" rx="18" fill="#F7931A" opacity="0.35"/>
+    <rect x="246" y="300" width="20" height="120" rx="10" fill="#FFB347" opacity="0.5"/>
+
+    <!-- lake bands -->
+    <rect x="0" y="318" width="512" height="194" fill="#082a49"/>
+    <rect x="0" y="318" width="512" height="10" fill="#F7931A" opacity="0.9"/>
+
+    <!-- waves -->
+    <g fill="none" stroke-linecap="round" stroke-width="16">
+      <path d="M40 368 Q 104 344, 168 368 T 296 368 T 424 368 T 552 368" stroke="#0799B6"/>
+      <path d="M40 412 Q 104 388, 168 412 T 296 412 T 424 412 T 552 412" stroke="#3fb6cf" opacity="0.9"/>
+      <path d="M40 454 Q 104 430, 168 454 T 296 454 T 424 454 T 552 454" stroke="#8fd6e6" opacity="0.8"/>
+    </g>
+
+    <!-- small boat silhouette (Kisumu pier) -->
+    <g fill="#04121f" opacity="0.95">
+      <path d="M150 312 L238 312 L222 330 L166 330 Z"/>
+      <rect x="190" y="282" width="6" height="30"/>
+      <path d="M196 282 L196 306 L224 306 Z" fill="#fdfdfd" opacity="0.9"/>
+    </g>
+  </g>
+
+  <!-- Bitcoin symbol -->
+  <g>
+    <circle cx="256" cy="218" r="92" fill="none" stroke="#ffffff" stroke-width="6" opacity="0.9"/>
+    <text x="256" y="258" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="900" fill="#ffffff">₿</text>
+  </g>
+
+  <circle cx="256" cy="256" r="232" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.25"/>
+  <circle cx="256" cy="256" r="248" fill="none" stroke="#7a4a00" stroke-width="2" opacity="0.6"/>
+</svg>

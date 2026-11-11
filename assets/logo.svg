@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 320" role="img" aria-label="Bitcoin Kisumu logo">
+  <defs>
+    <linearGradient id="skyH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A1931"/>
+      <stop offset="60%" stop-color="#12325e"/>
+      <stop offset="100%" stop-color="#0A3D62"/>
+    </linearGradient>
+    <linearGradient id="sunsetH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFB347"/>
+      <stop offset="100%" stop-color="#F7931A"/>
+    </linearGradient>
+    <clipPath id="circleClipH">
+      <circle cx="160" cy="160" r="130"/>
+    </clipPath>
+  </defs>
+
+  <!-- mark -->
+  <circle cx="160" cy="160" r="142" fill="#F7931A"/>
+  <circle cx="160" cy="160" r="130" fill="url(#skyH)"/>
+  <g clip-path="url(#circleClipH)">
+    <circle cx="160" cy="138" r="54" fill="url(#sunsetH)"/>
+    <rect x="150" y="190" width="20" height="70" rx="10" fill="#F7931A" opacity="0.35"/>
+    <rect x="0" y="198" width="320" height="122" fill="#082a49"/>
+    <rect x="0" y="198" width="320" height="6" fill="#F7931A"/>
+    <g fill="none" stroke-linecap="round" stroke-width="10">
+      <path d="M20 222 Q 60 208, 100 222 T 180 222 T 260 222 T 340 222" stroke="#0799B6"/>
+      <path d="M20 248 Q 60 234, 100 248 T 180 248 T 260 248 T 340 248" stroke="#3fb6cf"/>
+      <path d="M20 272 Q 60 258, 100 272 T 180 272 T 260 272 T 340 272" stroke="#8fd6e6" opacity="0.85"/>
+    </g>
+    <g fill="#04121f">
+      <path d="M96 193 L148 193 L138 204 L106 204 Z"/>
+      <rect x="119" y="176" width="4" height="17"/>
+    </g>
+  </g>
+  <circle cx="160" cy="138" r="54" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.9"/>
+  <text x="160" y="162" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="900" fill="#ffffff">₿</text>
+
+  <!-- wordmark -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="330" y="152" font-size="76" font-weight="900" letter-spacing="2" fill="#0A1931">BITCOIN</text>
+    <text x="330" y="228" font-size="76" font-weight="300" letter-spacing="10" fill="#F7931A">KISUMU</text>
+    <rect x="332" y="248" width="120" height="6" fill="#0799B6"/>
+    <text x="332" y="282" font-size="22" font-weight="400" letter-spacing="3" fill="#4a5a6a">LAKE VICTORIA • KENYA</text>
+  </g>
+</svg>
