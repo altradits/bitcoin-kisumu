@@ -6,7 +6,7 @@ export const site = {
   tagline: 'Free, open-source Bitcoin education for Kisumu, Kenya.',
   locale: 'Kisumu • Lake Victoria • Kenya',
   networkUrl: 'https://network.myfirstbitcoin.org/community/bitcoin-kisumu',
-  email: 'hello@bitcoinkisumu.org', // TODO: real inbox
+  email: 'bitcoinkisumu@gmail.com',
   lightningAddress: 'bitcoinkisumu@blink.sv',
   geyserUrl: '', // TODO: e.g. https://geyser.fund/project/bitcoinkisumu
   socials: [
