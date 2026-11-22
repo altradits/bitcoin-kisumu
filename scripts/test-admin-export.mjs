@@ -122,8 +122,11 @@ try {
     String(r.headers.get('content-disposition') || '').includes('attachment'),
     'must download as attachment'
   );
-  const csv = await r.text();
-  check(csv.charCodeAt(0) === 0xfeff, 'must start with UTF-8 BOM for Excel');
+  // Raw bytes: .text() strips a leading BOM per the encoding spec (in
+  // production too), but download clients read bytes, where it must exist.
+  const raw = Buffer.from(await r.arrayBuffer());
+  check(raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf, 'must start with UTF-8 BOM for Excel');
+  const csv = raw.toString('utf8');
   const rows = parseCsv(csv);
   check(rows.length === 3, `expected header + 2 verified rows, got ${rows.length}`);
   check(rows[0][0] === 'date' && rows[0][9] === 'verified_at', `header wrong: ${rows[0]}`);

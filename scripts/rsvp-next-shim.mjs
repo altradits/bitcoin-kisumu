@@ -1,18 +1,16 @@
-// Minimal next/server stand-in for the RSVP concurrency test only.
-// Mirrors the small surface the route uses: NextResponse.json(body, init).
-export class NextResponse {
+// Minimal next/server stand-in for tests only. Extends the real Response so
+// `new NextResponse(body, init)` behaves exactly like production, alongside
+// the `.json()` and `.redirect()` helpers the routes use.
+export class NextResponse extends Response {
   static json(body, init = {}) {
-    return {
-      status: init.status ?? 200,
-      headers: new Headers(init.headers || {}),
-      async json() {
-        return body;
-      }
-    };
+    return new NextResponse(JSON.stringify(body), {
+      ...init,
+      headers: { 'content-type': 'application/json', ...(init.headers || {}) }
+    });
   }
   static redirect(url, init = {}) {
     const headers = new Headers(init.headers || {});
     headers.set('location', String(url));
-    return { status: init.status ?? 307, headers };
+    return new NextResponse(null, { ...init, status: init.status ?? 307, headers });
   }
 }
