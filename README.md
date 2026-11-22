@@ -7,7 +7,8 @@ Live site: https://bitcoin-kisumu.vercel.app/
 ## Quick start
 
 ```bash
-cd /Users/mac/bitcoin-kisumu
+git clone https://github.com/bitcoinkisumu/bitcoin-kisumu.git
+cd bitcoin-kisumu
 npm install
 npm run dev
 ```
@@ -21,17 +22,19 @@ npm run build
 npm start
 ```
 
-## What's inside
+## Repository structure
 
-- `assets/` — logo kit (SVG) + brand guide. `logo.svg` is the Leaderboard upload.
-- `content/` — Leaderboard drafts: bio, 250-word intro, executive summary, team, socials, donate, checklist.
-- `app/` — Next.js 14 fullstack site (App Router, no external CSS framework).
+- `app/` — Next.js 14 site (App Router, no external CSS framework). Pages, `app/api/` endpoints and `app/lib/` helpers.
 - `app/api/` — contact, newsletter, events + RSVP endpoints backed by Upstash Redis on Vercel, `data/*.json` locally.
-- `public/` — favicon + web logo.
+- `content/` — Leaderboard drafts: bio, 250-word intro, executive summary, team, socials, donate, checklist.
+- `data/` — local dev storage for form submissions (git-ignored; Redis is used on Vercel).
+- `public/` — favicon + web logo, team photos (`public/team/`).
+- `assets/` — logo kit (SVG) + brand guide. `logo.svg` is the Leaderboard upload.
+- `doc/` — developer notes and other contributor documentation.
 
-## Pages (Education Network complete)
+## Pages
 
-Home, About, Programs, Events (+RSVP), Team, Donate (Lightning + Geyser), Resources, Executive Summary, Contact.
+Home (`/`), About (`/about`), Programs (`/programs`), Guide (`/guide`), Events + RSVP (`/events`), Team (`/team`), Donate (`/donate`, Lightning + Geyser), Resources (`/resources`), Executive Summary (`/executive-summary`), Contact (`/contact`).
 
 ## Configure before launch
 
@@ -54,3 +57,15 @@ API shapes are identical either way.
 1. Vercel dashboard → project `bitcoin-kisumu` → **Storage** tab → **Create** → Upstash Redis → connect to this project.
 2. Redeploy (any push redeploys, or Redeploy in the dashboard). The integration adds `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` automatically.
 3. Local Redis (optional): copy those two values into `.env.local` (see `.env.example`). Without them, local dev just uses `data/`.
+
+## Contributing
+
+Everyone is welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow (Bitcoin Core-style), the [Code of Conduct](CODE_OF_CONDUCT.md), and the [Security Policy](SECURITY.md) before opening an issue or pull request.
+
+## Launch roadmap
+
+The remaining launch tasks are tracked as [GitHub issues](https://github.com/bitcoinkisumu/bitcoin-kisumu/issues) — pick one up, comment to claim it, and open a pull request against `main`.
+
+## License
+
+[MIT](LICENSE) — free and open-source, like the education we teach.
