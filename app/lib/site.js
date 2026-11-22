@@ -10,12 +10,13 @@ export const site = {
   lightningAddress: 'bitcoinkisumu@blink.sv',
   geyserUrl: '', // TODO: e.g. https://geyser.fund/project/bitcoinkisumu
   socials: [
-    { label: 'X', href: '' },
+    { label: 'X', href: 'https://x.com/bitcoinkisumu' },
+    { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61596750573799' },
     { label: 'Nostr', href: '' },
     { label: 'Telegram', href: '' },
     { label: 'WhatsApp', href: '' },
     { label: 'YouTube', href: '' },
-    { label: 'GitHub', href: 'https://github.com/altradits/bitcoin-kisumu' }
+    { label: 'GitHub', href: 'https://github.com/bitcoinkisumu-create' }
   ]
 };
 
