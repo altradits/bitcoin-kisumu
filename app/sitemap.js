@@ -12,6 +12,7 @@ const ROUTES = [
   '/treasury',
   '/resources',
   '/executive-summary',
+  '/stories',
   '/contact'
 ];
 

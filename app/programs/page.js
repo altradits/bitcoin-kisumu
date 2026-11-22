@@ -56,6 +56,7 @@ export default function Programs() {
             <Link className="btn btn-dark" href="/guide">The playbook</Link>
             <Link className="btn btn-dark" href="/merchants">Merchant directory</Link>
             <Link className="btn btn-dark" href="/treasury">Treasury &amp; audit</Link>
+            <Link className="btn btn-dark" href="/stories">Stories</Link>
           </div>
         </div>
       </div>
