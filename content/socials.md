@@ -6,7 +6,7 @@
 - WhatsApp: TODO (community link, big in Kisumu)
 - YouTube: TODO
 - Instagram / TikTok: TODO
-- GitHub: https://github.com/altradits/bitcoin-kisumu
+- GitHub: https://github.com/bitcoinkisumu/bitcoin-kisumu
 - Website: https://bitcoin-kisumu.vercel.app/
 - Email: TODO
 
