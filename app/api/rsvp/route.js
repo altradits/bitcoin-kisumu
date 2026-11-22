@@ -27,7 +27,9 @@ export async function POST(req) {
   const contact = String(body.contact || '').trim();
   if (!ids.has(eventId)) return NextResponse.json({ error: 'Unknown event.' }, { status: 400 });
   if (name.length < 2) return NextResponse.json({ error: 'Please give your name.' }, { status: 400 });
+  if (name.length > 100) return NextResponse.json({ error: 'Name too long (100 chars max).' }, { status: 400 });
   if (contact.length < 3) return NextResponse.json({ error: 'Please give a phone or email.' }, { status: 400 });
+  if (contact.length > 254) return NextResponse.json({ error: 'Contact too long (254 chars max).' }, { status: 400 });
 
   const event = events.find((e) => e.id === eventId);
   const all = await store.readList('rsvps.json');
@@ -35,7 +37,7 @@ export async function POST(req) {
   if (forEvent.length >= (event.capacity || 100)) {
     return NextResponse.json({ error: 'This event is full — contact us to join the waitlist.' }, { status: 409 });
   }
-  if (forEvent.some((r) => r.contact.toLowerCase() === contact.toLowerCase())) {
+  if (forEvent.some((r) => String(r.contact || '').toLowerCase() === contact.toLowerCase())) {
     return NextResponse.json({ ok: true, duplicate: true, count: forEvent.length });
   }
   const rsvp = await store.appendTo('rsvps.json', { eventId, name, contact });

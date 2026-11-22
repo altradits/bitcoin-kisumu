@@ -12,7 +12,7 @@ export async function POST(req) {
     return NextResponse.json({ error: 'Invalid JSON.' }, { status: 400 });
   }
   const email = String(body.email || '').trim().toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
     return NextResponse.json({ error: 'Please give a valid email.' }, { status: 400 });
   }
   const existing = await store.readList('newsletter.json');
