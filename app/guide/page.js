@@ -30,7 +30,7 @@ const LESSONS = [
     learn: 'A lakeside town like ours can go circular: dense merchant cluster first, then the lake does the marketing. Kisumu has the same ingredients — beach, traders, visitors.',
     links: [
       ['Bitcoin Magazine', 'https://bitcoinmagazine.com/culture/inside-guatemalas-bitcoin-lake'],
-      ['Visit guide', 'http://kayakguatemala.com/faqs/bitcoin-lake-atitlan-lago-de-bitcoin/']
+      ['Visit guide', 'https://kayakguatemala.com/faqs/bitcoin-lake-atitlan-lago-de-bitcoin/']
     ]
   }
 ];
@@ -219,7 +219,7 @@ export default function Guide() {
           </div>
           <div className="card" style={{ marginTop: 20, borderLeft: '6px solid var(--teal)' }}>
             <h3 style={{ fontSize: '1.15rem' }}>3-bucket multi-sig treasury</h3>
-            <p>Every sat lives in one of three buckets — Education &amp; Operations, Circular Economy Pilot, Reserve &amp; Compliance — under 2-of-3 hardware custody with zero single-key control.</p>
+            <p>Every sat lives in one of three buckets — Operating Runway &amp; Free Education (35%), Productive Lake CapEx &amp; Circular Pilot (45%), Sovereign BTC Reserve &amp; Compliance (20%) — proposed targets to be ratified at Day 0, under 2-of-3 hardware custody with zero single-key control.</p>
             <p><Link className="btn btn-dark" href="/treasury">See the public treasury &amp; audit</Link></p>
           </div>
         </div>

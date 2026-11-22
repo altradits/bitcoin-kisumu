@@ -6,25 +6,25 @@
 
 export const treasuryBuckets = [
   {
-    name: 'Bucket 1 — Education & Operations',
+    name: 'Bucket 1 — Operating Runway & Free Education',
     purpose:
-      'Venue, printouts, educator transport, phones and data subsidies. Keeps every class free.',
-    allocation: 'To be ratified at Day 0',
+      'Held in KES / USD-pegged Stablesats to guarantee 90 days of classes, venues, educator transport, and predictable starter stipends.',
+    allocation: 'Proposed target 35% (to be ratified at Day 0)',
+    custody: 'Mobile-money + Stablesats rails under published controls (ratified Day 0)'
+  },
+  {
+    name: 'Bucket 2 — Productive Lake CapEx & Circular Pilot',
+    purpose:
+      'Earmarked for revenue-generating Lake Victoria assets (solar cold-chain partnership, hyacinth-to-biogas hardware, merch inventory, merchant POS kits) plus verified results-based pilot bounties — so grant capital builds assets that earn after grants end.',
+    allocation: 'Proposed target 45% (to be ratified at Day 0)',
     custody: 'Community multi-sig (see policy below)'
   },
   {
-    name: 'Bucket 2 — Circular Economy Pilot',
+    name: 'Bucket 3 — Sovereign BTC Reserve & Compliance',
     purpose:
-      'Stipends for verified results (shop ambassadors, peer teachers, storytellers), paid only after delivery.',
-    allocation: 'To be ratified at Day 0',
-    custody: 'Community multi-sig (see policy below)'
-  },
-  {
-    name: 'Bucket 3 — Reserve & Compliance',
-    purpose:
-      'Buffer for volatility and audit costs. Never spent on day-to-day activity without a published note.',
-    allocation: 'To be ratified at Day 0',
-    custody: 'Community multi-sig (see policy below)'
+      'Cold-storage 2-of-3 multi-sig BTC endowment + audit/legal compliance reserve; never spent on routine OpEx without a published note.',
+    allocation: 'Proposed target 20% (to be ratified at Day 0)',
+    custody: 'Cold-storage 2-of-3 multi-sig (see policy below)'
   }
 ];
 
