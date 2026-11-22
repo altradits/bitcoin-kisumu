@@ -25,20 +25,23 @@ export const team = [
     name: 'Stanley',
     role: 'Community Lead',
     bio: 'Strategy, partnerships and lead educator. Founded Bitcoin Kisumu to bring practical Bitcoin knowledge to the lake region.',
-    photo: ''
+    photo: '',
+    links: [{ label: 'X', href: 'https://x.com/altradits' }]
   },
   {
     name: 'Ivy',
     role: 'Education Coordinator',
     bio: 'Cohorts, curriculum and student support. Makes sure every learner finishes with a working wallet and real understanding.',
-    photo: ''
+    photo: '',
+    links: [{ label: 'X', href: 'https://x.com/i_veemoh' }]
   },
   {
-    // TODO: confirm name/role/bio/photo with Paul. Bio stays empty (not rendered) until confirmed.
+    // Role confirmed by founder; bio + photo still pending from Paul.
     name: 'Paul Oguda',
     role: 'Organiser',
     bio: '',
-    photo: ''
+    photo: '',
+    links: [{ label: 'X', href: 'https://x.com/Kamalogudah' }]
   }
 ];
 
