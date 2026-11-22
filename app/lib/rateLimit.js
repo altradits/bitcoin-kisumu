@@ -1,11 +1,16 @@
-// Dependency-free in-memory token-bucket rate limiter for the public
-// POST endpoints (contact, newsletter, rsvp).
+// Rate limiting for the public POST endpoints (contact, newsletter, rsvp).
 //
-// Follow-up: move to Redis-backed limiting (Upstash is already wired for
-// storage in app/lib/store.js) so limits hold across serverless
-// instances and process restarts. This in-memory version only limits
-// per running instance.
+// Two backends, one contract (5 requests/minute per key+IP):
+// - Redis (production): atomic INCR + EXPIRE counters in aligned 60s windows,
+//   shared across serverless instances and surviving cold starts.
+// - Memory (local dev, zero credentials): per-instance token bucket.
+// A Redis hiccup fails open to the memory limiter so the forms never die
+// with the cache.
 
+const LIMIT = 5;
+const WINDOW_SECONDS = 60;
+
+// --- memory fallback (local dev) ---
 const CAPACITY = 5; // max burst per key
 const REFILL_MS = 12_000; // one token every 12s ≈ 5 requests/minute
 const MAX_BUCKETS = 5000; // opportunistic prune guard
@@ -26,7 +31,7 @@ function prune(now) {
   }
 }
 
-export function checkRateLimit(req, key) {
+function checkMemory(req, key) {
   const bucketKey = `${key}:${clientIp(req)}`;
   const now = Date.now();
   let bucket = buckets.get(bucketKey);
@@ -47,6 +52,37 @@ export function checkRateLimit(req, key) {
   }
   bucket.tokens -= 1;
   return { ok: true, retryAfter: 0 };
+}
+
+function redisConfigured() {
+  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+}
+
+async function redisClient() {
+  const { Redis } = await import('@upstash/redis');
+  return Redis.fromEnv();
+}
+
+async function checkRedis(req, key) {
+  const windowId = Math.floor(Date.now() / 1000 / WINDOW_SECONDS);
+  const bucketKey = `bk:rl:${key}:${clientIp(req)}:${windowId}`;
+  const redis = await redisClient();
+  const count = await redis.incr(bucketKey);
+  if (count === 1) await redis.expire(bucketKey, WINDOW_SECONDS * 2);
+  if (count > LIMIT) {
+    const ttl = await redis.ttl(bucketKey);
+    return { ok: false, retryAfter: ttl > 0 ? ttl : WINDOW_SECONDS };
+  }
+  return { ok: true, retryAfter: 0 };
+}
+
+export async function checkRateLimit(req, key) {
+  if (!redisConfigured()) return checkMemory(req, key);
+  try {
+    return await checkRedis(req, key);
+  } catch {
+    return checkMemory(req, key);
+  }
 }
 
 export function tooManyRequests(retryAfter) {

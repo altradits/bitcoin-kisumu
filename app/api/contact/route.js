@@ -7,7 +7,7 @@ function bad(msg) {
 }
 
 export async function POST(req) {
-  const limit = checkRateLimit(req, 'contact');
+  const limit = await checkRateLimit(req, 'contact');
   if (!limit.ok) return tooManyRequests(limit.retryAfter);
   let body;
   try {
