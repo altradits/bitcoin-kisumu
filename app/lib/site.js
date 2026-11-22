@@ -32,6 +32,13 @@ export const team = [
     role: 'Education Coordinator',
     bio: 'Cohorts, curriculum and student support. Makes sure every learner finishes with a working wallet and real understanding.',
     photo: ''
+  },
+  {
+    // Needs founder confirmation: name/role from the Leaderboard, bio + photo still TODO.
+    name: 'Paul Oguda',
+    role: 'Organiser',
+    bio: 'TODO (confirm with Paul)',
+    photo: ''
   }
 ];
 
