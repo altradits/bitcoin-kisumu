@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { store } from '@/app/lib/store';
+import { store, StorageUnavailable } from '@/app/lib/store';
 import { checkRateLimit, tooManyRequests } from '@/app/lib/rateLimit';
 import { events } from '@/app/lib/site';
 
@@ -23,6 +23,11 @@ export async function POST(req) {
   const eventId = String(body.eventId || '').trim();
   const name = String(body.name || '').trim();
   const contact = String(body.contact || '').trim();
+  if (String(body.website || '').trim() !== '') {
+    // Honeypot: pretend the seat is taken, store nothing.
+    const all = await store.readList('rsvps.json');
+    return NextResponse.json({ ok: true, duplicate: true, count: all.filter((r) => r.eventId === eventId).length });
+  }
   const event = events.find((e) => e.id === eventId);
   if (!event) return NextResponse.json({ error: 'Unknown event.' }, { status: 400 });
   if (name.length < 2) return NextResponse.json({ error: 'Please give your name.' }, { status: 400 });
@@ -32,7 +37,13 @@ export async function POST(req) {
 
   // Atomic: capacity + duplicate-contact enforced inside the store, so
   // overlapping requests can never overbook or double-claim a seat.
-  const res = await store.appendRsvp(eventId, { name, contact }, event.capacity || 100);
+  let res;
+  try {
+    res = await store.appendRsvp(eventId, { name, contact }, event.capacity || 100);
+  } catch (err) {
+    if (err instanceof StorageUnavailable) return NextResponse.json({ error: err.message }, { status: 503 });
+    throw err;
+  }
   if (res.outcome === 'duplicate') {
     return NextResponse.json(
       { error: 'You already reserved a seat with this contact.', duplicate: true, count: res.count },

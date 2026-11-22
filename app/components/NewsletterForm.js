@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
   const [status, setStatus] = useState(null);
 
   async function submit(e) {
@@ -13,7 +14,7 @@ export default function NewsletterForm() {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, website })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed');
@@ -30,6 +31,7 @@ export default function NewsletterForm() {
         Email
         <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
       </label>
+      <label className="hp-field" aria-hidden="true">Website (leave blank)<input value={website} onChange={(e) => setWebsite(e.target.value)} autoComplete="off" tabIndex={-1} /></label>
       <div><button className="btn btn-primary" type="submit">Subscribe</button></div>
       {status && (
         <div role="status" className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>

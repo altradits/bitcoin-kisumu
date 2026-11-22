@@ -4,11 +4,23 @@ import path from 'path';
 // Durable on Vercel (Upstash Redis), zero-setup locally (data/*.json).
 // Redis is used strictly when its env vars exist; otherwise the file
 // fallback keeps `npm run dev` working with no credentials.
+//
+// Redis lists (RPUSH/LRANGE) make every append atomic — concurrent writers
+// can never overwrite each other. A legacy single-JSON-string value (from
+// before this change) is migrated to a list once, under a short lock.
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 
+export class StorageUnavailable extends Error {}
+
 function redisConfigured() {
   return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+}
+
+// Vercel's filesystem is read-only: without Redis there is nowhere to
+// write, so writes must fail loudly (503) instead of pretending.
+function vercelWithoutRedis() {
+  return process.env.VERCEL === '1' && !redisConfigured();
 }
 
 async function redisClient() {
@@ -28,6 +40,17 @@ function makeRow(entry) {
   };
 }
 
+// --- file fallback (local dev): serialized + atomic renames ---
+
+const fileLocks = new Map();
+
+function withFileLock(file, fn) {
+  const prev = fileLocks.get(file) || Promise.resolve();
+  const next = prev.then(fn, fn);
+  fileLocks.set(file, next.catch(() => {}));
+  return next;
+}
+
 async function readListFile(file) {
   await fs.mkdir(DATA_DIR, { recursive: true });
   try {
@@ -40,50 +63,113 @@ async function readListFile(file) {
   }
 }
 
+async function writeListFile(file, list) {
+  const target = path.join(DATA_DIR, file);
+  const tmp = `${target}.${process.pid}.tmp`;
+  await fs.writeFile(tmp, JSON.stringify(list, null, 2));
+  await fs.rename(tmp, target); // atomic: readers never see a torn file
+}
+
 async function appendToFile(file, row) {
-  const list = await readListFile(file);
-  list.push(row);
-  await fs.writeFile(path.join(DATA_DIR, file), JSON.stringify(list, null, 2));
+  return withFileLock(file, async () => {
+    const list = await readListFile(file);
+    list.push(row);
+    await writeListFile(file, list);
+    return row;
+  });
+}
+
+// --- Redis lists ---
+
+// Migrates a legacy single-JSON-string value to a list, once, under a lock.
+// Corrupt values are quarantined (never deleted) so nothing is ever lost.
+async function ensureList(redis, key) {
+  const t = await redis.type(key);
+  if (t === 'none' || t === 'list') return;
+  const lockKey = `${key}:migrating`;
+  const got = await redis.set(lockKey, `${Date.now()}`, { nx: true, ex: 15 });
+  if (!got) {
+    await new Promise((r) => setTimeout(r, 300));
+    const retry = await redis.type(key);
+    if (retry === 'list' || retry === 'none') return;
+    throw new StorageUnavailable('Storage migration in progress, please retry.');
+  }
+  try {
+    const raw = await redis.get(key);
+    let list = [];
+    let corrupt = false;
+    if (raw) {
+      try {
+        const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+        if (Array.isArray(parsed)) list = parsed;
+        else corrupt = true;
+      } catch {
+        corrupt = true;
+      }
+    }
+    const pipe = redis.pipeline();
+    if (corrupt) pipe.rename(key, `${key}:corrupt:${Date.now()}`);
+    else pipe.del(key);
+    for (const row of list) pipe.rpush(key, JSON.stringify(row));
+    await pipe.exec();
+  } finally {
+    await redis.del(lockKey);
+  }
+}
+
+async function readListRedis(file) {
+  const redis = await redisClient();
+  const key = keyFor(file);
+  await ensureList(redis, key);
+  const items = await redis.lrange(key, 0, -1);
+  const out = [];
+  for (const raw of items) {
+    try {
+      out.push(typeof raw === 'string' ? JSON.parse(raw) : raw);
+    } catch {
+      // Skip a single corrupt row rather than failing the whole read.
+    }
+  }
+  return out;
+}
+
+async function appendToRedis(file, row) {
+  const redis = await redisClient();
+  const key = keyFor(file);
+  await ensureList(redis, key);
+  await redis.rpush(key, JSON.stringify(row));
   return row;
 }
 
 async function readList(file) {
+  if (vercelWithoutRedis()) return [];
   if (!redisConfigured()) return readListFile(file);
-  const redis = await redisClient();
-  const val = await redis.get(keyFor(file));
-  return Array.isArray(val) ? val : [];
+  return readListRedis(file);
 }
 
 async function appendTo(file, entry) {
+  if (vercelWithoutRedis()) {
+    throw new StorageUnavailable('Submissions are temporarily unavailable. Please try again soon.');
+  }
   const row = makeRow(entry);
   if (!redisConfigured()) return appendToFile(file, row);
-  const redis = await redisClient();
-  const key = keyFor(file);
-  const current = await readList(file);
-  current.push(row);
-  await redis.set(key, current);
-  return row;
+  return appendToRedis(file, row);
 }
 
 // --- Atomic RSVP writes (capacity + duplicate enforcement) ---
 //
-// Redis path: one Lua script runs check-and-append atomically against the
-// same JSON-array value the rest of the store uses (Upstash serializes
-// arrays as JSON, so Lua sees plain JSON text via GET).
-// File path: an in-process promise-chain mutex serializes writers.
+// Redis path: one Lua script runs check-and-append atomically over the
+// LRANGE list. File path: the same promise-chain mutex serializes writers.
 // Best-effort only across processes — production uses Redis.
 
 const RSVP_LUA = `
-local list = {}
-local raw = redis.call('GET', KEYS[1])
-if raw then
-  list = cjson.decode(raw)
-end
+local items = redis.call('LRANGE', KEYS[1], 0, -1)
 local event_id = ARGV[1]
 local contact = ARGV[2]
 local capacity = tonumber(ARGV[3])
 local count = 0
-for _, r in ipairs(list) do
+for _, raw in ipairs(items) do
+  local r = cjson.decode(raw)
   if r.eventId == event_id then
     count = count + 1
     if r.contact ~= nil and string.lower(r.contact) == contact then
@@ -94,19 +180,9 @@ end
 if count >= capacity then
   return {'full', count}
 end
-table.insert(list, cjson.decode(ARGV[4]))
-redis.call('SET', KEYS[1], cjson.encode(list))
+redis.call('RPUSH', KEYS[1], ARGV[4])
 return {'ok', count + 1}
 `;
-
-const fileLocks = new Map();
-
-function withFileLock(file, fn) {
-  const prev = fileLocks.get(file) || Promise.resolve();
-  const next = prev.then(fn, fn);
-  fileLocks.set(file, next.catch(() => {}));
-  return next;
-}
 
 function rsvpOutcome(list, eventId, contactLower, capacity) {
   let count = 0;
@@ -128,16 +204,18 @@ async function appendRsvpFile(eventId, row, capacity) {
     const res = rsvpOutcome(list, eventId, String(row.contact).toLowerCase(), capacity);
     if (res.outcome !== 'ok') return { ...res, row: null };
     list.push(row);
-    await fs.writeFile(path.join(DATA_DIR, 'rsvps.json'), JSON.stringify(list, null, 2));
+    await writeListFile('rsvps.json', list);
     return { ...res, row };
   });
 }
 
 async function appendRsvpRedis(eventId, row, capacity) {
   const redis = await redisClient();
+  const key = keyFor('rsvps.json');
+  await ensureList(redis, key);
   const res = await redis.eval(
     RSVP_LUA,
-    [keyFor('rsvps.json')],
+    [key],
     [eventId, String(row.contact).toLowerCase(), String(capacity), JSON.stringify(row)]
   );
   const [outcome, count] = Array.isArray(res) ? res : [];
@@ -145,6 +223,9 @@ async function appendRsvpRedis(eventId, row, capacity) {
 }
 
 async function appendRsvp(eventId, entry, capacity) {
+  if (vercelWithoutRedis()) {
+    throw new StorageUnavailable('Submissions are temporarily unavailable. Please try again soon.');
+  }
   const row = makeRow({ eventId, ...entry });
   if (!redisConfigured()) return appendRsvpFile(eventId, row, capacity);
   return appendRsvpRedis(eventId, row, capacity);
