@@ -40,7 +40,7 @@ export default function Stories() {
                   <Avatar name={s.name} />
                   <div>
                     <h2 style={{ fontSize: '1.35rem', margin: 0 }}>{s.name}</h2>
-                    <p style={{ color: 'var(--teal)', fontWeight: 700, margin: 0, fontSize: '0.95rem' }}>
+                    <p style={{ color: 'var(--teal-ink)', fontWeight: 700, margin: 0, fontSize: '0.95rem' }}>
                       {s.role} • {s.cohort}
                     </p>
                   </div>

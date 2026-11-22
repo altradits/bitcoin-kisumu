@@ -163,7 +163,7 @@ export default function Resources() {
             {WALLETS.map((w) => (
               <article key={w.name} className="card">
                 <h3 style={{ fontSize: '1.15rem' }}>{w.name}</h3>
-                <p style={{ color: 'var(--teal)', fontWeight: 700, fontSize: '0.92rem' }}>{w.custody}</p>
+                <p style={{ color: 'var(--teal-ink)', fontWeight: 700, fontSize: '0.92rem' }}>{w.custody}</p>
                 <p>{w.body}</p>
                 <p style={{ fontSize: '0.9rem' }}>
                   {w.links.map(([t, h], i) => (

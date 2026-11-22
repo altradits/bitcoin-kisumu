@@ -61,7 +61,7 @@ export default function ContactPage() {
           <label>Message<textarea required rows={6} value={form.message} onChange={(e) => set('message', e.target.value)} /></label>
           <div><button className="btn btn-primary" type="submit">Send</button></div>
           {status && (
-            <div className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>
+            <div role="status" className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>
           )}
         </form>
       </div>

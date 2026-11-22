@@ -43,7 +43,7 @@ export default function Programs() {
           {PROGRAMS.map((p) => (
             <article key={p.title} className="card">
               <h2 style={{ fontSize: '1.4rem' }}>{p.title}</h2>
-              <p style={{ color: 'var(--teal)', fontWeight: 700, fontSize: '0.92rem' }}>{p.meta}</p>
+              <p style={{ color: 'var(--teal-ink)', fontWeight: 700, fontSize: '0.92rem' }}>{p.meta}</p>
               <p>{p.body}</p>
               <Link className="btn btn-dark" href={p.cta[1]}>{p.cta[0]}</Link>
             </article>
