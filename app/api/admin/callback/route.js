@@ -5,6 +5,7 @@ import {
   signSession,
   sessionCookie,
   stateCookie,
+  safeEqual,
   STATE_COOKIE
 } from '@/app/lib/adminAuth';
 
@@ -42,7 +43,7 @@ export async function GET(req) {
       { status: 503, headers: { 'Set-Cookie': clearState } }
     );
   }
-  if (!state || !code || !cookies[STATE_COOKIE] || state !== cookies[STATE_COOKIE]) {
+  if (!state || !code || !cookies[STATE_COOKIE] || !safeEqual(state, cookies[STATE_COOKIE])) {
     return fail('Invalid sign-in attempt.', clearState);
   }
   try {
@@ -58,7 +59,11 @@ export async function GET(req) {
     const tokenData = await tokenRes.json();
     if (!tokenRes.ok || !tokenData.access_token) return fail('GitHub sign-in failed.', clearState);
     const userRes = await fetch('https://api.github.com/user', {
-      headers: { Authorization: `Bearer ${tokenData.access_token}`, Accept: 'application/vnd.github+json' }
+      headers: {
+        Authorization: `Bearer ${tokenData.access_token}`,
+        Accept: 'application/vnd.github+json',
+        'User-Agent': 'bitcoin-kisumu'
+      }
     });
     const user = await userRes.json();
     const login = user && user.login;

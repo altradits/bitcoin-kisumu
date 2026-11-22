@@ -7,7 +7,7 @@
 import { createHmac } from 'node:crypto';
 import { register } from 'node:module';
 
-register('./rsvp-shim-loader.mjs', import.meta.url);
+register('./test-shim-loader.mjs', import.meta.url);
 const libUrl = new URL('../app/lib/adminAuth.js', import.meta.url).href;
 const lib = await import(libUrl);
 const meUrl = new URL('../app/api/admin/me/route.js', import.meta.url).href;
@@ -17,7 +17,7 @@ const logoutUrl = new URL('../app/api/admin/logout/route.js', import.meta.url).h
 const { GET: me } = await import(meUrl);
 const { GET: login } = await import(loginUrl);
 const { GET: callback } = await import(callbackUrl);
-const { GET: logout } = await import(logoutUrl);
+const { POST: logout } = await import(logoutUrl);
 
 const failures = [];
 const check = (cond, msg) => {
@@ -117,11 +117,10 @@ check(
   `logout must clear cookie, got ${outCookies}`
 );
 
-// (h) Session cookie flags.
-const sessionSet = `bk_admin=${good}`;
-check(sessionSet.length > 0, 'sanity');
-const loginAgain = await login(req('http://t/api/admin/login', null));
-check(loginAgain.status === 302 || loginAgain.status === 307, 'login redirect stable');
+// (h) Constant-time state comparison.
+check(lib.safeEqual('abc123', 'abc123') === true, 'safeEqual identical');
+check(lib.safeEqual('abc123', 'abc124') === false, 'safeEqual differs');
+check(lib.safeEqual('abc', 'abcdef') === false, 'safeEqual length differs');
 
 if (failures.length) {
   console.error(`ADMIN AUTH TEST FAILED (${failures.length}):`);

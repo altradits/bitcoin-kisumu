@@ -74,6 +74,13 @@ export function newState() {
   return randomBytes(16).toString('base64url');
 }
 
+export function safeEqual(a, b) {
+  const ab = Buffer.from(String(a || ''));
+  const bb = Buffer.from(String(b || ''));
+  if (ab.length !== bb.length) return false;
+  return timingSafeEqual(ab, bb);
+}
+
 function cookie(name, value, maxAge) {
   const parts = [
     `${name}=${value}`,
