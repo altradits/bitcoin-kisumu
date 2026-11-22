@@ -30,6 +30,8 @@ npm start
 - `data/` — local dev storage for form submissions (git-ignored; Redis is used on Vercel).
 - `public/` — favicon + web logo, team photos (`public/team/`).
 - `assets/` — logo kit (SVG) + brand guide. `logo.svg` is the Leaderboard upload.
+- `db/migrations/` — numbered plain-SQL migrations (`npm run db:migrate`).
+- `scripts/` — asset generators, migration runner, automated tests.
 - `doc/` — developer notes and other contributor documentation.
 
 ## Pages
@@ -57,6 +59,16 @@ API shapes are identical either way.
 1. Vercel dashboard → project `bitcoin-kisumu` → **Storage** tab → **Create** → Upstash Redis → connect to this project.
 2. Redeploy (any push redeploys, or Redeploy in the dashboard). The integration adds `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` automatically.
 3. Local Redis (optional): copy those two values into `.env.local` (see `.env.example`). Without them, local dev just uses `data/`.
+
+### Postgres (pilot records — earners, results, audit)
+
+Pilot records live in Postgres (Neon free tier on Vercel). Public pages and the contact/newsletter/RSVP forms never touch it, so everything works with `DATABASE_URL` unset.
+
+1. Vercel dashboard → project `bitcoin-kisumu` → **Storage** tab → **Create** → Neon Postgres → connect (adds `DATABASE_URL`).
+2. Local Docker: `docker run --name bk-pg -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=bitcoinkisumu -p 5432:5432 -d postgres:16`, then set `DATABASE_URL=postgresql://postgres:postgres@localhost:5432/bitcoinkisumu` in `.env.local`.
+3. Run migrations: `npm run db:migrate` (idempotent; `-- --dry-run` lists pending files).
+
+Rate limiting also uses Redis automatically when the Upstash vars exist (atomic counters shared across instances); otherwise it falls back to in-memory limits.
 
 ## Contributing
 
