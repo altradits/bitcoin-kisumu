@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 export default function RsvpForm({ eventId }) {
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
+  const [website, setWebsite] = useState('');
   const [count, setCount] = useState(null);
   const [status, setStatus] = useState(null);
 
@@ -22,10 +23,15 @@ export default function RsvpForm({ eventId }) {
       const res = await fetch('/api/rsvp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, name, contact })
+        body: JSON.stringify({ eventId, name, contact, website })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed');
+      if (data.duplicate) {
+        setStatus({ kind: 'ok', msg: 'You already reserved a seat with this contact.' });
+        if (typeof data.count === 'number') setCount(data.count);
+        return;
+      }
       setStatus({ kind: 'ok', msg: `Asante ${data.rsvp.name}! Seat reserved.` });
       setCount(data.count);
       setName('');
@@ -45,6 +51,7 @@ export default function RsvpForm({ eventId }) {
         Phone or email
         <input required value={contact} onChange={(e) => setContact(e.target.value)} placeholder="07… or you@example.com" />
       </label>
+      <label className="hp-field" aria-hidden="true">Website (leave blank)<input value={website} onChange={(e) => setWebsite(e.target.value)} autoComplete="off" tabIndex={-1} /></label>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
         <button className="btn btn-primary" type="submit">Reserve seat</button>
         {count !== null && <span className="form-note">{count} reserved so far</span>}

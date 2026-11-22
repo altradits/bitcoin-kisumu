@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { store } from '@/app/lib/store';
+import { store, StorageUnavailable } from '@/app/lib/store';
 import { checkRateLimit, tooManyRequests } from '@/app/lib/rateLimit';
 
 function bad(msg) {
@@ -15,6 +15,9 @@ export async function POST(req) {
   } catch {
     return bad('Invalid JSON.');
   }
+  if (String(body.website || '').trim() !== '') {
+    return NextResponse.json({ ok: true }); // honeypot: pretend success, store nothing
+  }
   const name = String(body.name || '').trim();
   const email = String(body.email || '').trim();
   const topic = String(body.topic || '').trim() || 'Other';
@@ -26,6 +29,11 @@ export async function POST(req) {
   if (message.length < 10) return bad('Message needs at least 10 characters.');
   if (message.length > 5000) return bad('Message too long (5000 chars max).');
 
-  const row = await store.appendTo('contact.json', { name, email, topic, message });
-  return NextResponse.json({ ok: true, id: row.id });
+  try {
+    const row = await store.appendTo('contact.json', { name, email, topic, message });
+    return NextResponse.json({ ok: true, id: row.id });
+  } catch (err) {
+    if (err instanceof StorageUnavailable) return NextResponse.json({ error: err.message }, { status: 503 });
+    throw err;
+  }
 }

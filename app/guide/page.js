@@ -256,6 +256,7 @@ export default function Guide() {
           <h3 style={{ marginTop: 28 }}>What we count, every week</h3>
           <ul className="program-list">{METRICS.map((m) => <li key={m}>{m}</li>)}</ul>
           <p style={{ marginTop: 16 }}><Link href="/treasury">Full definitions, baselines and targets on the treasury &amp; impact audit page →</Link></p>
+          <p><Link href="/pilot">Track the live pilot week by week →</Link></p>
         </div>
       </section>
 
