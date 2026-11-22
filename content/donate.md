@@ -1,7 +1,7 @@
 # Donate (10 + 10 pts)
 
 ## Lightning address (10 pts)
-TODO — e.g. `bitcoinkisumu@getalby.com` or your LNURL / bolt12.
+`bitcoinkisumu@blink.sv` (Blink).
 
 Until set, the /donate page shows a placeholder and instructions.
 

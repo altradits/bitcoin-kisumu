@@ -7,7 +7,7 @@ export const site = {
   locale: 'Kisumu • Lake Victoria • Kenya',
   networkUrl: 'https://network.myfirstbitcoin.org/community/bitcoin-kisumu',
   email: 'hello@bitcoinkisumu.org', // TODO: real inbox
-  lightningAddress: '', // TODO: e.g. bitcoinkisumu@getalby.com
+  lightningAddress: 'bitcoinkisumu@blink.sv',
   geyserUrl: '', // TODO: e.g. https://geyser.fund/project/bitcoinkisumu
   socials: [
     { label: 'X', href: '' },
