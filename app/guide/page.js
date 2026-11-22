@@ -167,6 +167,7 @@ export default function Guide() {
           </div>
           <h3 style={{ marginTop: 28 }}>What we count, every week</h3>
           <ul className="program-list">{METRICS.map((m) => <li key={m}>{m}</li>)}</ul>
+          <p style={{ marginTop: 12 }}>The numbers themselves, week by week: <Link href="/pilot">pilot numbers</Link>.</p>
         </div>
       </section>
 
