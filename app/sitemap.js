@@ -11,6 +11,7 @@ const ROUTES = [
   '/donate',
   '/treasury',
   '/pilot',
+  '/partners',
   '/resources',
   '/executive-summary',
   '/stories',

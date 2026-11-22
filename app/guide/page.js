@@ -267,6 +267,7 @@ export default function Guide() {
           <div className="hero-actions" style={{ marginTop: 12 }}>
             <Link className="btn btn-primary" href="/donate">Support the pilot</Link>
             <Link className="btn btn-dark" href="/merchants">Merchant directory</Link>
+            <Link className="btn btn-dark" href="/partners">Partner with us</Link>
             <Link className="btn btn-ghost" style={{ color: 'var(--navy)', borderColor: 'var(--navy)' }} href="/contact">Talk to us</Link>
           </div>
         </div>

@@ -61,6 +61,7 @@ export default function RootLayout({ children }) {
                   <li><a href="/team">Team</a></li>
                   <li><a href="/donate">Donate</a></li>
                   <li><a href="/stories">Stories</a></li>
+                  <li><a href="/partners">Partners</a></li>
                 </ul>
               </div>
               <div>
