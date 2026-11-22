@@ -8,11 +8,16 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
-    "test:rsvp": "node scripts/test-rsvp-concurrency.mjs"
+    "test:rsvp": "node scripts/test-rsvp-concurrency.mjs",
+    "test:ratelimit": "node scripts/test-rate-limit.mjs",
+    "test:db": "node scripts/test-db-migrate.mjs",
+    "db:migrate": "node scripts/db-migrate.mjs",
+    "test:admin": "node scripts/test-admin-auth.mjs"
   },
   "dependencies": {
     "@upstash/redis": "^1.41.0",
     "next": "^14.2.35",
+    "pg": "^8.23.1",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

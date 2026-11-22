@@ -3,7 +3,7 @@ import { store } from '@/app/lib/store';
 import { checkRateLimit, tooManyRequests } from '@/app/lib/rateLimit';
 
 export async function POST(req) {
-  const limit = checkRateLimit(req, 'newsletter');
+  const limit = await checkRateLimit(req, 'newsletter');
   if (!limit.ok) return tooManyRequests(limit.retryAfter);
   let body;
   try {

@@ -12,7 +12,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const limit = checkRateLimit(req, 'rsvp');
+  const limit = await checkRateLimit(req, 'rsvp');
   if (!limit.ok) return tooManyRequests(limit.retryAfter);
   let body;
   try {
