@@ -3,8 +3,6 @@ import { store } from '@/app/lib/store';
 import { checkRateLimit, tooManyRequests } from '@/app/lib/rateLimit';
 import { events } from '@/app/lib/site';
 
-const ids = new Set(events.map((e) => e.id));
-
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const eventId = searchParams.get('eventId');
@@ -25,21 +23,27 @@ export async function POST(req) {
   const eventId = String(body.eventId || '').trim();
   const name = String(body.name || '').trim();
   const contact = String(body.contact || '').trim();
-  if (!ids.has(eventId)) return NextResponse.json({ error: 'Unknown event.' }, { status: 400 });
+  const event = events.find((e) => e.id === eventId);
+  if (!event) return NextResponse.json({ error: 'Unknown event.' }, { status: 400 });
   if (name.length < 2) return NextResponse.json({ error: 'Please give your name.' }, { status: 400 });
   if (name.length > 100) return NextResponse.json({ error: 'Name too long (100 chars max).' }, { status: 400 });
   if (contact.length < 3) return NextResponse.json({ error: 'Please give a phone or email.' }, { status: 400 });
   if (contact.length > 254) return NextResponse.json({ error: 'Contact too long (254 chars max).' }, { status: 400 });
 
-  const event = events.find((e) => e.id === eventId);
-  const all = await store.readList('rsvps.json');
-  const forEvent = all.filter((r) => r.eventId === eventId);
-  if (forEvent.length >= (event.capacity || 100)) {
-    return NextResponse.json({ error: 'This event is full — contact us to join the waitlist.' }, { status: 409 });
+  // Atomic: capacity + duplicate-contact enforced inside the store, so
+  // overlapping requests can never overbook or double-claim a seat.
+  const res = await store.appendRsvp(eventId, { name, contact }, event.capacity || 100);
+  if (res.outcome === 'duplicate') {
+    return NextResponse.json(
+      { error: 'You already reserved a seat with this contact.', duplicate: true, count: res.count },
+      { status: 409 }
+    );
   }
-  if (forEvent.some((r) => String(r.contact || '').toLowerCase() === contact.toLowerCase())) {
-    return NextResponse.json({ ok: true, duplicate: true, count: forEvent.length });
+  if (res.outcome === 'full') {
+    return NextResponse.json(
+      { error: 'This event is full — contact us to join the waitlist.', count: res.count },
+      { status: 409 }
+    );
   }
-  const rsvp = await store.appendTo('rsvps.json', { eventId, name, contact });
-  return NextResponse.json({ ok: true, rsvp, count: forEvent.length + 1 });
+  return NextResponse.json({ ok: true, rsvp: res.row, count: res.count }, { status: 201 });
 }
