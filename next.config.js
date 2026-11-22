@@ -15,7 +15,8 @@ const CSP = [
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  'img-src \'self\' https://blinkbitcoin.github.io https://get.blink.sv',
+  // img data: — Blink renders its live invoice QR as <img src="data:image/..."> (buildQrDataUrl).
+  'img-src \'self\' data: https://blinkbitcoin.github.io https://get.blink.sv',
   'connect-src \'self\' https://api.blink.sv https://blink.sv https://get.blink.sv https://ws.blink.sv wss://ws.blink.sv',
   "frame-src 'none'",
   "object-src 'none'",
