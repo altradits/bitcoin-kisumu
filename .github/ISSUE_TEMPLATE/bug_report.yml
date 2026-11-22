@@ -1,0 +1,25 @@
+name: Bug report
+description: Something on the site is broken or wrong.
+labels: ["bug"]
+body:
+  - type: textarea
+    attributes:
+      label: What happened
+      description: What did you see? Add a screenshot if it helps.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Open /guide on a phone\n2. ..."
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Page and device
+      placeholder: "/donate, Android Chrome"

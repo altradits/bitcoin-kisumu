@@ -12,8 +12,12 @@
    - Links: TODO
    - Photo: `public/team/ivy.jpg` (TODO)
 
-3. **TODO — Organiser / Comms**
+3. **Paul Oguda** — Organiser
    - Role: events, social media, photos
-   - Add name, bio, photo
+   - Bio: TODO (confirm with Paul)
+   - Links: TODO
+   - Photo: `public/team/paul.jpg` (TODO)
+
+   > Needs founder confirmation: name/role from the Leaderboard, bio + photo still TODO.
 
 Add rows as the team grows. Each member with photo + role = 10 pts.

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { store } from '@/app/lib/store';
+import { checkRateLimit, tooManyRequests } from '@/app/lib/rateLimit';
 import { events } from '@/app/lib/site';
 
 const ids = new Set(events.map((e) => e.id));
@@ -13,6 +14,8 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
+  const limit = checkRateLimit(req, 'rsvp');
+  if (!limit.ok) return tooManyRequests(limit.retryAfter);
   let body;
   try {
     body = await req.json();

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security problem privately
+    url: https://github.com/bitcoinkisumu/bitcoin-kisumu/security/policy
+    about: Never report security problems in a public issue.
+  - name: Talk to us
+    url: https://bitcoin-kisumu.vercel.app/contact
+    about: Questions, partnerships and anything that is not a bug or a feature.

@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import { store } from '@/app/lib/store';
+import { checkRateLimit, tooManyRequests } from '@/app/lib/rateLimit';
 
 function bad(msg) {
   return NextResponse.json({ error: msg }, { status: 400 });
 }
 
 export async function POST(req) {
+  const limit = checkRateLimit(req, 'contact');
+  if (!limit.ok) return tooManyRequests(limit.retryAfter);
   let body;
   try {
     body = await req.json();
