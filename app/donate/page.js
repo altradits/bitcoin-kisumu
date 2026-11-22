@@ -4,6 +4,8 @@ import BlinkDonate from '../components/BlinkDonate';
 export default function Donate() {
   const ln = site.lightningAddress;
   const geyser = site.geyserUrl;
+  const nostr = site.socials.find((s) => s.label === 'Nostr')?.href;
+  const x = site.socials.find((s) => s.label === 'X')?.href;
   return (
     <section className="section">
       <div className="wrap">
@@ -17,6 +19,13 @@ export default function Donate() {
                 <p>Send to our Lightning address:</p>
                 <p><code className="addr">{ln}</code></p>
                 <p><a className="btn btn-primary" href={`lightning:${ln}`}>Open in my wallet</a></p>
+                <p style={{ marginTop: 12 }}>
+                  <a href={`lightning:${ln}`} aria-label={`Pay ${ln} with my wallet`}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/qr/lightning-donate.svg" alt={`Lightning QR code for ${ln}`} width="200" height="200" style={{ borderRadius: 12, background: '#fff' }} />
+                  </a>
+                </p>
+                <p className="form-note">Scan with Blink, Phoenix or Wallet of Satoshi.</p>
                 <BlinkDonate username={ln.split('@')[0]} />
               </>
             ) : (
@@ -43,8 +52,14 @@ export default function Donate() {
               </>
             ) : (
               <>
-                <p><strong>Geyser project launching soon.</strong></p>
-                <p className="form-note">Maintainer: set <code>geyserUrl</code> in <code>app/lib/site.js</code>, then add it to the Leaderboard for 10 pts.</p>
+                <p><strong>Geyser campaign launching soon.</strong></p>
+                <p className="form-note">
+                  {nostr && x ? (
+                    <>Follow the launch on <a href={nostr}>Nostr</a> or <a href={x}>X</a> — or support directly via Lightning above.</>
+                  ) : (
+                    <>Geyser campaign launching soon — support directly via Lightning above.</>
+                  )}
+                </p>
               </>
             )}
             <h3 style={{ marginTop: 20 }}>Non-sat support</h3>
@@ -58,7 +73,8 @@ export default function Donate() {
         </div>
         <div className="card" style={{ marginTop: 20 }}>
           <h3>Transparency</h3>
-          <p>Quarterly reports land here and on the Leaderboard: amounts received, spent, students graduated, events held. Proof of work unlocks everything.</p>
+          <p>Every sat sits in our public 3-bucket treasury (35/45/20), tracked on a 6-KPI scorecard with quarterly audit reports. Proof of work unlocks everything.</p>
+          <p><a className="btn btn-dark" href="/treasury">Open the treasury &amp; audit</a></p>
         </div>
       </div>
     </section>

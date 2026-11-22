@@ -14,8 +14,10 @@ export const site = {
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61596750573799' },
     { label: 'Nostr', href: 'https://nostr.com/profile/a268bc1dd4edaa0c6d7a3173832eeb9a3b0984b9d1fe639078e17cf8daeebcba' },
     { label: 'Telegram', href: '' },
-    { label: 'WhatsApp', href: '' },
+    { label: 'WhatsApp', href: 'https://wa.me/254707172370' },
     { label: 'YouTube', href: 'https://www.youtube.com/@BitcoinKisumu' },
+    { label: 'Instagram', href: 'https://www.instagram.com/bitcoinkisumu/' },
+    { label: 'TikTok', href: 'https://www.tiktok.com/@bitcoinkisumu' },
     { label: 'GitHub', href: 'https://github.com/bitcoinkisumu' }
   ]
 };

@@ -20,7 +20,9 @@ export async function POST(req) {
   const topic = String(body.topic || '').trim() || 'Other';
   const message = String(body.message || '').trim();
   if (name.length < 2) return bad('Please give your name.');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return bad('Please give a valid email.');
+  if (name.length > 100) return bad('Name too long (100 chars max).');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return bad('Please give a valid email.');
+  if (topic.length > 60) return bad('Topic too long (60 chars max).');
   if (message.length < 10) return bad('Message needs at least 10 characters.');
   if (message.length > 5000) return bad('Message too long (5000 chars max).');
 
