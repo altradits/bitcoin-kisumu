@@ -22,6 +22,19 @@ npm run test:db           # skips green without DATABASE_URL
 
 Migrations are plain SQL in `db/migrations/`, applied in filename order and tracked in `schema_migrations`. Public pages and existing forms never require the database.
 
+## Admin sign-in (local)
+
+```sh
+# 1. Create a GitHub OAuth App (see .env.example) with callback:
+#    http://localhost:3000/api/admin/callback
+# 2. Fill GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, AUTH_SECRET
+#    (openssl rand -hex 32) and ADMIN_GITHUB_LOGINS in .env.local
+npm run dev           # sign in at http://localhost:3000/admin
+npm run test:admin    # fail-closed gates, allowlist, expiry, logout
+```
+
+Sessions are HMAC-signed, HTTP-only, 12h expiring. Missing env vars fail closed (401/403), never open. No Auth.js dependency by design — the whole flow is `app/lib/adminAuth.js` + `app/api/admin/*`.
+
 ## Before you push
 
 ```sh
@@ -30,6 +43,7 @@ npm run build         # must pass
 npm run test:rsvp     # must pass
 npm run test:ratelimit
 npm run test:db       # needs local Postgres or skips
+npm run test:admin
 ```
 
 ## Code style

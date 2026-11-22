@@ -70,6 +70,10 @@ Pilot records live in Postgres (Neon free tier on Vercel). Public pages and the 
 
 Rate limiting also uses Redis automatically when the Upstash vars exist (atomic counters shared across instances); otherwise it falls back to in-memory limits.
 
+## Admin (restricted)
+
+`/admin` and `/api/admin/*` require GitHub sign-in as a username listed in `ADMIN_GITHUB_LOGINS`. Sessions are signed, HTTP-only and expire after 12h. With auth env vars unset, every admin surface fails closed. Setup: `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `AUTH_SECRET`, `ADMIN_GITHUB_LOGINS` — see [.env.example](.env.example) and [developer notes](doc/developer-notes.md).
+
 ## Contributing
 
 Everyone is welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow (Bitcoin Core-style), the [Code of Conduct](CODE_OF_CONDUCT.md), and the [Security Policy](SECURITY.md) before opening an issue or pull request.
