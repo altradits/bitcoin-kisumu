@@ -11,14 +11,14 @@ export default function Home() {
       <section className="hero">
         <div className="wrap hero-grid">
           <div>
-            <h1>Puonj mar Bitcoin pi jo-Kisumu, maonge chulo eriyo.</h1>
+            <h1>Puonj mar bitcoin ne joka nyanam maonge chudo</h1>
             <p className="lede">
               {site.taglineDholuo} Wanigo baraza, puonj mar jodong&apos; kod dul malong&apos;o mar
               Bitcoin Diploma e Kisumu — kod puonj mar jopuonj mondo ng&apos;ado obed e pinywa.
             </p>
             <div className="hero-actions">
               <Link className="btn btn-primary" href="/events">Donj e baraza</Link>
-              <Link className="btn btn-ghost" href="/programs">Ywak program</Link>
+              <Link className="btn btn-ghost" href="/programs">Yaw program</Link>
             </div>
             <p style={{ fontSize: '0.92rem', color: '#9fb6c8' }}>
               Komuniti mayot e{' '}
@@ -26,9 +26,9 @@ export default function Home() {
             </p>
           </div>
           <dl className="hero-facts">
-            <dt>Kany</dt>
-            <dd>Kisumu, Kenya — e nam mar Lake Victoria</dd>
-            <dt>Kado</dt>
+            <dt>Kanye</dt>
+            <dd>Kisumu, Kenya — e nam lolwe</dd>
+            <dt>Nade</dt>
             <dd>E dala machon kod wallets ma nyuol e lweny</dd>
             <dt>Chulo</dt>
             <dd>Maonge chulo. Ma chulo gi konywa kod joprom.</dd>
@@ -66,8 +66,8 @@ export default function Home() {
                 <span style={{ color: 'var(--muted)', fontSize: '0.93rem' }}>{e.date} — {e.venue}</span>
               </p>
             ))}
-            <p><Link href="/events">RSVP e baraza →</Link></p>
-            <h3 style={{ marginTop: 24 }}>Kony klas maonge chulo</h3>
+            <p><Link href="/events">Ndikri e baraza →</Link></p>
+            <h3 style={{ marginTop: 24 }}>Chiw kony ne pwonj ma nono</h3>
             <p style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
               Yamo, printouts, transport mar jopuonj. Klas duto maonge chulo nikech donors o chulo.
             </p>
