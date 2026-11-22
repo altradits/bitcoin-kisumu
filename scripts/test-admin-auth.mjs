@@ -7,7 +7,7 @@
 import { createHmac } from 'node:crypto';
 import { register } from 'node:module';
 
-register('./rsvp-shim-loader.mjs', import.meta.url);
+register('./test-shim-loader.mjs', import.meta.url);
 const libUrl = new URL('../app/lib/adminAuth.js', import.meta.url).href;
 const lib = await import(libUrl);
 const meUrl = new URL('../app/api/admin/me/route.js', import.meta.url).href;

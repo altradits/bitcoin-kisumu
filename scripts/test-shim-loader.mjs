@@ -20,5 +20,8 @@ export async function resolve(specifier, context, next) {
       shortCircuit: true
     };
   }
+  if ((specifier.startsWith('./') || specifier.startsWith('../')) && !path.extname(specifier)) {
+    return next(specifier + '.js', context);
+  }
   return next(specifier, context);
 }

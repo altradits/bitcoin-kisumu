@@ -13,7 +13,7 @@ process.chdir(mkdtempSync(path.join(tmpdir(), 'bk-rsvp-')));
 delete process.env.UPSTASH_REDIS_REST_URL;
 delete process.env.UPSTASH_REDIS_REST_TOKEN;
 
-register('./rsvp-shim-loader.mjs', import.meta.url);
+register('./test-shim-loader.mjs', import.meta.url);
 const { POST, GET } = await import(new URL('../app/api/rsvp/route.js', import.meta.url).href);
 const { events } = await import(new URL('../app/lib/site.js', import.meta.url).href);
 
