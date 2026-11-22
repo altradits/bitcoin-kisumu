@@ -1,4 +1,5 @@
 import { site } from '../lib/site';
+import BlinkDonate from '../components/BlinkDonate';
 
 export default function Donate() {
   const ln = site.lightningAddress;
@@ -15,6 +16,8 @@ export default function Donate() {
               <>
                 <p>Send to our Lightning address:</p>
                 <p><code className="addr">{ln}</code></p>
+                <p><a className="btn btn-primary" href={`lightning:${ln}`}>Open in my wallet</a></p>
+                <BlinkDonate username={ln.split('@')[0]} />
               </>
             ) : (
               <>
@@ -28,6 +31,7 @@ export default function Donate() {
               <li>Printed handouts &amp; certificates</li>
               <li>Educator transport</li>
               <li>Phones / data subsidies for students</li>
+              <li>Pilot payments in sats to local earners (see the <a href="/guide">Guide</a>)</li>
             </ul>
           </div>
           <div className="card light-card">
