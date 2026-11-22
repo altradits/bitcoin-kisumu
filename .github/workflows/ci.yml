@@ -16,4 +16,8 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
+      # Advisory-only until the Next 16 migration (tracked in #19): the only
+      # published fixes for the flagged next/postcss/glob advisories are
+      # semver-major, so a gating audit would block every PR with no remedy.
       - run: npm audit --audit-level=high
+        continue-on-error: true
