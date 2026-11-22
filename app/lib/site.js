@@ -17,6 +17,7 @@ export const site = {
     { label: 'WhatsApp', href: 'https://wa.me/254707172370' },
     { label: 'YouTube', href: 'https://www.youtube.com/@BitcoinKisumu' },
     { label: 'Instagram', href: 'https://www.instagram.com/bitcoinkisumu/' },
+    { label: 'TikTok', href: 'https://www.tiktok.com/@bitcoinkisumu' },
     { label: 'GitHub', href: 'https://github.com/bitcoinkisumu' }
   ]
 };
