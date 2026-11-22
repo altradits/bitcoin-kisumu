@@ -23,10 +23,11 @@ export default async function Inbox() {
   const session = getAdminSession(headers().get('cookie'));
   if (session.status !== 'ok') return <AdminGate session={session} configured={authConfigured()} />;
 
-  const [contact, newsletter, rsvps] = await Promise.all([
+  const [contact, newsletter, rsvps, inquiries] = await Promise.all([
     store.readList('contact.json'),
     store.readList('newsletter.json'),
-    store.readList('rsvps.json')
+    store.readList('rsvps.json'),
+    store.readList('inquiries.json')
   ]);
 
   return (
@@ -60,6 +61,19 @@ export default async function Inbox() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        <h2 style={{ marginTop: 28 }}>Revenue Inquiries ({inquiries.length})</h2>
+        {newestFirst(inquiries).length === 0 ? <p className="form-note">No revenue inquiries yet. Paying leads from /partners land here.</p> : (
+          <div style={{ display: 'grid', gap: 14 }}>
+            {newestFirst(inquiries).map((m) => (
+              <article key={m.id} className="card">
+                <h3 style={{ fontSize: '1.1rem' }}>{m.name} <span className="form-note">• {m.email} • {m.interest}</span></h3>
+                <p style={{ whiteSpace: 'pre-wrap' }}>{m.message}</p>
+                <p className="form-note">{m.at}</p>
+              </article>
+            ))}
           </div>
         )}
 

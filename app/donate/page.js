@@ -71,6 +71,7 @@ export default function Donate() {
             </ul>
           </div>
         </div>
+        <p style={{ marginTop: 20 }}>Visiting Kisumu or hiring remotely? <a href="/partners">Partner with us →</a></p>
         <div className="card" style={{ marginTop: 20 }}>
           <h3>Transparency</h3>
           <p>Every sat sits in our public 3-bucket treasury (35/45/20), tracked on a 6-KPI scorecard with quarterly audit reports. Proof of work unlocks everything.</p>

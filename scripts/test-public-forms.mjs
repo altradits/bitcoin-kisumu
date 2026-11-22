@@ -16,6 +16,7 @@ delete process.env.VERCEL;
 register('./test-shim-loader.mjs', import.meta.url);
 const contact = await import(new URL('../app/api/contact/route.js', import.meta.url).href);
 const newsletter = await import(new URL('../app/api/newsletter/route.js', import.meta.url).href);
+const inquiries = await import(new URL('../app/api/inquiries/route.js', import.meta.url).href);
 const rsvp = await import(new URL('../app/api/rsvp/route.js', import.meta.url).href);
 const { store } = await import(new URL('../app/lib/store.js', import.meta.url).href);
 
@@ -53,6 +54,25 @@ const newsBurst = await Promise.all(
 check(newsBurst.every((r) => r.status === 200), 'all 20 newsletter POSTs must 200');
 check((await store.readList('newsletter.json')).length === 20, 'all 20 newsletter rows must persist');
 
+const inquiryBurst = await Promise.all(
+  Array.from({ length: 20 }, (_, i) =>
+    inquiries.POST(
+      req('http://t/api/inquiries', {
+        name: `Partner ${i}`,
+        email: `partner${i}@example.com`,
+        interest: 'tour',
+        message: 'We want to book a study tour for our group.'
+      }, `10.3.2.${i + 1}`)
+    )
+  )
+);
+check(inquiryBurst.every((r) => r.status === 200), 'all 20 inquiry POSTs must 200');
+check((await store.readList('inquiries.json')).length === 20, 'all 20 inquiry rows must persist');
+const badInterest = await inquiries.POST(
+  req('http://t/api/inquiries', { name: 'Partner X', email: 'x@example.com', interest: 'nope', message: 'Long enough message here.' }, '10.3.2.99')
+);
+check(badInterest.status === 400, 'bad interest must 400');
+
 // Honeypot: success-shaped replies, zero rows stored.
 const hpContact = await contact.POST(
   req('http://t/api/contact', { name: 'Bot', email: 'bot@x.com', message: 'spam spam spam', website: 'http://evil' }, '10.3.9.1')
@@ -68,6 +88,11 @@ check(hpRsvp.status === 200 && hpBody.duplicate === true, 'honeypot rsvp must fa
 check((await store.readList('contact.json')).length === 20, 'honeypot must store no contact rows');
 check((await store.readList('newsletter.json')).length === 20, 'honeypot must store no newsletter rows');
 check((await store.readList('rsvps.json')).length === 0, 'honeypot must store no rsvp rows');
+const hpInquiry = await inquiries.POST(
+  req('http://t/api/inquiries', { name: 'Bot', email: 'bot@x.com', interest: 'tour', message: 'spam spam spam', website: 'x' }, '10.3.9.4')
+);
+check(hpInquiry.status === 200, 'honeypot inquiry must fake success');
+check((await store.readList('inquiries.json')).length === 20, 'honeypot must store no inquiry rows');
 
 // Vercel without Redis: loud 503, never silent loss.
 process.env.VERCEL = '1';
@@ -81,6 +106,10 @@ const v3 = await rsvp.POST(
   req('http://t/api/rsvp', { eventId: 'meetup-001', name: 'Vercel User', contact: 'v@x.com' }, '10.3.9.11')
 );
 check(v3.status === 503, `Vercel-no-Redis rsvp must 503, got ${v3.status}`);
+const v4 = await inquiries.POST(
+  req('http://t/api/inquiries', { name: 'Vercel User', email: 'v@x.com', interest: 'tour', message: 'long enough message here' }, '10.3.9.12')
+);
+check(v4.status === 503, `Vercel-no-Redis inquiries must 503, got ${v4.status}`);
 delete process.env.VERCEL;
 
 if (failures.length) {
@@ -88,4 +117,4 @@ if (failures.length) {
   for (const f of failures) console.error(' -', f);
   process.exit(1);
 }
-console.log('Public forms test passed: 40/40 rows kept, honeypots dropped, Vercel guard 503s.');
+console.log('Public forms test passed: 60/60 rows kept, honeypots dropped, Vercel guard 503s.');

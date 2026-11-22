@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { merchantCategories, merchants } from '../lib/merchants';
+import { merchantCategories } from '../lib/merchants';
 
-export default function MerchantDirectory() {
+export default function MerchantDirectory({ merchants }) {
   const [filter, setFilter] = useState('All');
   const visible = filter === 'All' ? merchants : merchants.filter((m) => m.category === filter);
 

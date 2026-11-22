@@ -1,13 +1,38 @@
 import Link from 'next/link';
 import MerchantDirectory from '../components/MerchantDirectory';
-import { joinSteps, btcmapUrl } from '../lib/merchants';
+import { joinSteps, btcmapUrl, merchants as staticMerchants } from '../lib/merchants';
+import { isDbConfigured, getPool } from '../lib/db';
 
 export const metadata = {
   title: 'Merchant Directory | Bitcoin Kisumu',
   description: 'Lake Victoria Bitcoin merchant and B2B directory: fish hubs, eateries, boda stages, tour operators and suppliers where sats work.'
 };
 
-export default function Merchants() {
+async function liveMerchants() {
+  // Live cluster when Postgres is configured, static fallback otherwise.
+  // Any DB hiccup falls back silently — the public page never breaks.
+  if (!isDbConfigured()) return staticMerchants;
+  try {
+    const { rows } = await getPool().query(
+      `SELECT name, category, area, accepts, b2b_supplier_of, status
+       FROM merchants WHERE status = 'live' ORDER BY name ASC`
+    );
+    if (!rows.length) return staticMerchants;
+    return rows.map((m) => ({
+      name: m.name,
+      category: m.category,
+      area: m.area || '',
+      accepts: m.accepts || [],
+      note: m.b2b_supplier_of ? `B2B supplier for ${m.b2b_supplier_of}` : '',
+      status: m.status
+    }));
+  } catch {
+    return staticMerchants;
+  }
+}
+
+export default async function Merchants() {
+  const merchants = await liveMerchants();
   return (
     <>
       <section className="section">
@@ -25,7 +50,7 @@ export default function Merchants() {
         </div>
       </section>
 
-      <MerchantDirectory />
+      <MerchantDirectory merchants={merchants} />
 
       <section className="section">
         <div className="wrap">
