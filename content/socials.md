@@ -7,6 +7,7 @@ Live now (matches `app/lib/site.js`):
 - Nostr: https://nostr.com/profile/a268bc1dd4edaa0c6d7a3173832eeb9a3b0984b9d1fe639078e17cf8daeebcba
 - YouTube: https://www.youtube.com/@BitcoinKisumu
 - WhatsApp: https://wa.me/254707172370
+- Instagram: https://www.instagram.com/bitcoinkisumu/
 - GitHub: https://github.com/bitcoinkisumu
 - Website: https://bitcoin-kisumu.vercel.app/
 - Email: bitcoinkisumu@gmail.com
@@ -14,7 +15,7 @@ Live now (matches `app/lib/site.js`):
 Still TODO:
 
 - Telegram: TODO (group/channel link — also join the public My First Bitcoin group)
-- Instagram / TikTok: TODO
+- TikTok: TODO
 - Geyser: TODO (e.g. https://geyser.fund/project/bitcoinkisumu)
 
 Update `app/lib/site.js` with the same links so the website footer matches.
