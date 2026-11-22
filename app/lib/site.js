@@ -4,6 +4,7 @@
 export const site = {
   name: 'Bitcoin Kisumu',
   tagline: 'Free, open-source Bitcoin education for Kisumu, Kenya.',
+  taglineDholuo: 'Puonj mar Bitcoin maonge chulo ne jo Kisumu, Kenya.',
   locale: 'Kisumu • Lake Victoria • Kenya',
   networkUrl: 'https://network.myfirstbitcoin.org/community/bitcoin-kisumu',
   email: 'bitcoinkisumu@gmail.com',
