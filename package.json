@@ -13,7 +13,8 @@
     "test:db": "node scripts/test-db-migrate.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",
     "test:admin": "node scripts/test-admin-auth.mjs",
-    "test:earners": "node scripts/test-admin-earners.mjs"
+    "test:earners": "node scripts/test-admin-earners.mjs",
+    "test:results": "node scripts/test-admin-results.mjs"
   },
   "dependencies": {
     "@upstash/redis": "^1.41.0",
