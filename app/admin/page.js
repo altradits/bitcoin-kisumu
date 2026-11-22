@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { headers } from 'next/headers';
 import { getAdminSession, authConfigured } from '../lib/adminAuth';
+import AdminGate from '../components/AdminGate';
 
 export const metadata = {
   title: 'Admin | Bitcoin Kisumu',
@@ -17,26 +17,7 @@ const MODULES = [
 export default function Admin() {
   // Server-side gate: the shell HTML never renders without a valid session.
   const session = getAdminSession(headers().get('cookie'));
-  if (session.status !== 'ok') {
-    return (
-      <section className="section">
-        <div className="wrap">
-          <h1>Admin</h1>
-          <div className="card" style={{ maxWidth: '36rem' }}>
-            {session.status === 'forbidden' ? (
-              <p><strong>{session.login}</strong> is signed in but not a Bitcoin Kisumu admin.</p>
-            ) : (
-              <p>Restricted area. Sign in with an allowlisted GitHub account.</p>
-            )}
-            {!authConfigured() && (
-              <p className="form-note">Admin sign-in is not configured on this deployment yet.</p>
-            )}
-            <p style={{ marginTop: 12 }}><Link className="btn btn-dark" href="/api/admin/login">Sign in with GitHub</Link></p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (session.status !== 'ok') return <AdminGate session={session} configured={authConfigured()} />;
   return (
     <section className="section">
       <div className="wrap">
@@ -51,7 +32,9 @@ export default function Admin() {
             </div>
           ))}
         </div>
-        <p style={{ marginTop: 20 }}><a href="/api/admin/logout">Sign out</a></p>
+        <form method="POST" action="/api/admin/logout" style={{ marginTop: 20 }}>
+          <button className="btn btn-dark" type="submit">Sign out</button>
+        </form>
       </div>
     </section>
   );
