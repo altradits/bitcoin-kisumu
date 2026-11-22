@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import { treasuryBuckets, multisigPolicy, kpis, reports } from '../lib/transparency';
+import { getPilotMetrics } from '../lib/pilotMetrics';
 
 export const metadata = {
   title: 'Treasury & Impact Audit | Bitcoin Kisumu',
   description: 'Public treasury buckets, multi-sig governance, sustainability scorecard and quarterly audit reports. Every sat traceable.'
 };
 
-export default function Treasury() {
+export default async function Treasury() {
+  const live = await getPilotMetrics();
   return (
     <>
       <section className="section">
@@ -63,6 +65,17 @@ export default function Treasury() {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="card" style={{ marginTop: 20, borderLeft: '6px solid var(--teal)' }}>
+            <h3 style={{ fontSize: '1.15rem' }}>Live pilot numbers</h3>
+            {live.source === 'live' ? (
+              <p>
+                <strong>{live.activeEarners}</strong> active earners • <strong>{live.verifiedResults}</strong> verified results.
+                {' '}<Link href="/pilot">Track the pilot week by week →</Link>
+              </p>
+            ) : (
+              <p>Day-0 baseline: counting starts when the pilot opens. <Link href="/pilot">Pilot tracker →</Link></p>
+            )}
           </div>
         </div>
       </section>

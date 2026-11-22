@@ -38,6 +38,7 @@ jobs:
       - run: npm run test:results
       - run: npm run test:export
       - run: npm run test:forms
+      - run: npm run test:pilot
       # Advisory-only until the Next 16 migration (tracked in #19): the only
       # published fixes for the flagged next/postcss/glob advisories are
       # semver-major, so a gating audit would block every PR with no remedy.
