@@ -26,7 +26,7 @@ export default function Team() {
                   <p style={{ color: 'var(--teal)', fontWeight: 700, margin: 0, fontSize: '0.95rem' }}>{m.role}</p>
                 </div>
               </div>
-              <p style={{ marginTop: 14 }}>{m.bio}</p>
+              {m.bio ? <p style={{ marginTop: 14 }}>{m.bio}</p> : null}
             </article>
           ))}
         </div>
