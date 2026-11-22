@@ -22,7 +22,7 @@ const PROGRAMS = [
   {
     title: 'Merchant Track',
     meta: 'For Kisumu shops • Practical',
-    body: 'For shops and stalls that want to accept Bitcoin: pricing, Lightning receive, record-keeping, volatility basics. Goal: five live merchants in year one.',
+    body: 'For shops and stalls that want to accept Bitcoin: pricing, Lightning receive, record-keeping, volatility basics. Anchored by the Dunga Beach pilot cluster — 10–15 interconnected merchants and B2B suppliers, listed in our merchant directory once live.',
     cta: ['Talk to us', '/contact']
   },
   {
@@ -38,7 +38,7 @@ export default function Programs() {
     <section className="section">
       <div className="wrap">
         <h1>Programs</h1>
-        <p style={{ maxWidth: '44rem' }}>Five tracks, one rule: every class is free, open-source and practical. Points we earn on the Education Network Leaderboard come from exactly this work — cohorts taught, students graduated, educators trained.</p>
+        <p style={{ maxWidth: '44rem' }}>Five tracks, one bridge: free My First Bitcoin education → productive Lake Victoria livelihoods → post-grant financial autonomy. Classes fill the pipeline, the circular-economy playbook turns graduates into earners, and pillar revenue keeps every class free.</p>
         <div style={{ display: 'grid', gap: 18, marginTop: 28 }}>
           {PROGRAMS.map((p) => (
             <article key={p.title} className="card">
@@ -48,6 +48,15 @@ export default function Programs() {
               <Link className="btn btn-dark" href={p.cta[1]}>{p.cta[0]}</Link>
             </article>
           ))}
+        </div>
+        <div className="card" style={{ marginTop: 28, borderLeft: '6px solid var(--teal)' }}>
+          <h2 style={{ fontSize: '1.4rem' }}>From free classes to livelihoods</h2>
+          <p style={{ maxWidth: '44rem' }}>Graduation is the middle, not the end. Our playbook lays out the revenue pillars, payroll standard and treasury policy that carry learners into paid lake-economy work — tracked openly, quarter by quarter.</p>
+          <div className="hero-actions">
+            <Link className="btn btn-dark" href="/guide">The playbook</Link>
+            <Link className="btn btn-dark" href="/merchants">Merchant directory</Link>
+            <Link className="btn btn-dark" href="/treasury">Treasury &amp; audit</Link>
+          </div>
         </div>
       </div>
     </section>
