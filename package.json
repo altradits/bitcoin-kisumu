@@ -17,7 +17,8 @@
     "test:results": "node scripts/test-admin-results.mjs",
     "test:export": "node scripts/test-admin-export.mjs",
     "test:forms": "node scripts/test-public-forms.mjs",
-    "test:pilot": "node scripts/test-pilot-metrics.mjs"
+    "test:pilot": "node scripts/test-pilot-metrics.mjs",
+    "test:merchants-payouts": "node scripts/test-admin-merchants-payouts.mjs"
   },
   "dependencies": {
     "@upstash/redis": "^1.41.0",

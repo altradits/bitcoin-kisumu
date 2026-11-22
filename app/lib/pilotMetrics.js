@@ -12,7 +12,11 @@ export function baselineMetrics() {
     verifiedResults: 0,
     byRole: {},
     byType: {},
-    weekly: []
+    weekly: [],
+    shopsLive: 0,
+    shopsActive30d: 0,
+    shopRetention30d: null,
+    totalSatsPaidOut: 0
   };
 }
 
@@ -20,7 +24,7 @@ export async function getPilotMetrics() {
   if (!isDbConfigured()) return baselineMetrics();
   try {
     const pool = getPool();
-    const [earners, byRole, byType, weekly] = await Promise.all([
+    const [earners, byRole, byType, weekly, shopsLive, shopsActive, satsPaid] = await Promise.all([
       pool.query('SELECT COUNT(*)::int AS n FROM earners WHERE active'),
       pool.query(
         `SELECT e.role, COUNT(*)::int AS n FROM results r
@@ -36,10 +40,18 @@ export async function getPilotMetrics() {
                 COUNT(*)::int AS n
          FROM results r WHERE r.status = 'verified'
          GROUP BY 1 ORDER BY 1`
-      )
+      ),
+      pool.query(`SELECT COUNT(*)::int AS n FROM merchants WHERE status = 'live'`),
+      pool.query(
+        `SELECT COUNT(*)::int AS n FROM merchants
+         WHERE status = 'live' AND last_verified_payment_date >= CURRENT_DATE - 30`
+      ),
+      pool.query('SELECT COALESCE(SUM(sats_amount), 0)::bigint AS n FROM payouts')
     ]);
     const verified = byRole.rows.reduce((s, r) => s + r.n, 0);
-    if (verified === 0 && earners.rows[0].n === 0) return baselineMetrics();
+    const live = shopsLive.rows[0].n;
+    const active = shopsActive.rows[0].n;
+    if (verified === 0 && earners.rows[0].n === 0 && live === 0) return baselineMetrics();
     const obj = (rows, k) => Object.fromEntries(rows.map((r) => [r[k], r.n]));
     return {
       source: 'live',
@@ -48,7 +60,11 @@ export async function getPilotMetrics() {
       verifiedResults: verified,
       byRole: obj(byRole.rows, 'role'),
       byType: obj(byType.rows, 'type'),
-      weekly: weekly.rows.map((r) => ({ week: r.week, verified: r.n }))
+      weekly: weekly.rows.map((r) => ({ week: r.week, verified: r.n })),
+      shopsLive: live,
+      shopsActive30d: active,
+      shopRetention30d: live > 0 ? Math.round((active / live) * 100) / 100 : null,
+      totalSatsPaidOut: Number(satsPaid.rows[0].n)
     };
   } catch {
     return baselineMetrics();

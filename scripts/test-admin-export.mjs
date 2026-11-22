@@ -146,7 +146,7 @@ try {
   // Weekly aggregates.
   r = await route.GET(req('http://t/api/admin/export?type=weekly', admin));
   const weekly = parseCsv(await r.text());
-  check(weekly[0].join(',') === 'week,role,verified_results,active_earners', `weekly header wrong: ${weekly[0]}`);
+  check(weekly[0].join(',') === 'week,role,verified_results,active_earners,shops_live,shops_active_30d', `weekly header wrong: ${weekly[0]}`);
   const teacherWeek = weekly.find((x) => x[1] === 'peer_teacher');
   check(
     Boolean(teacherWeek) && teacherWeek[2] === '1' && teacherWeek[3] === '1',

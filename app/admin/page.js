@@ -13,7 +13,9 @@ export const metadata = {
 const MODULES = [
   ['Inbox', 'Contact + newsletter messages + RSVPs', '/admin/inbox'],
   ['Earners', 'Pilot earner register', '/admin/earners'],
-  ['Results', 'Results log and verification', '/admin/results']
+  ['Results', 'Results log and verification', '/admin/results'],
+  ['Merchants', 'Cluster shop registry', '/admin/merchants'],
+  ['Payouts', 'Friday non-custodial settlement', '/admin/payouts']
 ];
 
 export default function Admin() {

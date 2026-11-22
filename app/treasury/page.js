@@ -71,6 +71,8 @@ export default async function Treasury() {
             {live.source === 'live' ? (
               <p>
                 <strong>{live.activeEarners}</strong> active earners • <strong>{live.verifiedResults}</strong> verified results.
+                {' '}<strong>{live.shopsLive}</strong> shops live (<strong>{live.shopsActive30d}</strong> active in 30 days).
+                {' '}<strong>{live.totalSatsPaidOut.toLocaleString('en-US')}</strong> sats paid out.
                 {' '}<Link href="/pilot">Track the pilot week by week →</Link>
               </p>
             ) : (

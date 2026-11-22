@@ -38,6 +38,10 @@ export default async function Pilot() {
                 <h2 style={{ fontSize: '1.4rem' }}>Verified results</h2>
                 <p style={{ fontSize: '2.2rem', fontWeight: 900, margin: 0 }}>{m.verifiedResults}</p>
               </div>
+              <div className="card">
+                <h2 style={{ fontSize: '1.4rem' }}>Sats paid out</h2>
+                <p style={{ fontSize: '2.2rem', fontWeight: 900, margin: 0 }}>{m.totalSatsPaidOut.toLocaleString('en-US')}</p>
+              </div>
             </div>
           )}
         </div>
@@ -68,6 +72,11 @@ export default async function Pilot() {
                 </tbody>
               </table>
             </div>
+            <h2 style={{ marginTop: 28 }}>Cluster health</h2>
+            <p>
+              <strong>{m.shopsLive}</strong> shops live • <strong>{m.shopsActive30d}</strong> active in the last 30 days
+              {m.shopRetention30d === null ? '' : ` • ${Math.round(m.shopRetention30d * 100)}% retention`}.
+            </p>
           </div>
         </section>
       )}
