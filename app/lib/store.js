@@ -65,4 +65,89 @@ async function appendTo(file, entry) {
   return row;
 }
 
-export const store = { readList, appendTo, redisConfigured };
+// --- Atomic RSVP writes (capacity + duplicate enforcement) ---
+//
+// Redis path: one Lua script runs check-and-append atomically against the
+// same JSON-array value the rest of the store uses (Upstash serializes
+// arrays as JSON, so Lua sees plain JSON text via GET).
+// File path: an in-process promise-chain mutex serializes writers.
+// Best-effort only across processes — production uses Redis.
+
+const RSVP_LUA = `
+local list = {}
+local raw = redis.call('GET', KEYS[1])
+if raw then
+  list = cjson.decode(raw)
+end
+local event_id = ARGV[1]
+local contact = ARGV[2]
+local capacity = tonumber(ARGV[3])
+local count = 0
+for _, r in ipairs(list) do
+  if r.eventId == event_id then
+    count = count + 1
+    if r.contact ~= nil and string.lower(r.contact) == contact then
+      return {'duplicate', count}
+    end
+  end
+end
+if count >= capacity then
+  return {'full', count}
+end
+table.insert(list, cjson.decode(ARGV[4]))
+redis.call('SET', KEYS[1], cjson.encode(list))
+return {'ok', count + 1}
+`;
+
+const fileLocks = new Map();
+
+function withFileLock(file, fn) {
+  const prev = fileLocks.get(file) || Promise.resolve();
+  const next = prev.then(fn, fn);
+  fileLocks.set(file, next.catch(() => {}));
+  return next;
+}
+
+function rsvpOutcome(list, eventId, contactLower, capacity) {
+  let count = 0;
+  for (const r of list) {
+    if (r.eventId === eventId) {
+      count += 1;
+      if (String(r.contact || '').toLowerCase() === contactLower) {
+        return { outcome: 'duplicate', count };
+      }
+    }
+  }
+  if (count >= capacity) return { outcome: 'full', count };
+  return { outcome: 'ok', count: count + 1 };
+}
+
+async function appendRsvpFile(eventId, row, capacity) {
+  return withFileLock('rsvps.json', async () => {
+    const list = await readListFile('rsvps.json');
+    const res = rsvpOutcome(list, eventId, String(row.contact).toLowerCase(), capacity);
+    if (res.outcome !== 'ok') return { ...res, row: null };
+    list.push(row);
+    await fs.writeFile(path.join(DATA_DIR, 'rsvps.json'), JSON.stringify(list, null, 2));
+    return { ...res, row };
+  });
+}
+
+async function appendRsvpRedis(eventId, row, capacity) {
+  const redis = await redisClient();
+  const res = await redis.eval(
+    RSVP_LUA,
+    [keyFor('rsvps.json')],
+    [eventId, String(row.contact).toLowerCase(), String(capacity), JSON.stringify(row)]
+  );
+  const [outcome, count] = Array.isArray(res) ? res : [];
+  return { outcome, count: Number(count), row: outcome === 'ok' ? row : null };
+}
+
+async function appendRsvp(eventId, entry, capacity) {
+  const row = makeRow({ eventId, ...entry });
+  if (!redisConfigured()) return appendRsvpFile(eventId, row, capacity);
+  return appendRsvpRedis(eventId, row, capacity);
+}
+
+export const store = { readList, appendTo, appendRsvp, redisConfigured };

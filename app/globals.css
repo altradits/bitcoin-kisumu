@@ -2,6 +2,7 @@
   --navy: #0a1931;
   --lake: #0a3d62;
   --teal: #0799b6;
+  --teal-ink: #046a80;
   --orange: #f7931a;
   --gold: #ffb347;
   --ink: #16222e;
@@ -34,7 +35,9 @@ h2 { font-size: 1.8rem; margin: 0 0 0.7rem; }
 h3 { font-size: 1.25rem; margin: 0 0 0.5rem; }
 p { margin: 0 0 1rem; }
 a { color: var(--lake); }
-a:hover { color: var(--teal); }
+a:hover { color: var(--teal-ink); }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.section-navy .form-note { color: #dbe7ef; }
 
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
 
@@ -152,6 +155,12 @@ code.addr { background: #0f2342; color: var(--gold); padding: 3px 9px; border-ra
   .nav { display: none; width: 100%; flex-direction: column; padding-bottom: 10px; }
   .nav.open { display: flex; }
   .nav-toggle { display: block; }
+}
+
+@media print {
+  .site-header, .site-footer, .nav-toggle, .hero-actions { display: none; }
+  body { font-size: 12pt; }
+  .section { padding: 18px 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

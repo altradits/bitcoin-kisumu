@@ -50,7 +50,7 @@ export default function RsvpForm({ eventId }) {
         {count !== null && <span className="form-note">{count} reserved so far</span>}
       </div>
       {status && (
-        <div className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>
+        <div role="status" className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>
       )}
     </form>
   );

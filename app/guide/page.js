@@ -168,7 +168,7 @@ export default function Guide() {
               <article key={name} className="card">
                 <h3 style={{ fontSize: '1.15rem' }}>{name}</h3>
                 <p>{what}</p>
-                <p style={{ color: 'var(--teal)', fontWeight: 700 }}>{why}</p>
+                <p style={{ color: 'var(--teal-ink)', fontWeight: 700 }}>{why}</p>
               </article>
             ))}
           </div>
@@ -183,7 +183,7 @@ export default function Guide() {
               <article key={role} className="card">
                 <h3 style={{ fontSize: '1.15rem' }}>{role}</h3>
                 <p><strong>Paid for:</strong> {paid}</p>
-                <p style={{ color: 'var(--teal)', fontWeight: 700 }}>{spreads}</p>
+                <p style={{ color: 'var(--teal-ink)', fontWeight: 700 }}>{spreads}</p>
               </article>
             ))}
           </div>

@@ -32,7 +32,7 @@ export default function NewsletterForm() {
       </label>
       <div><button className="btn btn-primary" type="submit">Subscribe</button></div>
       {status && (
-        <div className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>
+        <div role="status" className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>
       )}
     </form>
   );

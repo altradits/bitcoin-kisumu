@@ -18,6 +18,7 @@ export default function MerchantDirectory() {
               key={c}
               type="button"
               onClick={() => setFilter(c)}
+              aria-pressed={filter === c}
               className={`btn ${filter === c ? 'btn-primary' : 'btn-ghost'}`}
               style={filter === c ? {} : { color: 'var(--navy)', borderColor: 'var(--navy)' }}
             >
@@ -29,7 +30,7 @@ export default function MerchantDirectory() {
           {visible.map((m) => (
             <article key={m.name} className="card">
               <h3 style={{ fontSize: '1.15rem' }}>{m.name}</h3>
-              <p style={{ color: 'var(--teal)', fontWeight: 700, fontSize: '0.92rem' }}>
+              <p style={{ color: 'var(--teal-ink)', fontWeight: 700, fontSize: '0.92rem' }}>
                 {m.category} • {m.area} • {m.status === 'live' ? 'Accepting now' : 'Onboarding'}
               </p>
               <p>{m.note}</p>

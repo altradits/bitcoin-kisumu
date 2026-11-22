@@ -84,6 +84,7 @@ export default function Treasury() {
           <div className="hero-actions" style={{ marginTop: 24 }}>
             <Link className="btn btn-primary" href="/donate">Fund the buckets</Link>
             <Link className="btn btn-dark" href="/guide">Read the playbook</Link>
+            <Link className="btn btn-dark" href="/stories">Impact in their words</Link>
           </div>
         </div>
       </section>

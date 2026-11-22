@@ -33,7 +33,7 @@ export default function Header() {
             <span className="brand-sub">LAKE VICTORIA • KENYA</span>
           </span>
         </Link>
-        <button className="nav-toggle" onClick={() => setOpen((v) => !v)} aria-label="Toggle navigation">
+        <button className="nav-toggle" onClick={() => setOpen((v) => !v)} aria-label="Toggle navigation" aria-expanded={open}>
           {open ? '✕' : '☰'}
         </button>
         <nav className={`nav${open ? ' open' : ''}`}>
