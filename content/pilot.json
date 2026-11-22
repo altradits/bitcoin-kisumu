@@ -1,0 +1,27 @@
+{
+  "title": "90-day pilot: weekly numbers",
+  "updated": "2026-11-22",
+  "source": "Counted every Friday from the pilot results log. To publish new numbers, edit the weeks below and redeploy.",
+  "metrics": [
+    { "key": "activeShops", "label": "Shops active (at least one payment in the last 30 days)" },
+    { "key": "firstPayments", "label": "Learners who made their first payment" },
+    { "key": "holdingAfter30Days", "label": "People still holding or spending after 30 days" },
+    { "key": "satsInFromOutside", "label": "Sats in from outside Kisumu" },
+    { "key": "satsPaidOut", "label": "Sats paid out" }
+  ],
+  "weeks": [
+    { "week": 1, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Setup week. First numbers after the first Friday payout." },
+    { "week": 2, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 3, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 4, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 5, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 6, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 7, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 8, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 9, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 10, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 11, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 12, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Counted Friday from the results log." },
+    { "week": 13, "activeShops": 0, "firstPayments": 0, "holdingAfter30Days": 0, "satsInFromOutside": 0, "satsPaidOut": 0, "note": "Final week of the 90-day pilot." }
+  ]
+}
