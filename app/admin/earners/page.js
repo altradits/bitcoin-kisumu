@@ -12,6 +12,16 @@ export const metadata = {
   robots: { index: false }
 };
 
+// pg DATE arrives as local-midnight; serialize the true calendar date before
+// crossing to the client (ISO strings would shift a day on UTC+ servers).
+function plainEarner(e) {
+  const d = (v) =>
+    v instanceof Date
+      ? `${v.getFullYear()}-${String(v.getMonth() + 1).padStart(2, '0')}-${String(v.getDate()).padStart(2, '0')}`
+      : v;
+  return { ...e, start_date: d(e.start_date), consent_date: d(e.consent_date) };
+}
+
 export default async function Earners() {
   const session = getAdminSession(headers().get('cookie'));
   if (session.status !== 'ok') return <AdminGate session={session} configured={authConfigured()} />;
@@ -31,9 +41,10 @@ export default async function Earners() {
     );
   }
 
-  const { rows: earners } = await getPool().query(
+  const { rows } = await getPool().query(
     'SELECT id, name, role, lightning_address, payroll_tier, ward_area, start_date, active, consent_date, phone FROM earners ORDER BY active DESC, name ASC'
   );
+  const earners = rows.map(plainEarner);
 
   return (
     <section className="section">
