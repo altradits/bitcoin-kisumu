@@ -34,7 +34,7 @@ npm start
 
 ## Pages
 
-Home (`/`), About (`/about`), Programs (`/programs`), Guide (`/guide`), Events + RSVP (`/events`), Team (`/team`), Donate (`/donate`, Lightning + Geyser), Resources (`/resources`), Executive Summary (`/executive-summary`), Contact (`/contact`).
+Home (`/`), About (`/about`), Programs (`/programs`), Guide (`/guide`), Merchants (`/merchants`), Events + RSVP (`/events`), Team (`/team`), Donate (`/donate`, Lightning + Geyser), Treasury (`/treasury`), Resources (`/resources`), Executive Summary (`/executive-summary`), Contact (`/contact`).
 
 ## Configure before launch
 

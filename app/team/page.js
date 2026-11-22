@@ -26,7 +26,14 @@ export default function Team() {
                   <p style={{ color: 'var(--teal)', fontWeight: 700, margin: 0, fontSize: '0.95rem' }}>{m.role}</p>
                 </div>
               </div>
-              <p style={{ marginTop: 14 }}>{m.bio}</p>
+              {m.bio ? <p style={{ marginTop: 14 }}>{m.bio}</p> : null}
+              {m.links && m.links.length > 0 && (
+                <p style={{ fontSize: '0.92rem' }}>
+                  {m.links.map((l, i) => (
+                    <span key={l.label}>{i > 0 && ' · '}<a href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a></span>
+                  ))}
+                </p>
+              )}
             </article>
           ))}
         </div>

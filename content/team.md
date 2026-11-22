@@ -3,21 +3,21 @@
 1. **Stanley** — Community Lead / Founder
    - Role: strategy, partnerships, lead educator
    - Bio: TODO (2 lines)
-   - Links: TODO (Nostr / X / GitHub)
+   - Links: X https://x.com/altradits (Nostr / GitHub later)
    - Photo: `public/team/stanley.jpg` (TODO)
 
 2. **Ivy** — Education Coordinator
    - Role: cohorts, curriculum, student support
    - Bio: TODO
-   - Links: TODO
+   - Links: X https://x.com/i_veemoh (Nostr / GitHub later)
    - Photo: `public/team/ivy.jpg` (TODO)
 
 3. **Paul Oguda** — Organiser
    - Role: events, social media, photos
    - Bio: TODO (confirm with Paul)
-   - Links: TODO
+   - Links: X https://x.com/Kamalogudah (Nostr / GitHub later)
    - Photo: `public/team/paul.jpg` (TODO)
 
-   > Needs founder confirmation: name/role from the Leaderboard, bio + photo still TODO.
+   > Role confirmed by founder; bio + photo still pending from Paul.
 
 Add rows as the team grows. Each member with photo + role = 10 pts.

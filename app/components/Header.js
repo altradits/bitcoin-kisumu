@@ -9,9 +9,11 @@ const LINKS = [
   ['/about', 'About'],
   ['/programs', 'Programs'],
   ['/guide', 'Guide'],
+  ['/merchants', 'Merchants'],
   ['/events', 'Events'],
   ['/team', 'Team'],
   ['/donate', 'Donate'],
+  ['/treasury', 'Treasury'],
   ['/resources', 'Resources'],
   ['/contact', 'Contact']
 ];

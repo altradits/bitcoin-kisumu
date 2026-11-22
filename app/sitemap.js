@@ -5,9 +5,11 @@ const ROUTES = [
   '/about',
   '/programs',
   '/guide',
+  '/merchants',
   '/events',
   '/team',
   '/donate',
+  '/treasury',
   '/resources',
   '/executive-summary',
   '/contact'

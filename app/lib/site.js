@@ -12,10 +12,10 @@ export const site = {
   socials: [
     { label: 'X', href: 'https://x.com/bitcoinkisumu' },
     { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61596750573799' },
-    { label: 'Nostr', href: '' },
+    { label: 'Nostr', href: 'https://nostr.com/profile/a268bc1dd4edaa0c6d7a3173832eeb9a3b0984b9d1fe639078e17cf8daeebcba' },
     { label: 'Telegram', href: '' },
     { label: 'WhatsApp', href: '' },
-    { label: 'YouTube', href: '' },
+    { label: 'YouTube', href: 'https://www.youtube.com/@BitcoinKisumu' },
     { label: 'GitHub', href: 'https://github.com/bitcoinkisumu' }
   ]
 };
@@ -25,20 +25,23 @@ export const team = [
     name: 'Stanley',
     role: 'Community Lead',
     bio: 'Strategy, partnerships and lead educator. Founded Bitcoin Kisumu to bring practical Bitcoin knowledge to the lake region.',
-    photo: ''
+    photo: '',
+    links: [{ label: 'X', href: 'https://x.com/altradits' }]
   },
   {
     name: 'Ivy',
     role: 'Education Coordinator',
     bio: 'Cohorts, curriculum and student support. Makes sure every learner finishes with a working wallet and real understanding.',
-    photo: ''
+    photo: '',
+    links: [{ label: 'X', href: 'https://x.com/i_veemoh' }]
   },
   {
-    // Needs founder confirmation: name/role from the Leaderboard, bio + photo still TODO.
+    // Role confirmed by founder; bio + photo still pending from Paul.
     name: 'Paul Oguda',
     role: 'Organiser',
-    bio: 'TODO (confirm with Paul)',
-    photo: ''
+    bio: '',
+    photo: '',
+    links: [{ label: 'X', href: 'https://x.com/Kamalogudah' }]
   }
 ];
 
