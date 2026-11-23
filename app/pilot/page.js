@@ -42,6 +42,11 @@ export default async function Pilot() {
                 <h2 style={{ fontSize: '1.4rem' }}>Sats paid out</h2>
                 <p style={{ fontSize: '2.2rem', fontWeight: 900, margin: 0 }}>{m.totalSatsPaidOut.toLocaleString('en-US')}</p>
               </div>
+              <div className="card">
+                <h2 style={{ fontSize: '1.4rem' }}>Sats in</h2>
+                <p style={{ fontSize: '2.2rem', fontWeight: 900, margin: 0 }}>{m.totalSatsIn.toLocaleString('en-US')}</p>
+                <p className="form-note">{m.earnedSatsIn.toLocaleString('en-US')} earned • {m.grantSatsIn.toLocaleString('en-US')} grants</p>
+              </div>
             </div>
           )}
         </div>
@@ -76,6 +81,11 @@ export default async function Pilot() {
             <p>
               <strong>{m.shopsLive}</strong> shops live • <strong>{m.shopsActive30d}</strong> active in the last 30 days
               {m.shopRetention30d === null ? '' : ` • ${Math.round(m.shopRetention30d * 100)}% retention`}.
+            </p>
+            <p>
+              Earned-revenue ratio: <strong>{m.earnedRevenueRatio === null ? '—' : m.earnedRevenueRatio}</strong>
+              {' • '}Net sats inflow: <strong>{m.netSatsInflowRatio === null ? '—' : m.netSatsInflowRatio}</strong>
+              {' '}(targets ≥0.25 Day 90 / &gt;1.0).
             </p>
           </div>
         </section>

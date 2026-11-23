@@ -13,6 +13,7 @@ const ROUTES = [
   '/pilot',
   '/partners',
   '/merch',
+  '/sw',
   '/resources',
   '/executive-summary',
   '/stories',

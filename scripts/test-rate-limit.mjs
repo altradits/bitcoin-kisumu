@@ -35,6 +35,15 @@ check(otherIp.ok === true, 'a different IP must be unaffected');
 const otherKey = await checkRateLimit(req('10.9.8.1'), 'newsletter');
 check(otherKey.ok === true, 'a different key must be unaffected');
 
+// KV fallback: unreachable Redis fails open to memory (still limits).
+process.env.KV_REST_API_URL = 'http://127.0.0.1:9';
+process.env.KV_REST_API_TOKEN = 'test';
+const kvBurst = [];
+for (let i = 0; i < 6; i++) kvBurst.push(await checkRateLimit(req('10.9.8.9'), 'contact'));
+check(kvBurst.filter((r) => r.ok).length === 5, 'KV fail-open must still limit after 5');
+delete process.env.KV_REST_API_URL;
+delete process.env.KV_REST_API_TOKEN;
+
 if (failures.length) {
   console.error(`RATE LIMIT TEST FAILED (${failures.length}):`);
   for (const f of failures) console.error(' -', f);

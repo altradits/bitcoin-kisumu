@@ -13,8 +13,20 @@ const DATA_DIR = path.join(process.cwd(), 'data');
 
 export class StorageUnavailable extends Error {}
 
+// Upstash env vars first; Vercel's Upstash Marketplace integration names
+// them KV_REST_API_* instead, so fall back to those automatically.
+function redisEnv() {
+  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+    return { url: process.env.UPSTASH_REDIS_REST_URL, token: process.env.UPSTASH_REDIS_REST_TOKEN };
+  }
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+    return { url: process.env.KV_REST_API_URL, token: process.env.KV_REST_API_TOKEN };
+  }
+  return null;
+}
+
 function redisConfigured() {
-  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+  return Boolean(redisEnv());
 }
 
 // Vercel's filesystem is read-only: without Redis there is nowhere to
@@ -25,7 +37,10 @@ function vercelWithoutRedis() {
 
 async function redisClient() {
   const { Redis } = await import('@upstash/redis');
-  return Redis.fromEnv();
+  const env = redisEnv();
+  // Fail fast: one immediate retry, then the caller falls back — a slow
+  // cache must never add seconds of latency to a request.
+  return new Redis({ url: env.url, token: env.token, retry: { retries: 1, backoff: () => 0 } });
 }
 
 function keyFor(file) {
