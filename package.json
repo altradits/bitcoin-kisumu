@@ -22,6 +22,7 @@
     "test:inflows": "node scripts/test-admin-inflows.mjs",
     "test:verify": "node scripts/test-bitcoin-verify.mjs",
     "test:metrics": "node scripts/test-public-metrics-api.mjs",
+    "test:smoke": "node scripts/test-smoke-routes.mjs",
     "test": "node scripts/run-tests.mjs"
   },
   "dependencies": {

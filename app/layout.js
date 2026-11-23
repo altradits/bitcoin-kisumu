@@ -39,8 +39,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <Header />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <footer className="site-footer">
           <div className="wrap">
             <div className="footer-grid">
@@ -56,15 +57,29 @@ export default function RootLayout({ children }) {
               <div>
                 <h3>Visit</h3>
                 <ul>
+                  <li><a href="/about">About</a></li>
                   <li><a href="/programs">Programs</a></li>
                   <li><a href="/events">Events &amp; RSVP</a></li>
-                  <li><a href="/team">Team</a></li>
-                  <li><a href="/donate">Donate</a></li>
-                  <li><a href="/stories">Stories</a></li>
-                  <li><a href="/partners">Partners</a></li>
+                  <li><a href="/merchants">Merchants</a></li>
                   <li><a href="/merch">Merch</a></li>
+                  <li><a href="/treasury">Treasury</a></li>
+                  <li><a href="/donate">Donate</a></li>
                   <li><a href="/sw">Kiswahili</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3>Learn more</h3>
+                <ul>
+                  <li><a href="/guide">Guide</a></li>
+                  <li><a href="/pilot">Pilot tracker</a></li>
+                  <li><a href="/partners">Partners</a></li>
+                  <li><a href="/resources">Resources</a></li>
+                  <li><a href="/resources/field-kit">Field kit</a></li>
                   <li><a href="/verify">Verify</a></li>
+                  <li><a href="/stories">Stories</a></li>
+                  <li><a href="/team">Team</a></li>
+                  <li><a href="/contact">Contact</a></li>
+                  <li><a href="/executive-summary">Executive summary</a></li>
                 </ul>
               </div>
               <div>

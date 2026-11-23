@@ -2,25 +2,36 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const LINKS = [
-  ['/', 'Home'],
   ['/about', 'About'],
   ['/programs', 'Programs'],
-  ['/guide', 'Guide'],
-  ['/merchants', 'Merchants'],
   ['/events', 'Events'],
-  ['/team', 'Team'],
-  ['/donate', 'Donate'],
+  ['/merchants', 'Merchants'],
+  ['/merch', 'Merch'],
   ['/treasury', 'Treasury'],
-  ['/resources', 'Resources'],
-  ['/contact', 'Contact']
+  ['/donate', 'Donate'],
+  ['/sw', 'Kiswahili']
 ];
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e) {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open ]);
+
   return (
     <header className="site-header">
       <div className="header-inner">
@@ -33,7 +44,7 @@ export default function Header() {
             <span className="brand-sub">LAKE VICTORIA • KENYA</span>
           </span>
         </Link>
-        <button className="nav-toggle" onClick={() => setOpen((v) => !v)} aria-label="Toggle navigation" aria-expanded={open}>
+        <button ref={toggleRef} className="nav-toggle" onClick={() => setOpen((v) => !v)} aria-label="Toggle navigation" aria-expanded={open}>
           {open ? '✕' : '☰'}
         </button>
         <nav className={`nav${open ? ' open' : ''}`}>

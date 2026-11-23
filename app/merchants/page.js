@@ -3,6 +3,8 @@ import MerchantDirectory from '../components/MerchantDirectory';
 import { joinSteps, btcmapUrl, merchants as staticMerchants } from '../lib/merchants';
 import { isDbConfigured, getPool } from '../lib/db';
 
+export const revalidate = 60;
+
 export const metadata = {
   title: 'Merchant Directory | Bitcoin Kisumu',
   description: 'Lake Victoria Bitcoin merchant and B2B directory: fish hubs, eateries, boda stages, tour operators and suppliers where sats work.'

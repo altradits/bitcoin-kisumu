@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Executive Summary | Bitcoin Kisumu',
+  description: 'The problem, solution, programs and year-one goals of Bitcoin Kisumu in one page.'
+};
+
 export default function ExecutiveSummary() {
   return (
     <section className="section">

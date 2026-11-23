@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { treasuryBuckets, multisigPolicy, kpis, reports, budgetTargets, forecastQuarters, actualsDayZero, proofOfReserve } from '../lib/transparency';
 import { getPilotMetrics } from '../lib/pilotMetrics';
 
+export const revalidate = 60;
+
 export const metadata = {
   title: 'Treasury & Impact Audit | Bitcoin Kisumu',
   description: 'Public treasury buckets, multi-sig governance, sustainability scorecard and quarterly audit reports. Every sat traceable.'

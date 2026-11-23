@@ -18,7 +18,8 @@ const SUITES = [
   'test:pilot',
   'test:merchants-payouts',
   'test:inflows',
-  'test:metrics'
+  'test:metrics',
+  'test:smoke'
 ];
 
 if (!process.env.DATABASE_URL) {
