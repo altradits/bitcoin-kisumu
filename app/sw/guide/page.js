@@ -61,7 +61,7 @@ export default function SwahiliGuide() {
           <p style={{ fontSize: '1.1rem', maxWidth: '44rem' }}>
             Jinsi tunavyogeuza elimu ya Bitcoin isiyolipishwa kuwa ajira za Ziwa
             Victoria — na jinsi kazi yenyewe itakavyojilipa baada ya ufadhili.
-            Tunauchapisha wazi ili mtuweze kutuwajibisha.
+            Tunauchapisha wazi ili mweze kutuwajibisha.
           </p>
           <p><Link href="/guide">Read the full playbook in English →</Link></p>
           <div className="card" style={{ marginTop: 24, borderLeft: '6px solid var(--orange)' }}>

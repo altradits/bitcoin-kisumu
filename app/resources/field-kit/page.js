@@ -3,7 +3,7 @@ import PrintButton from '../../components/PrintButton';
 
 export const metadata = {
   title: 'Field Kit — Printable Classroom Sheets | Bitcoin Kisumu',
-  description: 'Print-ready bilingual seed-word backup card and Dunga Beach merchant counter card. Made for offline Kisumu classrooms.'
+  description: 'Print-ready bilingual seed-word backup card, Dunga Beach merchant counter card, and earner/merchant onboarding consent sheet. Made for offline Kisumu classrooms.'
 };
 
 const range = (from, to) => Array.from({ length: to - from + 1 }, (_, i) => from + i);
@@ -40,8 +40,9 @@ export default function FieldKit() {
         <div className="wrap">
           <h1>Kisumu classroom &amp; field kit</h1>
           <p style={{ maxWidth: '44rem' }}>
-            Two handouts for offline Kisumu: a seed-word backup card and a
-            merchant counter card. Print double-sided on A4 and cut.
+            Three handouts for offline Kisumu: a seed-word backup card, a
+            merchant counter card, and an earner/merchant onboarding consent
+            sheet. Print double-sided on A4 and cut.
           </p>
           <div className="hero-actions">
             <PrintButton />
@@ -88,6 +89,41 @@ export default function FieldKit() {
               in shillings, and nobody from Bitcoin Kisumu will ever ask for
               your backup words.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ pageBreakBefore: 'always' }}>
+        <div className="wrap">
+          <h2>3. Earner &amp; merchant onboarding consent sheet (EN/SW)</h2>
+          <p style={{ maxWidth: '44rem' }}>
+            One sheet per person or shop. Matches the earner &amp; merchant
+            register fields exactly — copy into /admin after the event.
+          </p>
+          <div className="card" style={{ marginTop: 18, breakInside: 'avoid' }}>
+            <p><strong>Name / Jina:</strong> ________________________________________</p>
+            <p><strong>Role / Category — Wadhifa / Aina ya biashara:</strong> ________________________________________</p>
+            <p><strong>Ward / Area — Kata / Eneo:</strong> ________________________________________</p>
+            <p><strong>Lightning Address:</strong> ________________________________________</p>
+            <p>
+              <strong>Payroll Tier — Daraja la malipo (default Tier 1: 85/15):</strong>{' '}
+              ☐ Tier 1 (85/15) &nbsp;&nbsp; ☐ Tier 2 (70/30) &nbsp;&nbsp; ☐ Tier 3 (B2B)
+            </p>
+            <p><strong>Phone (optional) / Simu (hiari):</strong> ________________________________________</p>
+            <p><strong>Consent date / Tarehe ya idhini:</strong> ____________</p>
+            <p><strong>Signature / Sahihi:</strong> ________________________________________</p>
+            <div style={{ marginTop: 16, borderLeft: '6px solid #b3261e', paddingLeft: 14 }}>
+              <p style={{ fontWeight: 800, margin: 0 }}>
+                Kenya Data Protection Act 2019: No national ID number is ever
+                collected or stored. Phone numbers only with your dated consent
+                above.
+              </p>
+              <p style={{ fontWeight: 800, margin: '8px 0 0' }}>
+                Sheria ya Kulinda Data Kenya 2019: Hatukusanyi wala kuhifadhi
+                namba ya kitambulisho — kamwe. Namba ya simu kwa idhini yako
+                yenye tarehe hapo juu pekee.
+              </p>
+            </div>
           </div>
         </div>
       </section>
