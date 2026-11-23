@@ -271,6 +271,10 @@ export default function Guide() {
             <Link className="btn btn-dark" href="/partners">Partner with us</Link>
             <Link className="btn btn-ghost" style={{ color: 'var(--navy)', borderColor: 'var(--navy)' }} href="/contact">Talk to us</Link>
           </div>
+          <p style={{ marginTop: 16, maxWidth: '44rem' }}>
+            Native Dholuo speaker? Claim a paid bounty to translate our Kiswahili starter page (<Link href="/sw">/sw</Link>) —{' '}
+            <Link href="/partners">details here</Link>. No machine translation accepted.
+          </p>
         </div>
       </section>
     </>

@@ -57,7 +57,7 @@ API shapes are identical either way.
 ### Connect Redis (one-time, ~2 min)
 
 1. Vercel dashboard → project `bitcoin-kisumu` → **Storage** tab → **Create** → Upstash Redis → connect to this project.
-2. Redeploy (any push redeploys, or Redeploy in the dashboard). The integration adds `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` automatically.
+2. Redeploy (any push redeploys, or Redeploy in the dashboard). The integration adds `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` automatically (or `KV_REST_API_URL` + `KV_REST_API_TOKEN` via Marketplace — both are picked up).
 3. Local Redis (optional): copy those two values into `.env.local` (see `.env.example`). Without them, local dev just uses `data/`.
 
 ### Postgres (pilot records — earners, results, audit)

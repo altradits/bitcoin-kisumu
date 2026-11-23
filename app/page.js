@@ -20,6 +20,7 @@ export default function Home() {
             <p style={{ fontSize: '0.92rem', color: '#9fb6c8' }}>
               Independent community in the{' '}
               <a href={site.networkUrl} style={{ color: '#ffd9a0' }}>My First Bitcoin Education Network</a>.
+              {' '}<Link href="/sw" style={{ color: '#ffd9a0' }}>Kiswahili →</Link>
             </p>
           </div>
           <dl className="hero-facts">
