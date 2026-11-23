@@ -35,6 +35,64 @@ const LESSONS = [
   }
 ];
 
+const GRANTEES = [
+  {
+    name: 'BTCPay Server (Spiral’s first grant, 2019)',
+    did: 'Free, self-hosted payment processing with zero fees and zero custody. Spiral (then Square Crypto) gave it the first $100,000 grant in September 2019.',
+    learn: 'Rent-extracting middlemen are optional. That is why our entire stack stays MIT-licensed and forkable.',
+    links: [
+      ['Official site', 'https://btcpayserver.org'],
+      ['Spiral', 'https://spiral.xyz']
+    ]
+  },
+  {
+    name: 'Bitcoin Design Community (Spiral-backed)',
+    did: 'Open-source design guide and research for non-custodial Bitcoin products, built in the open with the community.',
+    learn: 'Wallet and self-custody UX only improves when emerging-market field friction is documented openly upstream. We publish ours.',
+    links: [
+      ['bitcoin.design', 'https://bitcoin.design'],
+      ['Design Guide', 'https://bitcoin.design/guide']
+    ]
+  },
+  {
+    name: 'Payjoin & BDK / LDK contributors (Spiral-backed)',
+    did: 'Privacy-preserving transactions and the developer kits behind modern Lightning wallets — open protocols, open code.',
+    learn: 'Replace trust with cryptographic verification: SHA256 preimage proofs, watch-only descriptors, and transparent technical updates.',
+    links: [
+      ['Payjoin', 'https://payjoin.org'],
+      ['Bitcoin Dev Kit', 'https://bitcoindevkit.org'],
+      ['Lightning Dev Kit', 'https://lightningdevkit.org']
+    ]
+  },
+  {
+    name: 'Btrust Kenya & BitDevs (Btrust)',
+    did: 'Funding and meetups growing Bitcoin open-source engineers across Africa, including a BitDevs chapter network.',
+    learn: 'Local meetups compound when paired with an open-source contributor pipeline: CONTRIBUTING.md plus good first issues into global Bitcoin repos.',
+    links: [
+      ['Btrust', 'https://www.btrust.tech/'],
+      ['BitDevs in Africa', 'https://www.btrust.tech/bitdevs']
+    ]
+  },
+  {
+    name: 'BitSpenda (Kenya / Africa, HRF)',
+    did: 'Non-custodial, account-free Lightning to mobile-money bridge across Kenya, Ghana, Nigeria, Uganda and Cameroon.',
+    learn: 'Everyday earners stay safe from volatility without custodial traps when the bridge never holds their money.',
+    links: [
+      ['Official site', 'https://www.bitspenda.app/'],
+      ['HRF grant announcement', 'https://hrf.org/latest/hrf-grants-500m-satoshis-to-16-freedom-tech-projects-worldwide/']
+    ]
+  },
+  {
+    name: 'AfriBit Kibera & Bitcoin Babies Kimbo (Kenya)',
+    did: 'Kibera youth earning sats for waste collection and coding; Kimbo mothers saving in bitcoin and spending at local shops. Both won Bitcoin Beach circular-economy grants.',
+    learn: 'Tangible daily livelihood loops beat abstract theory. Start with one dense cluster and real payments.',
+    links: [
+      ['Bitcoin Beach grants', 'https://www.bitcoinbeach.com/news/grants-winners'],
+      ['Bitcoin Babies', 'https://bitcoinbabies.com/en']
+    ]
+  }
+];
+
 const PILLARS = [
   [
     'Fisheries Solar Cold Chain',
@@ -160,6 +218,26 @@ export default function Guide() {
       </section>
 
       <section className="section">
+        <div className="wrap">
+          <h2>What top Bitcoin FOSS &amp; circular economy grantees taught us</h2>
+          <div className="split" style={{ marginTop: 18 }}>
+            {GRANTEES.map((l) => (
+              <article key={l.name} className="card">
+                <h3>{l.name}</h3>
+                <p>{l.did}</p>
+                <p><strong>Lesson:</strong> {l.learn}</p>
+                <p style={{ fontSize: '0.9rem' }}>
+                  Sources: {l.links.map(([t, h], i) => (
+                    <span key={h}>{i > 0 && ', '}<a href={h} target="_blank" rel="noopener noreferrer">{t}</a></span>
+                  ))}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-wash">
         <div className="wrap">
           <h2>The 5 Lake Victoria revenue &amp; employment pillars</h2>
           <p style={{ maxWidth: '48rem' }}>Education fills the pipeline; these pillars turn graduates into earners and donations into a top-up instead of the lifeline. Each pillar is tested in the pilot before it scales.</p>

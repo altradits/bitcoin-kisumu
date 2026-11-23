@@ -25,6 +25,7 @@ const GROUPS = [
     title: 'For educators & organisers',
     links: [
       ['My First Bitcoin resources', 'https://myfirstbitcoin.org/resources/'],
+      ['Bitcoin Diploma curriculum source (GitHub)', 'https://github.com/MyFirstBitcoin/mfb-curriculum'],
       ['Our executive summary', '/executive-summary'],
       ['Our programs', '/programs']
     ]
