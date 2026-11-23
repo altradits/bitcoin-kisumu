@@ -10,7 +10,8 @@ const LINKS = [
   ['Rasilimali na mwongozo wa pochi', '/resources', 'Hatua kwa hatua: sakinisha, hifadhi, pokea, tuma.'],
   ['Maduka yanayokubali Bitcoin', '/merchants', 'Orodha ya maduka ya Kisumu.'],
   ['Bidhaa zetu', '/merch', 'Kila ununuzi hufadhili madarasa bure.'],
-  ['Changia', '/donate', 'Sats kidogo hufanya darasa liwe bure.']
+  ['Changia', '/donate', 'Sats kidogo hufanya darasa liwe bure.'],
+  ['Chapisha karatasi za darasani', '/resources/field-kit', 'Kadi za maneno ya siri na mwongozo wa maduka.']
 ];
 
 export default function Swahili() {

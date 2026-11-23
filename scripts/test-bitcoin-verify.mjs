@@ -35,29 +35,62 @@ const liveHash = createHash('sha256').update(Buffer.from(livePre, 'hex')).digest
 check(v.verifyLightningPreimage(livePre, liveHash) === true, 'live round-trip verifies');
 check(v.verifyLightningPreimage('zz', liveHash) === false, 'malformed preimage fails');
 
-// BOLT11 shape validation (prefix + bech32 charset + length; no signature check).
-check(v.isValidBolt11('lnbc10u1' + 'q'.repeat(60)) === true, 'lnbc shape valid');
-check(v.isValidBolt11('lntb500n1' + 'p'.repeat(60)) === true, 'lntb shape valid');
-check(v.isValidBolt11(('lnbc10u1' + 'q'.repeat(60)).toUpperCase()) === true, 'uppercase valid');
-check(v.isValidBolt11('lnbc10u1' + 'b'.repeat(60)) === false, 'b not in bech32 charset');
-check(v.isValidBolt11('lnxx10u1' + 'q'.repeat(60)) === false, 'bad prefix rejected');
+// BOLT11 vectors below were minted by Bitcoin Core's own segwit_addr
+// (test/functional/test_framework) — checksums and all.
+const f = await import(new URL('../app/lib/bitcoinFormat.js', import.meta.url).href);
+const INV_MAIN = 'lnbc10u1rpyp9fzx9r9gf8frzrgyxzxyrrgrz8f9qzggypf8pxfrffr89pq9gzqf8yfyy9fzrq8gpxyqxzgxzqgffgxzgqrygz9ryzpp8qx8fgzpygqgx9przgzrqxxy8qfrgyyxqf99q9gzzrp8z9r9yqxzg8f9yr9qzfxqyzf9rqfxff98zz9pq9gzqf8yfyy9fzpxd0jv';
+const INV_TEST = 'lntb20m1s8tydgzp5yf0xv7kt9rqgwn623zcdxapefuyvj840nv5mq';
+const INV_REG = 'lnbcrt2500n1qw508xwpw2r3uc9f2vmcr3na9azgy3tkayrsf5mc0lg5l9y';
+const INV_ANY = 'lnbc18ytydgzp5yf0xv7kt9rqgwn623zczenqy4';
+const INV_PICO = 'lnbc100p19wskfytdn6gz3hxva7pc2jrm084qszsfx8';
+check(v.isValidBolt11(INV_MAIN) === true, 'Core-minted mainnet invoice valid');
+check(v.isValidBolt11(INV_TEST) === true, 'Core-minted testnet invoice valid');
+check(v.isValidBolt11(INV_MAIN.toUpperCase()) === true, 'uppercase valid');
+const dMain = f.decodeBolt11Summary(INV_MAIN);
+check(dMain.valid && dMain.network === 'mainnet' && dMain.amountSats === 1000, `10u decodes to 1000 sats: ${JSON.stringify(dMain)}`);
+const dTest = f.decodeBolt11Summary(INV_TEST);
+check(dTest.valid && dTest.network === 'testnet' && dTest.amountSats === 2000000, '20m decodes to 2000000 sats');
+const dReg = f.decodeBolt11Summary(INV_REG);
+check(dReg.valid && dReg.network === 'regtest' && dReg.amountSats === 250, '2500n decodes to 250 sats');
+const dPico = f.decodeBolt11Summary(INV_PICO);
+check(dPico.valid && dPico.amountSats === 0.01, `100p decodes to 0.01 sats: ${dPico.amountSats}`);
+const dAny = f.decodeBolt11Summary(INV_ANY);
+check(dAny.valid && dAny.anyAmount === true && dAny.amountSats === null, 'no-amount invoice flagged any-amount');
+const corruptAt = INV_MAIN.indexOf('q', 10);
+const badBolt = INV_MAIN.slice(0, corruptAt) + 'p' + INV_MAIN.slice(corruptAt + 1);
+check(v.isValidBolt11(badBolt) === false, 'corrupted checksum rejected');
+check(f.decodeBolt11Summary(badBolt).valid === false, 'corrupted decode rejected');
 check(v.isValidBolt11('lnbc1') === false, 'too short rejected');
 check(v.isValidBolt11(null) === false, 'null rejected');
 
-// Watch-only descriptors: shape accepted, private keys rejected.
-const K1 = 'xpubSYNTHETICKEYONE0000000000000000000000000000000000000000000000000000000000000000000000';
-const K2 = 'xpubSYNTHETICKEYTWO0000000000000000000000000000000000000000000000000000000000000000000000';
-const GOOD = `wsh(sortedmulti(2,${K1},${K2}))`;
-check(v.isValidBip380MultisigDescriptor(GOOD) === true, 'wsh(sortedmulti) accepted');
-check(v.isValidBip380MultisigDescriptor(`sh(${GOOD})#abcd1234`) === true, 'nested + checksum accepted');
+// Descriptor vectors use real BIP32 xpubs from Core's descriptor_tests;
+// checksums were minted by Core's own descsum_create.
+const K1 = 'xpub661MyMwAqRbcF3yVrV2KyYetLMYA5mCbv4BhrKwUrFE9LZM6JRR1AEt8Jq4V4C8LwtTke6YEEdCZqgXp85YRk2j74EfJKhe3QybQ9kcUjs4';
+const K2 = 'xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8';
+const K3 = 'xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB';
+const D1 = `wsh(sortedmulti(2,${K1},${K2},${K3}))#842ccm2w`;
+const D2 = `sh(wsh(sortedmulti(2,${K1},${K2})))#nqv3udee`;
+const p1 = f.parseBip380MultisigDescriptor(D1);
+check(p1.valid && p1.threshold === 2 && p1.totalKeys === 3, 'Core 2-of-3 parses');
+check(p1.scriptType === 'P2WSH sortedmulti' && p1.checksumValid === true, 'script type + checksum valid');
+const p2 = f.parseBip380MultisigDescriptor(D2);
+check(p2.valid && p2.scriptType === 'P2SH-P2WSH sortedmulti', 'nested descriptor parses');
+check(v.isValidBip380MultisigDescriptor(D1) === true, 'boolean wrapper accepts');
+check(f.parseBip380MultisigDescriptor(D1.slice(0, -1) + 'x').valid === false, 'corrupted checksum rejected');
+check(f.parseBip380MultisigDescriptor(`wsh(sortedmulti(3,${K1},${K2}))`).valid === false, 'm > n rejected');
+check(f.parseBip380MultisigDescriptor(`wsh(sortedmulti(0,${K1},${K2}))`).valid === false, 'm = 0 rejected');
+check(
+  f.parseBip380MultisigDescriptor(`wsh(sortedmulti(2,${Array(21).fill(K1).join(',')}))`).valid === false,
+  'n > 20 rejected'
+);
 for (const bad of ['xprv', 'tprv', 'yprv', 'zprv']) {
-  check(
-    v.isValidBip380MultisigDescriptor(GOOD.replace(/xpub/g, bad)) === false,
-    `${bad} must be rejected`
-  );
+  const r = f.parseBip380MultisigDescriptor(D1.replace(/xpub/g, bad));
+  check(r.valid === false && /private/i.test(r.error || ''), `${bad} rejected as private`);
 }
 check(v.isValidBip380MultisigDescriptor(`wpkh(${K1})`) === false, 'non-multisig rejected');
 check(v.isValidBip380MultisigDescriptor('') === false, 'empty rejected');
+const noSum = f.parseBip380MultisigDescriptor(D1.slice(0, -9));
+check(noSum.valid && noSum.checksumPresent === false, 'missing checksum parses as present=false');
 
 // --- Postgres integration (real DB or skip) ---
 if (!process.env.DATABASE_URL) {
