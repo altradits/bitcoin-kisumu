@@ -91,6 +91,41 @@ export default function FieldKit() {
           </div>
         </div>
       </section>
+
+      <section className="section" style={{ pageBreakBefore: 'always' }}>
+        <div className="wrap">
+          <h2>3. Earner &amp; merchant onboarding consent sheet (EN/SW)</h2>
+          <p style={{ maxWidth: '44rem' }}>
+            One sheet per person or shop. Matches the earner &amp; merchant
+            register fields exactly — copy into /admin after the event.
+          </p>
+          <div className="card" style={{ marginTop: 18, breakInside: 'avoid' }}>
+            <p><strong>Name / Jina:</strong> ________________________________________</p>
+            <p><strong>Role / Category — Wadhifa / Aina ya biashara:</strong> ________________________________________</p>
+            <p><strong>Ward / Area — Kata / Eneo:</strong> ________________________________________</p>
+            <p><strong>Lightning Address:</strong> ________________________________________</p>
+            <p>
+              <strong>Payroll Tier — Daraja la malipo (default Tier 1: 85/15):</strong>{' '}
+              ☐ Tier 1 (85/15) &nbsp;&nbsp; ☐ Tier 2 (70/30) &nbsp;&nbsp; ☐ Tier 3 (B2B)
+            </p>
+            <p><strong>Phone (optional) / Simu (hiari):</strong> ________________________________________</p>
+            <p><strong>Consent date / Tarehe ya idhini:</strong> ____________</p>
+            <p><strong>Signature / Sahihi:</strong> ________________________________________</p>
+            <div style={{ marginTop: 16, borderLeft: '6px solid #b3261e', paddingLeft: 14 }}>
+              <p style={{ fontWeight: 800, margin: 0 }}>
+                Kenya Data Protection Act 2019: No national ID number is ever
+                collected or stored. Phone numbers only with your dated consent
+                above.
+              </p>
+              <p style={{ fontWeight: 800, margin: '8px 0 0' }}>
+                Sheria ya Kulinda Data Kenya 2019: Hatukusanyi wala kuhifadhi
+                namba ya kitambulisho — kamwe. Namba ya simu kwa idhini yako
+                yenye tarehe hapo juu pekee.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
