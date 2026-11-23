@@ -74,6 +74,14 @@ Rate limiting also uses Redis automatically when the Upstash vars exist (atomic 
 
 `/admin` and `/api/admin/*` require GitHub sign-in as a username listed in `ADMIN_GITHUB_LOGINS`. Sessions are signed, HTTP-only and expire after 12h. With auth env vars unset, every admin surface fails closed. Setup: `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `AUTH_SECRET`, `ADMIN_GITHUB_LOGINS` — see [.env.example](.env.example) and [developer notes](doc/developer-notes.md).
 
+## For Bitcoin circular economies & funders
+
+This repo is MIT-licensed FOSS public infrastructure — fork it, audit it, reuse it:
+
+- [Architecture](docs/ARCHITECTURE.md) — non-custodial design, DB-level segregation of duties, cryptographic verification, privacy boundaries.
+- [Forking guide](FORKING.md) — run your own instance in ~10 minutes with zero vendor lock-in.
+- [UX research protocol](docs/UX-RESEARCH-PROTOCOL.md) — our open East African self-custody study, published upstream.
+
 ## Contributing
 
 Everyone is welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow (Bitcoin Core-style), the [Code of Conduct](CODE_OF_CONDUCT.md), and the [Security Policy](SECURITY.md) before opening an issue or pull request.
