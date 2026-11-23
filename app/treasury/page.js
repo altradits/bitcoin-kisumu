@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { treasuryBuckets, multisigPolicy, kpis, reports, budgetTargets, forecastQuarters, actualsDayZero } from '../lib/transparency';
+import { treasuryBuckets, multisigPolicy, kpis, reports, budgetTargets, forecastQuarters, actualsDayZero, proofOfReserve } from '../lib/transparency';
 import { getPilotMetrics } from '../lib/pilotMetrics';
 
 export const metadata = {
@@ -44,6 +44,27 @@ export default async function Treasury() {
           <ul className="program-list" style={{ maxWidth: '48rem', marginTop: 18 }}>
             {multisigPolicy.map((p) => <li key={p}>{p}</li>)}
           </ul>
+        </div>
+      </section>
+
+      <section className="section section-wash">
+        <div className="wrap">
+          <h2>Cryptographic Proof-of-Reserve (BIP-380 Watch-Only Multi-Sig)</h2>
+          <p style={{ maxWidth: '48rem' }}>
+            Strict non-custodial rule: only a public watch-only descriptor
+            (<code>wsh(sortedmulti(2, …))</code> — never an <code>xprv</code>)
+            and public treasury addresses publish here at Day 0. Anyone can
+            then verify balances independently on{' '}
+            <a href="https://mempool.space" target="_blank" rel="noopener noreferrer">mempool.space</a>{' '}
+            or any Bitcoin Core node.
+          </p>
+          <div className="card" style={{ marginTop: 18, borderLeft: '6px solid var(--orange)' }}>
+            <h3 style={{ fontSize: '1.15rem' }}>Day-0 status</h3>
+            <p>{proofOfReserve.status}</p>
+            {proofOfReserve.descriptor && (
+              <p><code className="addr">{proofOfReserve.descriptor}</code></p>
+            )}
+          </div>
         </div>
       </section>
 
