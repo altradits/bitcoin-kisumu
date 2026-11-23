@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin, requireDb, logAudit } from '@/app/lib/adminApi';
-import { getPool } from '@/app/lib/db';
+import { getPool, fmtPgDate } from '@/app/lib/db';
+import { safeRevalidate } from '@/app/lib/revalidate';
 import { EARNER_ROLES } from '@/app/lib/pilot';
 
 const LN_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -111,6 +112,8 @@ export async function POST(req) {
     entity: 'earners',
     entityId: rows[0].id
   });
+  await safeRevalidate('/pilot');
+  await safeRevalidate('/treasury');
   return NextResponse.json({ earner: rows[0] }, { status: 201 });
 }
 
@@ -133,7 +136,7 @@ export async function PATCH(req) {
   // Merge with the stored row so cross-field rules (phone+consent) check out.
   const merged = { ...existing.rows[0], ...body };
   for (const k of ['start_date', 'consent_date']) {
-    if (merged[k] instanceof Date) merged[k] = merged[k].toISOString().slice(0, 10);
+    merged[k] = fmtPgDate(merged[k]);
   }
   const v = validateEarner(merged, { partial: true });
   if (!v.ok) return NextResponse.json({ error: v.errors[0], errors: v.errors }, { status: 400 });
@@ -151,5 +154,7 @@ export async function PATCH(req) {
     entity: 'earners',
     entityId: id
   });
+  await safeRevalidate('/pilot');
+  await safeRevalidate('/treasury');
   return NextResponse.json({ earner: rows[0] });
 }

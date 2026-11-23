@@ -16,3 +16,14 @@ export function getPool() {
   if (!pools.has(url)) pools.set(url, new Pool({ connectionString: url }));
   return pools.get(url);
 }
+
+// pg DATE arrives as local-midnight; format local calendar components.
+// NEVER .toISOString().slice(0, 10) on these: UTC conversion shifts the
+// calendar day on UTC+ servers (e.g. Africa/Nairobi).
+export function fmtPgDate(v) {
+  if (v === null || v === undefined) return v;
+  if (v instanceof Date) {
+    return `${v.getFullYear()}-${String(v.getMonth() + 1).padStart(2, '0')}-${String(v.getDate()).padStart(2, '0')}`;
+  }
+  return String(v).slice(0, 10);
+}

@@ -48,6 +48,16 @@ const nextConfig = {
         // NIP-05 verification must be fetchable cross-origin by any client.
         source: '/.well-known/nostr.json',
         headers: [{ key: 'Access-Control-Allow-Origin', value: '*' }]
+      },
+      {
+        // Admin surfaces carry KRA records and earner lists: never cached
+        // on shared browsers or proxies. Merges with the global rules above.
+        source: '/admin/:path*',
+        headers: [{ key: 'Cache-Control', value: 'private, no-store' }]
+      },
+      {
+        source: '/api/admin/:path*',
+        headers: [{ key: 'Cache-Control', value: 'private, no-store' }]
       }
     ];
   }

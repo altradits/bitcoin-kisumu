@@ -25,13 +25,13 @@ export default function RsvpForm({ eventId }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ eventId, name, contact, website })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed');
-      if (data.duplicate) {
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 409 && data.duplicate) {
         setStatus({ kind: 'ok', msg: 'You already reserved a seat with this contact.' });
         if (typeof data.count === 'number') setCount(data.count);
         return;
       }
+      if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
       setStatus({ kind: 'ok', msg: `Asante ${data.rsvp.name}! Seat reserved.` });
       setCount(data.count);
       setName('');
@@ -53,7 +53,7 @@ export default function RsvpForm({ eventId }) {
       </label>
       <label className="hp-field" aria-hidden="true">Website (leave blank)<input value={website} onChange={(e) => setWebsite(e.target.value)} autoComplete="off" tabIndex={-1} /></label>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-        <button className="btn btn-primary" type="submit">Reserve seat</button>
+        <button className="btn btn-primary" type="submit" disabled={status?.kind === 'sending'}>Reserve seat</button>
         {count !== null && <span className="form-note">{count} reserved so far</span>}
       </div>
       {status && (

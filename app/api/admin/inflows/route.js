@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin, requireDb, logAudit } from '@/app/lib/adminApi';
-import { getPool } from '@/app/lib/db';
+import { getPool, fmtPgDate } from '@/app/lib/db';
+import { safeRevalidate } from '@/app/lib/revalidate';
 
 const CATEGORIES = [
   'grant_donation',
@@ -70,7 +71,7 @@ export async function POST(req) {
   if (note.length > 500) return NextResponse.json({ error: 'Source note too long.' }, { status: 400 });
   if (reference.length > 500) return NextResponse.json({ error: 'Payment reference too long.' }, { status: 400 });
   const pool = getPool();
-  const day = inflowDate === '' ? new Date().toISOString().slice(0, 10) : inflowDate;
+  const day = inflowDate === '' ? fmtPgDate(new Date()) : inflowDate;
   const { rows } = await pool.query(
     `INSERT INTO inflows (inflow_date, category, origin, bucket, sats_amount,
       kes_equivalent, source_note, payment_reference, recorded_by)
@@ -83,5 +84,7 @@ export async function POST(req) {
     entity: 'inflows',
     entityId: rows[0].id
   });
+  await safeRevalidate('/pilot');
+  await safeRevalidate('/treasury');
   return NextResponse.json({ inflow: rows[0] }, { status: 201 });
 }
