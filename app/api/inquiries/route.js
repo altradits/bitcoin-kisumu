@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { store, StorageUnavailable } from '@/app/lib/store';
 import { checkRateLimit, tooManyRequests } from '@/app/lib/rateLimit';
 
-export const INTERESTS = ['tour', 'guild', 'workshop', 'merch'];
+export const INTERESTS = ['tour', 'guild', 'workshop', 'merch', 'ecosystem', 'art'];
 
 function bad(msg) {
   return NextResponse.json({ error: msg }, { status: 400 });

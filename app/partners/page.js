@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import InquiryForm from '../components/InquiryForm';
 
 export const metadata = {
@@ -42,6 +43,7 @@ export default function Partners() {
               </article>
             ))}
           </div>
+          <p style={{ marginTop: 20 }}><Link href="/merch">Browse The Catch collection →</Link></p>
         </div>
       </section>
 

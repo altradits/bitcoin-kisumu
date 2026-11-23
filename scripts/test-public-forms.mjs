@@ -72,6 +72,12 @@ const badInterest = await inquiries.POST(
   req('http://t/api/inquiries', { name: 'Partner X', email: 'x@example.com', interest: 'nope', message: 'Long enough message here.' }, '10.3.2.99')
 );
 check(badInterest.status === 400, 'bad interest must 400');
+for (const interest of ['ecosystem', 'art']) {
+  const r = await inquiries.POST(
+    req('http://t/api/inquiries', { name: 'Partner Y', email: `y-${interest}@example.com`, interest, message: 'Long enough message here.' }, `10.3.2.${100 + interest.length}`)
+  );
+  check(r.status === 200, `${interest} interest must 200, got ${r.status}`);
+}
 
 // Honeypot: success-shaped replies, zero rows stored.
 const hpContact = await contact.POST(
@@ -92,7 +98,7 @@ const hpInquiry = await inquiries.POST(
   req('http://t/api/inquiries', { name: 'Bot', email: 'bot@x.com', interest: 'tour', message: 'spam spam spam', website: 'x' }, '10.3.9.4')
 );
 check(hpInquiry.status === 200, 'honeypot inquiry must fake success');
-check((await store.readList('inquiries.json')).length === 20, 'honeypot must store no inquiry rows');
+check((await store.readList('inquiries.json')).length === 22, 'honeypot must store no inquiry rows');
 
 // Vercel without Redis: loud 503, never silent loss.
 process.env.VERCEL = '1';
@@ -117,4 +123,4 @@ if (failures.length) {
   for (const f of failures) console.error(' -', f);
   process.exit(1);
 }
-console.log('Public forms test passed: 60/60 rows kept, honeypots dropped, Vercel guard 503s.');
+console.log('Public forms test passed: 62/62 rows kept, honeypots dropped, Vercel guard 503s.');

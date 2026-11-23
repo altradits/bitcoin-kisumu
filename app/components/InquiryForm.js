@@ -6,7 +6,9 @@ const INTEREST_LABELS = {
   tour: 'Lake Victoria Immersion / Study Tour',
   guild: 'Hire the Digital Export Guild',
   workshop: 'Sponsor a Corporate / NGO Workshop',
-  merch: 'The Catch merch / Lake CapEx partnership'
+  merch: 'The Catch merch / Lake CapEx partnership',
+  ecosystem: 'Ecosystem Merch Partnership (Official Stock / Licensed Local Print)',
+  art: 'Commission / Submit Lake Victoria Bitcoin Art'
 };
 
 export default function InquiryForm() {
