@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAdmin, requireDb, logAudit } from '@/app/lib/adminApi';
 import { getPool } from '@/app/lib/db';
 import { verifyLightningPreimage, isHex64 } from '@/app/lib/bitcoinVerify';
+import { safeRevalidate } from '@/app/lib/revalidate';
 
 const MAX_SATS = 210_000_000_000_000; // 21M BTC in sats: fat-finger ceiling
 
@@ -108,6 +109,8 @@ export async function POST(req) {
       entity: 'payouts',
       entityId: rows[0].id
     });
+    await safeRevalidate('/pilot');
+    await safeRevalidate('/treasury');
     return NextResponse.json({ payout: rows[0] }, { status: 201 });
   } catch (err) {
     // Racer lost the UNIQUE race after passing the check above.

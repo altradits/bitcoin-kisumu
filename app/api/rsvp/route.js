@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { store, StorageUnavailable } from '@/app/lib/store';
+import { safeRevalidate } from '@/app/lib/revalidate';
 import { checkRateLimit, tooManyRequests } from '@/app/lib/rateLimit';
 import { events } from '@/app/lib/site';
 
@@ -56,5 +57,6 @@ export async function POST(req) {
       { status: 409 }
     );
   }
+  await safeRevalidate('/events');
   return NextResponse.json({ ok: true, rsvp: res.row, count: res.count }, { status: 201 });
 }
