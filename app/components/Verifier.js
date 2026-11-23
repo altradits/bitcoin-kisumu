@@ -1,10 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { isHex64, isValidBolt11, isValidBip380MultisigDescriptor } from '../lib/bitcoinFormat';
+import {
+  isHex64,
+  decodeBolt11Summary,
+  parseBip380MultisigDescriptor
+} from '../lib/bitcoinFormat';
 
 const EXAMPLE_PREIMAGE = '00'.repeat(32);
 const EXAMPLE_HASH = '66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925';
+
+const EXAMPLE_DESCRIPTOR =
+  'wsh(sortedmulti(2,xpub661MyMwAqRbcF3yVrV2KyYetLMYA5mCbv4BhrKwUrFE9LZM6JRR1AEt8Jq4V4C8LwtTke6YEEdCZqgXp85YRk2j74EfJKhe3QybQ9kcUjs4,xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8,xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB))#842ccm2w';
+
+const EXAMPLE_INVOICE =
+  'lnbc10u1rpyp9fzx9r9gf8frzrgyxzxyrrgrz8f9qzggypf8pxfrffr89pq9gzqf8yfyy9fzrq8gpxyqxzgxzqgffgxzgqrygz9ryzpp8qx8fgzpygqgx9przgzrqxxy8qfrgyyxqf99q9gzzrp8z9r9yqxzg8f9yr9qzfxqyzf9rqfxff98zz9pq9gzqf8yfyy9fzpxd0jv';
 
 async function sha256Hex(hex) {
   const bytes = new Uint8Array(hex.match(/../g).map((b) => parseInt(b, 16)));
@@ -62,24 +72,40 @@ export function DescriptorTool() {
   const [value, setValue] = useState('');
   const [verdict, setVerdict] = useState(null);
 
+  function loadExample() {
+    setValue(EXAMPLE_DESCRIPTOR);
+    setVerdict(null);
+  }
+
+  function loadXprv() {
+    setValue(EXAMPLE_DESCRIPTOR.replace(/xpub/g, 'xprv'));
+    setVerdict(null);
+  }
+
   function check(e) {
     e.preventDefault();
-    const s = value.trim();
-    if (/[xyzt]prv/i.test(s)) {
-      setVerdict({ kind: 'err', msg: 'STOP: this contains a PRIVATE extended key. Never paste private keys anywhere — this tool only accepts watch-only descriptors.' });
+    const r = parseBip380MultisigDescriptor(value);
+    if (!r.valid) {
+      const stop = /private/i.test(r.error || '') ? 'STOP: ' : '';
+      setVerdict({ kind: 'err', msg: `${stop}${r.error}` });
       return;
     }
-    if (isValidBip380MultisigDescriptor(s)) {
-      setVerdict({ kind: 'ok', msg: 'Valid watch-only descriptor: wsh(sortedmulti(…)) shape confirmed, no private keys present.' });
-    } else {
-      setVerdict({ kind: 'err', msg: 'Not a recognized wsh(sortedmulti(m, …)) or sh(wsh(…)) descriptor.' });
-    }
+    setVerdict({
+      kind: 'ok',
+      msg: `Valid: ${r.threshold}-of-${r.totalKeys} quorum • ${r.scriptType} • watch-only, no private keys • ${
+        r.checksumPresent ? (r.checksumValid ? 'valid BIP-380 checksum' : 'INVALID CHECKSUM') : 'no checksum supplied'
+      }.`
+    });
   }
 
   return (
     <form className="stack" onSubmit={check}>
       <label>Output descriptor<textarea rows={4} value={value} onChange={(e) => setValue(e.target.value)} placeholder="wsh(sortedmulti(2,…))" spellCheck={false} /></label>
-      <div><button className="btn btn-primary" type="submit">Check descriptor</button></div>
+      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <button className="btn btn-primary" type="submit">Check descriptor</button>
+        <button className="btn btn-dark" type="button" onClick={loadExample}>Load valid 2-of-3 example</button>
+        <button className="btn btn-dark" type="button" onClick={loadXprv}>Test xprv rejection</button>
+      </div>
       <Verdict state={verdict} />
     </form>
   );
@@ -89,21 +115,33 @@ export function Bolt11Tool() {
   const [value, setValue] = useState('');
   const [verdict, setVerdict] = useState(null);
 
+  function loadExample() {
+    setValue(EXAMPLE_INVOICE);
+    setVerdict(null);
+  }
+
   function check(e) {
     e.preventDefault();
-    const s = value.trim().toLowerCase();
-    if (!isValidBolt11(s)) {
-      setVerdict({ kind: 'err', msg: 'Not a valid BOLT11 shape: need an lnbc/lntb/lnbcrt prefix and bech32 payload.' });
+    const r = decodeBolt11Summary(value);
+    if (!r.valid) {
+      setVerdict({ kind: 'err', msg: r.error });
       return;
     }
-    const net = s.startsWith('lnbcrt') ? 'regtest' : s.startsWith('lnbc') ? 'Bitcoin mainnet' : 'testnet';
-    setVerdict({ kind: 'ok', msg: `Valid BOLT11 shape on ${net}. Note: shape only — this tool does not check the signature.` });
+    setVerdict({
+      kind: 'ok',
+      msg: `Valid invoice on ${r.network}. Amount: ${
+        r.anyAmount ? 'any amount (0-value invoice)' : `${r.amountSats.toLocaleString('en-US')} sats`
+      }. Bech32 checksum OK.`
+    });
   }
 
   return (
     <form className="stack" onSubmit={check}>
       <label>Lightning invoice<textarea rows={4} value={value} onChange={(e) => setValue(e.target.value)} placeholder="lnbc…" spellCheck={false} /></label>
-      <div><button className="btn btn-primary" type="submit">Inspect invoice</button></div>
+      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <button className="btn btn-primary" type="submit">Inspect invoice</button>
+        <button className="btn btn-dark" type="button" onClick={loadExample}>Load BOLT11 example</button>
+      </div>
       <Verdict state={verdict} />
     </form>
   );

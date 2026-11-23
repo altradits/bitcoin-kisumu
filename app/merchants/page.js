@@ -63,6 +63,7 @@ export default async function Merchants() {
             and every B2B match keeps sats circulating between lake businesses instead of
             exiting to fiat.
           </p>
+          <p><Link href="/resources/field-kit">Print the counter quick-card →</Link></p>
         </div>
       </section>
     </>
