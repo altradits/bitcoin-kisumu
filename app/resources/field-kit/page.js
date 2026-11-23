@@ -3,7 +3,7 @@ import PrintButton from '../../components/PrintButton';
 
 export const metadata = {
   title: 'Field Kit — Printable Classroom Sheets | Bitcoin Kisumu',
-  description: 'Print-ready bilingual seed-word backup card and Dunga Beach merchant counter card. Made for offline Kisumu classrooms.'
+  description: 'Print-ready bilingual seed-word backup card, Dunga Beach merchant counter card, and earner/merchant onboarding consent sheet. Made for offline Kisumu classrooms.'
 };
 
 const range = (from, to) => Array.from({ length: to - from + 1 }, (_, i) => from + i);
@@ -40,8 +40,9 @@ export default function FieldKit() {
         <div className="wrap">
           <h1>Kisumu classroom &amp; field kit</h1>
           <p style={{ maxWidth: '44rem' }}>
-            Two handouts for offline Kisumu: a seed-word backup card and a
-            merchant counter card. Print double-sided on A4 and cut.
+            Three handouts for offline Kisumu: a seed-word backup card, a
+            merchant counter card, and an earner/merchant onboarding consent
+            sheet. Print double-sided on A4 and cut.
           </p>
           <div className="hero-actions">
             <PrintButton />
