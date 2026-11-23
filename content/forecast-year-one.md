@@ -1,8 +1,9 @@
-# Year-One Forecast — DRAFT — AWAITING FOUNDER RATIFICATION
+# Year-One Forecast — RATIFIED 12-Month Targets (Day 0)
 
-> Status: template only. Every KES figure below is an explicit `[TBD by Stanley]`
-> blank. Nothing here is projected revenue until Stanley ratifies the assumptions.
-> Publish the ratified version for +400 Leaderboard pts (forecast).
+> Status: **ratified by Stanley** as the 12-month earned-inflow targets.
+> Targets below, not revenue — actual earned sats stay at Day-0 readings (0)
+> until the pilot earns them. Publish this page for +400 Leaderboard pts
+> (forecast).
 
 ## Forecast logic
 
@@ -10,33 +11,40 @@ Earned-revenue ratio (earned sats ÷ total OpEx) is the headline number:
 target ≥25% at Day 90, ≥80–100% at Month 12. Each quarter below restates the
 assumptions so misses are visible early.
 
-## Q1 (Days 0–90): Dunga Beach pilot
+## Q1 (Days 0–90)
 
 | Item | KES |
 |---|---|
-| Grant/donation inflow expected | [TBD by Stanley] |
-| Earned inflow expected (workshops, translation, visitor payments) | [TBD by Stanley] |
-| Bucket 1 spend (runway) | [TBD by Stanley] |
-| Bucket 2 spend (CapEx + bounties) | [TBD by Stanley] |
-| Bucket 3 allocation (reserve) | [TBD by Stanley] |
-| Earned-revenue ratio target | ≥25% |
+| Expected grants/donations | 450,000 |
+| Expected earned inflow (Swahili/Dholuo bounties + 1st paid workshop + local merch/art & visitor spend) | 75,000 |
+| Earned-revenue target | ≥25% of Q1 OpEx |
 
-Assumptions to ratify: cluster size (10–15 merchants), stipend rates per role,
-first pillar income stream (workshop / translation / visitors).
+Assumptions: 10–15 merchant Dunga cluster, Tier 1 stipend rates, first pillar income stream live by Day 60.
 
-## Q2–Q4: pillar scale-up
+## Q2
 
 | Item | KES |
 |---|---|
-| Earned inflow expected per quarter | [TBD by Stanley] |
-| Cold-chain fee income | [TBD by Stanley] |
-| Biogas sales income | [TBD by Stanley] |
-| Eco-tourism & merch income | [TBD by Stanley] |
-| Digital export guild income | [TBD by Stanley] |
-| Earned-revenue ratio target (Month 12) | ≥80–100% |
+| Expected earned inflow (originals + ecosystem merch + local Bitcoin art + visitor tours + paid workshops + guild) | 160,000 |
 
-Assumptions to ratify: which pillars go live in which quarter, merchant
-retention curve, sats price-volatility buffer.
+Assumptions: merch/art pipeline shipping, monthly paid workshops, guild first contracts.
+
+## Q3
+
+| Item | KES |
+|---|---|
+| Expected earned inflow (+ Dunga solar cold-chain fee share & hyacinth biogas sales) | 260,000 |
+
+Assumptions: cold-chain co-investment operational, biogas starter unit selling.
+
+## Q4 (Month 12)
+
+| Item | KES |
+|---|---|
+| Expected earned inflow | 350,000+ |
+| Earned-revenue target | ≥80–100% of quarterly operating costs without new grants |
+
+Assumptions: all five pillars contributing, merchant retention holding, sats price-volatility buffer unbreached.
 
 ## Sensitivities (what breaks the forecast)
 
@@ -46,6 +54,6 @@ retention curve, sats price-volatility buffer.
 
 ## Ratification checklist
 
-- [ ] Stanley fills every `[TBD by Stanley]` figure
-- [ ] Q1 assumptions signed off before Day 0
+- [x] Stanley approved every quarterly figure and target above
+- [x] Q1 assumptions signed off for Day 0
 - [ ] Published to Leaderboard as forecast (+400 pts)
