@@ -43,7 +43,7 @@ export default async function Payouts() {
        ORDER BY r.result_date ASC`
     ),
     pool.query(
-      `SELECT p.sats_amount, p.kes_equivalent, p.bucket, p.paid_by, p.paid_at,
+      `SELECT p.sats_amount, p.kes_equivalent, p.bucket, p.paid_by, p.paid_at, p.proof_verified,
               e.name AS earner_name, r.result_type
        FROM payouts p
        JOIN earners e ON e.id = p.earner_id
@@ -100,7 +100,7 @@ export default async function Payouts() {
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table className="points">
-              <thead><tr><th>Earner</th><th>Result</th><th>Sats</th><th>KES</th><th>Bucket</th><th>Paid by</th></tr></thead>
+              <thead><tr><th>Earner</th><th>Result</th><th>Sats</th><th>KES</th><th>Bucket</th><th>Paid by</th><th>Proof</th></tr></thead>
               <tbody>
                 {history.map((p, i) => (
                   <tr key={i}>
@@ -110,6 +110,7 @@ export default async function Payouts() {
                     <td>{p.kes_equivalent}</td>
                     <td>{p.bucket}</td>
                     <td>{p.paid_by}</td>
+                    <td>{p.proof_verified ? '✓ verified' : '—'}</td>
                   </tr>
                 ))}
               </tbody>

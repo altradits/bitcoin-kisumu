@@ -53,7 +53,7 @@ export function PayQR({ payload }) {
 
 export function PayoutForm({ resultId }) {
   const router = useRouter();
-  const [form, setForm] = useState({ sats_amount: '', kes_equivalent: '', payment_reference: '', bucket: 'runway' });
+  const [form, setForm] = useState({ sats_amount: '', kes_equivalent: '', payment_reference: '', bucket: 'runway', payment_hash: '', payment_preimage: '' });
   const [status, setStatus] = useState(null);
 
   function set(k, v) {
@@ -72,13 +72,15 @@ export function PayoutForm({ resultId }) {
           sats_amount: Number(form.sats_amount),
           kes_equivalent: form.kes_equivalent === '' ? null : Number(form.kes_equivalent),
           payment_reference: form.payment_reference,
-          bucket: form.bucket
+          bucket: form.bucket,
+          payment_hash: form.payment_hash,
+          payment_preimage: form.payment_preimage
         })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed');
       setStatus({ kind: 'ok', msg: 'Settlement recorded.' });
-      setForm({ sats_amount: '', kes_equivalent: '', payment_reference: '', bucket: 'runway' });
+      setForm({ sats_amount: '', kes_equivalent: '', payment_reference: '', bucket: 'runway', payment_hash: '', payment_preimage: '' });
       router.refresh();
     } catch (err) {
       setStatus({ kind: 'err', msg: err.message });
@@ -90,6 +92,8 @@ export function PayoutForm({ resultId }) {
       <label>Amount (sats)<input required inputMode="numeric" value={form.sats_amount} onChange={(e) => set('sats_amount', e.target.value)} placeholder="21000" /></label>
       <label>KES equivalent (KRA valuation)<input required inputMode="decimal" value={form.kes_equivalent} onChange={(e) => set('kes_equivalent', e.target.value)} placeholder="3500.00" /></label>
       <label>Payment reference (hash / preimage / receipt)<input required value={form.payment_reference} onChange={(e) => set('payment_reference', e.target.value)} /></label>
+      <label>Payment hash, optional (64 hex)<input value={form.payment_hash} onChange={(e) => set('payment_hash', e.target.value)} placeholder="Lightning payment hash" /></label>
+      <label>Preimage, optional (64 hex)<input value={form.payment_preimage} onChange={(e) => set('payment_preimage', e.target.value)} placeholder="Revealed preimage — verified on save" /></label>
       <label>Bucket
         <select value={form.bucket} onChange={(e) => set('bucket', e.target.value)}>
           <option value="runway">Bucket 1 — Operating Runway</option>

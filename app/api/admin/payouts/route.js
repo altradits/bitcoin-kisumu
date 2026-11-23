@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin, requireDb, logAudit } from '@/app/lib/adminApi';
 import { getPool } from '@/app/lib/db';
+import { verifyLightningPreimage, isHex64 } from '@/app/lib/bitcoinVerify';
 
 const MAX_SATS = 210_000_000_000_000; // 21M BTC in sats: fat-finger ceiling
 
@@ -12,7 +13,7 @@ export async function GET(req) {
   const { rows } = await getPool().query(
     `SELECT p.id, p.result_id, p.earner_id, p.sats_amount, p.kes_equivalent,
             p.payroll_tier_snapshot, p.lightning_address_snapshot, p.payment_reference,
-            p.paid_by, p.paid_at, p.bucket,
+            p.paid_by, p.paid_at, p.bucket, p.payment_hash, p.payment_preimage, p.proof_verified,
             e.name AS earner_name, e.role AS earner_role,
             r.result_type, r.result_date
      FROM payouts p
@@ -51,6 +52,21 @@ export async function POST(req) {
   if (bucket !== 'runway' && bucket !== 'pilot_capex') {
     return NextResponse.json({ error: "bucket must be 'runway' or 'pilot_capex'." }, { status: 400 });
   }
+  const paymentHash = String(body.payment_hash || '').trim() || null;
+  const paymentPreimage = String(body.payment_preimage || '').trim() || null;
+  let proofVerified = false;
+  if ((paymentHash && !paymentPreimage) || (!paymentHash && paymentPreimage)) {
+    return NextResponse.json({ error: 'Supply both payment_hash and payment_preimage, or neither.' }, { status: 400 });
+  }
+  if (paymentHash && paymentPreimage) {
+    if (!isHex64(paymentHash) || !isHex64(paymentPreimage)) {
+      return NextResponse.json({ error: 'payment_hash and payment_preimage must be 64-char hex.' }, { status: 400 });
+    }
+    if (!verifyLightningPreimage(paymentPreimage, paymentHash)) {
+      return NextResponse.json({ error: 'Preimage does not match payment hash.' }, { status: 400 });
+    }
+    proofVerified = true;
+  }
   const pool = getPool();
   const found = await pool.query(
     `SELECT r.id, r.status, r.earner_id, e.payroll_tier, e.lightning_address
@@ -68,8 +84,9 @@ export async function POST(req) {
   try {
     const { rows } = await pool.query(
       `INSERT INTO payouts (result_id, earner_id, sats_amount, kes_equivalent,
-        payroll_tier_snapshot, lightning_address_snapshot, payment_reference, paid_by, bucket)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
+        payroll_tier_snapshot, lightning_address_snapshot, payment_reference, paid_by, bucket,
+        payment_hash, payment_preimage, proof_verified)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
       [
         resultId,
         found.rows[0].earner_id,
@@ -79,7 +96,10 @@ export async function POST(req) {
         found.rows[0].lightning_address,
         reference,
         gate.session.login,
-        bucket
+        bucket,
+        paymentHash,
+        paymentPreimage,
+        proofVerified
       ]
     );
     await logAudit(pool, {

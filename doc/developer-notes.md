@@ -44,6 +44,13 @@ npm run test:rsvp     # must pass
 npm run test:ratelimit
 npm run test:db       # needs local Postgres or skips
 npm run test:admin
+npm run test:earners  # needs local Postgres or skips
+npm run test:results  # needs local Postgres or skips
+npm run test:export   # needs local Postgres or skips
+npm run test:pilot    # needs local Postgres or skips
+npm run test:merchants-payouts  # needs local Postgres or skips
+npm run test:inflows  # needs local Postgres or skips
+npm run test:verify   # unit always runs; DB phase needs Postgres or skips
 ```
 
 ## Code style
