@@ -77,6 +77,107 @@ async function payoutsCsv(pool, { from, to, role }) {
   });
 }
 
+async function inflowsCsv(pool, { from, to }) {
+  const conds = [];
+  const params = [];
+  if (from) {
+    params.push(from);
+    conds.push(`inflow_date >= $${params.length}`);
+  }
+  if (to) {
+    params.push(to);
+    conds.push(`inflow_date <= $${params.length}`);
+  }
+  const where = conds.length ? `WHERE ${conds.join(' AND ')}` : '';
+  const headers = [
+    'date', 'category', 'origin', 'bucket', 'sats_amount',
+    'kes_equivalent', 'source_note', 'payment_reference', 'recorded_by'
+  ];
+  const res = await pool.query(
+    `SELECT inflow_date, category, origin, bucket, sats_amount,
+            kes_equivalent, source_note, payment_reference, recorded_by
+     FROM inflows ${where} ORDER BY inflow_date ASC`,
+    params
+  );
+  const rows = res.rows.map((x) => [
+    fmtDate(x.inflow_date), x.category, x.origin, x.bucket, x.sats_amount,
+    x.kes_equivalent, x.source_note, x.payment_reference, x.recorded_by
+  ]);
+  return csvResponse(`bitcoin-kisumu-inflows-${todayStamp()}`, headers, rows);
+}
+
+async function quarterlyCsv(pool, { from, to }) {
+  const buildRange = (col) => {
+    const conds = [];
+    const params = [];
+    if (from) {
+      params.push(from);
+      conds.push(`${col} >= $${params.length}`);
+    }
+    if (to) {
+      params.push(to);
+      conds.push(`${col} <= $${params.length}`);
+    }
+    return { where: conds.length ? `WHERE ${conds.join(' AND ')}` : '', params };
+  };
+  const inf = buildRange('inflow_date');
+  const out = buildRange('paid_at::date');
+  const [i, o] = await Promise.all([
+    pool.query(
+      `SELECT COALESCE(SUM(sats_amount), 0)::bigint AS total,
+              COALESCE(SUM(sats_amount) FILTER (WHERE category = 'grant_donation'), 0)::bigint AS grants,
+              COALESCE(SUM(sats_amount) FILTER (WHERE category <> 'grant_donation'), 0)::bigint AS earned,
+              COALESCE(SUM(sats_amount) FILTER (WHERE origin = 'external'), 0)::bigint AS external,
+              COALESCE(SUM(sats_amount) FILTER (WHERE origin = 'local'), 0)::bigint AS local,
+              COALESCE(SUM(sats_amount) FILTER (WHERE bucket = 'runway'), 0)::bigint AS b_runway,
+              COALESCE(SUM(sats_amount) FILTER (WHERE bucket = 'pilot_capex'), 0)::bigint AS b_capex,
+              COALESCE(SUM(sats_amount) FILTER (WHERE bucket = 'reserve'), 0)::bigint AS b_reserve
+       FROM inflows ${inf.where}`,
+      inf.params
+    ),
+    pool.query(
+      `SELECT COALESCE(SUM(sats_amount), 0)::bigint AS total,
+              COALESCE(SUM(sats_amount) FILTER (WHERE bucket = 'runway'), 0)::bigint AS b_runway,
+              COALESCE(SUM(sats_amount) FILTER (WHERE bucket = 'pilot_capex'), 0)::bigint AS b_capex
+       FROM payouts ${out.where}`,
+      out.params
+    )
+  ]);
+  const a = i.rows[0];
+  const b = o.rows[0];
+  const outTotal = Number(b.total);
+  const ratio = (n) => (outTotal > 0 ? Math.round((Number(n) / outTotal) * 10000) / 10000 : '');
+  const rows = [
+    ['total_grants_sats', a.grants],
+    ['total_earned_sats', a.earned],
+    ['external_sats_in', a.external],
+    ['local_sats_in', a.local],
+    ['bucket_runway_in', a.b_runway],
+    ['bucket_pilot_capex_in', a.b_capex],
+    ['bucket_reserve_in', a.b_reserve],
+    ['total_sats_paid_out', b.total],
+    ['bucket_runway_out', b.b_runway],
+    ['bucket_pilot_capex_out', b.b_capex],
+    ['earned_revenue_ratio', ratio(a.earned)],
+    ['net_sats_inflow_ratio', ratio(a.external)]
+  ];
+  return csvResponse(`bitcoin-kisumu-quarterly-${todayStamp()}`, ['metric', 'value'], rows);
+}
+
+function todayStamp() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function csvResponse(filename, headers, rows) {
+  return new NextResponse(toCsv(headers, rows), {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': `attachment; filename="${filename}.csv"`
+    }
+  });
+}
+
 export async function GET(req) {
   const gate = requireAdmin(req);
   if (gate.error) return gate.error;
@@ -88,8 +189,8 @@ export async function GET(req) {
   const from = searchParams.get('from') || '';
   const to = searchParams.get('to') || '';
   const role = searchParams.get('role') || '';
-  if (type !== 'results' && type !== 'weekly' && type !== 'payouts') {
-    return NextResponse.json({ error: 'type must be results, weekly or payouts.' }, { status: 400 });
+  if (!['results', 'weekly', 'payouts', 'inflows', 'quarterly'].includes(type)) {
+    return NextResponse.json({ error: 'type must be results, weekly, payouts, inflows or quarterly.' }, { status: 400 });
   }
   if ((from && !isDate(from)) || (to && !isDate(to))) {
     return NextResponse.json({ error: 'from/to must be YYYY-MM-DD.' }, { status: 400 });
@@ -100,6 +201,8 @@ export async function GET(req) {
 
   const pool = getPool();
   if (type === 'payouts') return payoutsCsv(pool, { from, to, role });
+  if (type === 'inflows') return inflowsCsv(pool, { from, to });
+  if (type === 'quarterly') return quarterlyCsv(pool, { from, to });
   const conds = ["r.status = 'verified'"];
   const params = [];
   if (from) {

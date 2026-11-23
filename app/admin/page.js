@@ -15,7 +15,8 @@ const MODULES = [
   ['Earners', 'Pilot earner register', '/admin/earners'],
   ['Results', 'Results log and verification', '/admin/results'],
   ['Merchants', 'Cluster shop registry', '/admin/merchants'],
-  ['Payouts', 'Friday non-custodial settlement', '/admin/payouts']
+  ['Payouts', 'Friday non-custodial settlement', '/admin/payouts'],
+  ['Inflows', 'Grants + earned revenue ledger', '/admin/inflows']
 ];
 
 export default function Admin() {

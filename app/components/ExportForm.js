@@ -34,6 +34,8 @@ export default function ExportForm() {
         <button className="btn btn-dark" type="button" onClick={() => download('results')}>Verified results CSV</button>
         <button className="btn btn-dark" type="button" onClick={() => download('weekly')}>Weekly summary CSV</button>
         <button className="btn btn-dark" type="button" onClick={() => download('payouts')}>Payouts CSV (KRA)</button>
+        <button className="btn btn-dark" type="button" onClick={() => download('inflows')}>Inflows CSV</button>
+        <button className="btn btn-dark" type="button" onClick={() => download('quarterly')}>Quarterly audit CSV</button>
       </div>
     </div>
   );
