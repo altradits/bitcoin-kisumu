@@ -1,5 +1,10 @@
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Programs | Bitcoin Kisumu',
+  description: 'Five tracks from free classes to livelihoods: cohorts, meetups, workshops, merchant track and educator training.'
+};
+
 const PROGRAMS = [
   {
     title: 'Bitcoin Diploma Cohorts',

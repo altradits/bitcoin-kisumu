@@ -1,5 +1,11 @@
 import { site } from '../lib/site';
 import BlinkDonate from '../components/BlinkDonate';
+import CopyButton from '../components/CopyButton';
+
+export const metadata = {
+  title: 'Donate | Bitcoin Kisumu',
+  description: 'Keep every Bitcoin Kisumu class free: donate over Lightning. Small, steady sats beat one big gift.'
+};
 
 export default function Donate() {
   const ln = site.lightningAddress;
@@ -17,7 +23,7 @@ export default function Donate() {
             {ln ? (
               <>
                 <p>Send to our Lightning address:</p>
-                <p><code className="addr">{ln}</code></p>
+                <p><code className="addr">{ln}</code> <CopyButton text={ln} label="Copy" /></p>
                 <p><a className="btn btn-primary" href={`lightning:${ln}`}>Open in my wallet</a></p>
                 <p style={{ marginTop: 12 }}>
                   <a href={`lightning:${ln}`} aria-label={`Pay ${ln} with my wallet`}>

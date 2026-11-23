@@ -1,5 +1,10 @@
 import { team } from '../lib/site';
 
+export const metadata = {
+  title: 'Team | Bitcoin Kisumu',
+  description: 'The volunteer team behind Bitcoin Kisumu — and how to join it.'
+};
+
 export default function Team() {
   return (
     <section className="section">
