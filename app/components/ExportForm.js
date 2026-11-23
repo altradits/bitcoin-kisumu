@@ -33,6 +33,7 @@ export default function ExportForm() {
       <div className="hero-actions">
         <button className="btn btn-dark" type="button" onClick={() => download('results')}>Verified results CSV</button>
         <button className="btn btn-dark" type="button" onClick={() => download('weekly')}>Weekly summary CSV</button>
+        <button className="btn btn-dark" type="button" onClick={() => download('payouts')}>Payouts CSV (KRA)</button>
       </div>
     </div>
   );

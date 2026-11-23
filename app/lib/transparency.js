@@ -9,21 +9,21 @@ export const treasuryBuckets = [
     name: 'Bucket 1 — Operating Runway & Free Education',
     purpose:
       'Held in KES / USD-pegged Stablesats to guarantee 90 days of classes, venues, educator transport, and predictable starter stipends.',
-    allocation: 'Proposed target 35% (to be ratified at Day 0)',
+    allocation: 'Ratified: 35% — KES 525,000 target',
     custody: 'Mobile-money + Stablesats rails under published controls (ratified Day 0)'
   },
   {
     name: 'Bucket 2 — Productive Lake CapEx & Circular Pilot',
     purpose:
       'Earmarked for revenue-generating Lake Victoria assets (solar cold-chain partnership, hyacinth-to-biogas hardware, merch inventory, merchant POS kits) plus verified results-based pilot bounties — so grant capital builds assets that earn after grants end.',
-    allocation: 'Proposed target 45% (to be ratified at Day 0)',
+    allocation: 'Ratified: 45% — KES 675,000 target',
     custody: 'Community multi-sig (see policy below)'
   },
   {
     name: 'Bucket 3 — Sovereign BTC Reserve & Compliance',
     purpose:
       'Cold-storage 2-of-3 multi-sig BTC endowment + audit/legal compliance reserve; never spent on routine OpEx without a published note.',
-    allocation: 'Proposed target 20% (to be ratified at Day 0)',
+    allocation: 'Ratified: 20% — KES 300,000 target',
     custody: 'Cold-storage 2-of-3 multi-sig (see policy below)'
   }
 ];
@@ -86,3 +86,78 @@ export const reports = [
     ]
   }
 ];
+
+// Ratified Year-One Target Budget: KES 1,500,000 total. Targets, not
+// spending — actual received/spent balances stay at Day-0 readings (0).
+export const budgetTargets = {
+  totalKes: 1500000,
+  buckets: [
+    {
+      name: 'Bucket 1 — Operating Runway & Free Education',
+      share: 35,
+      totalKes: 525000,
+      items: [
+        ['Venue hire (12 meetups, 6 workshops, 3 cohorts)', 150000],
+        ['Printouts (workbooks, safety sheets, certificates)', 75000],
+        ['Educator transport & facilitation (4 educators)', 120000],
+        ['Student phones / data subsidies', 80000],
+        ['Starter stipends (Tier 1, 85/15)', 100000]
+      ]
+    },
+    {
+      name: 'Bucket 2 — Productive Lake CapEx & Circular Pilot',
+      share: 45,
+      totalKes: 675000,
+      items: [
+        ['Solar cold-chain / ice partnership (Dunga BMU)', 220000],
+        ['Hyacinth-to-biogas starter unit', 150000],
+        ['Merch & local art starter inventory', 90000],
+        ['Dunga cluster POS kits (10–15 shops)', 65000],
+        ['Results-based pilot bounties', 150000]
+      ]
+    },
+    {
+      name: 'Bucket 3 — Sovereign BTC Reserve & Compliance',
+      share: 20,
+      totalKes: 300000,
+      items: [
+        ['Cold-storage 2-of-3 multi-sig BTC endowment', 180000],
+        ['Quarterly public audit & bookkeeping', 50000],
+        ['Legal / VASP 2026 review, registration & KRA', 70000]
+      ]
+    }
+  ]
+};
+
+export const forecastQuarters = [
+  {
+    quarter: 'Q1 (Days 0–90)',
+    grantsKes: 450000,
+    earnedKes: 75000,
+    note: 'Swahili/Dholuo bounties + 1st paid workshop + merch/art & visitor spend. Target: ≥25% of OpEx earned.'
+  },
+  {
+    quarter: 'Q2',
+    grantsKes: null,
+    earnedKes: 160000,
+    note: 'Originals + ecosystem merch + local art + tours + workshops + guild.'
+  },
+  {
+    quarter: 'Q3',
+    grantsKes: null,
+    earnedKes: 260000,
+    note: 'Plus cold-chain fee share and biogas sales.'
+  },
+  {
+    quarter: 'Q4 (Month 12)',
+    grantsKes: null,
+    earnedKes: 350000,
+    note: '350,000+. Target: ≥80–100% of quarterly costs without new grants.'
+  }
+];
+
+export const actualsDayZero = {
+  satsReceived: 0,
+  satsSpent: 0,
+  note: 'Day-0 real readings. Updates here only when money actually moves.'
+};

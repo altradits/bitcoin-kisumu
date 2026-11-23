@@ -1,42 +1,45 @@
-# Year-One Budget — DRAFT — AWAITING FOUNDER RATIFICATION
+# Year-One Budget — RATIFIED Year-One Target Budget (Day 0)
 
-> Status: template only. Every KES figure below is an explicit `[TBD by Stanley]`
-> blank. Nothing here is approved, spent, or promised until Stanley ratifies it.
-> Publish the ratified version for +400 Leaderboard pts (budget).
+> Status: **ratified by Stanley** as the Year-One target budget. Figures below
+> are approved targets, not spent amounts — actual received/spent balances
+> stay at honest Day-0 readings (KES 0) until money moves. Publish this page
+> for +400 Leaderboard pts (budget).
 
-## Buckets (3-bucket treasury model, proposed 35 / 45 / 20)
+**Total: KES 1,500,000 (~$11,600 USD)** across the 3-bucket model (35 / 45 / 20).
 
-### Bucket 1 — Operating Runway & Free Education (35%)
+## Buckets
+
+### Bucket 1 — Operating Runway & Free Education (35% = KES 525,000)
 
 | Line item | KES / year |
 |---|---|
-| Venue hire (meetups, workshops, cohorts) | [TBD by Stanley] |
-| Printouts (handouts, certificates) | [TBD by Stanley] |
-| Educator transport | [TBD by Stanley] |
-| Student phones / data subsidies | [TBD by Stanley] |
-| Starter stipends (Tier 1, 85/15) | [TBD by Stanley] |
+| Venue hire (12 meetups, 6 workshops, 3 cohorts) | 150,000 |
+| Printouts (Bitcoin Diploma workbooks, safety sheets, certificates) | 75,000 |
+| Educator transport & facilitation (4 local educators) | 120,000 |
+| Student used phones / data subsidies | 80,000 |
+| Starter stipends (Tier 1, 85/15 split) | 100,000 |
 
 Held in KES / USD-pegged Stablesats to guarantee 90 days of runway.
 
-### Bucket 2 — Productive Lake CapEx & Circular Pilot (45%)
+### Bucket 2 — Productive Lake CapEx & Circular Pilot (45% = KES 675,000)
 
 | Line item | KES / year |
 |---|---|
-| Solar cold-chain partnership (fisheries) | [TBD by Stanley] |
-| Hyacinth-to-biogas hardware | [TBD by Stanley] |
-| Merch inventory (eco-tourism & merch) | [TBD by Stanley] |
-| Merchant POS kits (Dunga Beach cluster) | [TBD by Stanley] |
-| Results-based pilot bounties (verified delivery only) | [TBD by Stanley] |
+| Solar cold-chain / ice partnership co-investment (Dunga BMU) | 220,000 |
+| Water hyacinth-to-biogas starter unit co-investment | 150,000 |
+| Merch & local art starter inventory (*The Catch* originals, official/licensed ecosystem merch, local Kisumu artist editions) | 90,000 |
+| Dunga Beach cluster POS kits (10–15 shops: QR stands, signage, NFC cards) | 65,000 |
+| Results-based pilot bounties (verified delivery only) | 150,000 |
 
 Grant capital here must build assets that earn after grants end.
 
-### Bucket 3 — Sovereign BTC Reserve & Compliance (20%)
+### Bucket 3 — Sovereign BTC Reserve & Compliance (20% = KES 300,000)
 
 | Line item | KES / year |
 |---|---|
-| Cold-storage BTC endowment (2-of-3 multi-sig) | [TBD by Stanley] |
-| Audit costs (quarterly public audits) | [TBD by Stanley] |
-| Legal / KRA compliance | [TBD by Stanley] |
+| Cold-storage 2-of-3 multi-sig BTC endowment | 180,000 |
+| Quarterly public audit & bookkeeping | 50,000 |
+| Legal / Kenya VASP 2026 review, CBO/Co-op registration & KRA compliance | 70,000 |
 
 Never spent on routine OpEx without a published note.
 
@@ -48,7 +51,7 @@ Never spent on routine OpEx without a published note.
 
 ## Ratification checklist
 
-- [ ] Stanley fills every `[TBD by Stanley]` figure
-- [ ] Bucket percentages ratified at Day 0
-- [ ] Signers acknowledge the multi-sig policy
+- [x] Stanley approved every line-item figure (Day-0 targets above)
+- [x] Bucket percentages ratified at 35 / 45 / 20
+- [ ] Signer identities + quorum verification published (pending)
 - [ ] Published to Leaderboard as budget (+400 pts)

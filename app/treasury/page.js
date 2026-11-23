@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { treasuryBuckets, multisigPolicy, kpis, reports } from '../lib/transparency';
+import { treasuryBuckets, multisigPolicy, kpis, reports, budgetTargets, forecastQuarters, actualsDayZero } from '../lib/transparency';
 import { getPilotMetrics } from '../lib/pilotMetrics';
 
 export const metadata = {
@@ -78,6 +78,48 @@ export default async function Treasury() {
             ) : (
               <p>Day-0 baseline: counting starts when the pilot opens. <Link href="/pilot">Pilot tracker →</Link></p>
             )}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-wash">
+        <div className="wrap">
+          <h2>Year-one target budget &amp; 12-month forecast</h2>
+          <p style={{ maxWidth: '48rem' }}>
+            <strong>Ratified target: KES {budgetTargets.totalKes.toLocaleString('en-US')}</strong> across
+            the 3 buckets. Targets — not spending. Actual sats received and spent sit at Day-0
+            readings ({actualsDayZero.satsReceived} / {actualsDayZero.satsSpent}) until money moves.
+          </p>
+          <div style={{ display: 'grid', gap: 16, marginTop: 18 }}>
+            {budgetTargets.buckets.map((b) => (
+              <article key={b.name} className="card">
+                <h3 style={{ fontSize: '1.15rem' }}>{b.name}</h3>
+                <p style={{ color: 'var(--teal-ink)', fontWeight: 700, fontSize: '0.92rem' }}>
+                  {b.share}% • KES {b.totalKes.toLocaleString('en-US')}
+                </p>
+                <ul>
+                  {b.items.map(([label, kes]) => (
+                    <li key={label}>{label} — <strong>KES {kes.toLocaleString('en-US')}</strong></li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <h3 style={{ marginTop: 28 }}>12-month earned-inflow forecast</h3>
+          <div style={{ overflowX: 'auto', marginTop: 12 }}>
+            <table className="points">
+              <thead><tr><th>Quarter</th><th>Grants (KES)</th><th>Earned (KES)</th><th>What drives it</th></tr></thead>
+              <tbody>
+                {forecastQuarters.map((q) => (
+                  <tr key={q.quarter}>
+                    <td><strong>{q.quarter}</strong></td>
+                    <td>{q.grantsKes === null ? '—' : q.grantsKes.toLocaleString('en-US')}</td>
+                    <td>{q.earnedKes.toLocaleString('en-US')}{q.quarter.startsWith('Q4') ? '+' : ''}</td>
+                    <td>{q.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>

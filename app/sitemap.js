@@ -12,6 +12,7 @@ const ROUTES = [
   '/treasury',
   '/pilot',
   '/partners',
+  '/merch',
   '/resources',
   '/executive-summary',
   '/stories',
