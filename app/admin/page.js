@@ -19,9 +19,9 @@ const MODULES = [
   ['Inflows', 'Grants + earned revenue ledger', '/admin/inflows']
 ];
 
-export default function Admin() {
+export default async function Admin() {
   // Server-side gate: the shell HTML never renders without a valid session.
-  const session = getAdminSession(headers().get('cookie'));
+  const session = getAdminSession((await headers()).get('cookie'));
   if (session.status !== 'ok') return <AdminGate session={session} configured={authConfigured()} />;
   return (
     <section className="section">
