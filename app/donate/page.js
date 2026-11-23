@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { site } from '../lib/site';
 import BlinkDonate from '../components/BlinkDonate';
 import CopyButton from '../components/CopyButton';
@@ -46,7 +47,7 @@ export default function Donate() {
               <li>Printed handouts &amp; certificates</li>
               <li>Educator transport</li>
               <li>Phones / data subsidies for students</li>
-              <li>Pilot payments in sats to local earners (see the <a href="/guide">Guide</a>)</li>
+              <li>Pilot payments in sats to local earners (see the <Link href="/guide">Guide</Link>)</li>
             </ul>
           </div>
           <div className="card light-card">
@@ -73,11 +74,11 @@ export default function Donate() {
               <li>Venue partner in Kisumu CBD</li>
               <li>Printing sponsor</li>
               <li>Used smartphones for students</li>
-              <li>Volunteer time — see <a href="/team">team</a></li>
+              <li>Volunteer time — see <Link href="/team">team</Link></li>
             </ul>
           </div>
         </div>
-        <p style={{ marginTop: 20 }}>Visiting Kisumu or hiring remotely? <a href="/partners">Partner with us →</a> · <a href="/merch">Shop the collection →</a></p>
+        <p style={{ marginTop: 20 }}>Visiting Kisumu or hiring remotely? <Link href="/partners">Partner with us →</Link> · <Link href="/merch">Shop the collection →</Link></p>
         <div className="card" style={{ marginTop: 20 }}>
           <h3>Transparency</h3>
           <p>Every sat sits in our public 3-bucket treasury (35/45/20), tracked on a 6-KPI scorecard with quarterly audit reports. Proof of work unlocks everything.</p>

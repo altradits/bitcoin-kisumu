@@ -19,8 +19,8 @@ export default function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
       setStatus({ kind: 'ok', msg: 'Received! We reply within a few days.' });
       setForm({ name: '', email: '', topic: 'Cohort application', message: '', website: '' });
     } catch (err) {
@@ -44,7 +44,7 @@ export default function ContactForm() {
       </label>
       <label>Message<textarea required rows={6} value={form.message} onChange={(e) => set('message', e.target.value)} /></label>
       <label className="hp-field" aria-hidden="true">Website (leave blank)<input value={form.website} onChange={(e) => set('website', e.target.value)} autoComplete="off" tabIndex={-1} /></label>
-      <div><button className="btn btn-primary" type="submit">Send</button></div>
+      <div><button className="btn btn-primary" type="submit" disabled={status?.kind === 'sending'}>Send</button></div>
       {status && (
         <div role="status" className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>
       )}

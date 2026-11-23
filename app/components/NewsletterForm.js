@@ -16,8 +16,8 @@ export default function NewsletterForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, website })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
       setStatus({ kind: 'ok', msg: 'Karibu! You are on the list.' });
       setEmail('');
     } catch (err) {
@@ -32,7 +32,7 @@ export default function NewsletterForm() {
         <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
       </label>
       <label className="hp-field" aria-hidden="true">Website (leave blank)<input value={website} onChange={(e) => setWebsite(e.target.value)} autoComplete="off" tabIndex={-1} /></label>
-      <div><button className="btn btn-primary" type="submit">Subscribe</button></div>
+      <div><button className="btn btn-primary" type="submit" disabled={status?.kind === 'sending'}>Subscribe</button></div>
       {status && (
         <div role="status" className={status.kind === 'ok' ? 'form-ok' : status.kind === 'err' ? 'form-err' : 'form-note'}>{status.msg}</div>
       )}
