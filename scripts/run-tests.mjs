@@ -20,7 +20,8 @@ const SUITES = [
   'test:inflows',
   'test:metrics',
   'test:smoke',
-  'test:regressions'
+  'test:regressions',
+  'test:math'
 ];
 
 if (!process.env.DATABASE_URL) {

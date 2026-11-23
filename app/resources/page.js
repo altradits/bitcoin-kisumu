@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import SplitCalculator from '../components/SplitCalculator';
 
 export const metadata = {
   title: 'Resources — First Wallet & Lightning Guide | Bitcoin Kisumu',
@@ -173,6 +174,16 @@ export default function Resources() {
                 </p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="calculator">
+        <div className="wrap">
+          <h2>Try the numbers (works offline)</h2>
+          <p style={{ maxWidth: '44rem' }}>Payroll splits and the merchant discount, computed on your phone with no price feeds.</p>
+          <div style={{ marginTop: 18, maxWidth: '36rem' }}>
+            <SplitCalculator />
           </div>
         </div>
       </section>

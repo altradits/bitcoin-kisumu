@@ -50,7 +50,7 @@ check(typeof rob.sitemap === 'string' && rob.sitemap.endsWith('/sitemap.xml'), '
 const sitemap = await import(new URL('../app/sitemap.js', import.meta.url).href);
 const urls = sitemap.default();
 check(Array.isArray(urls) && urls.length >= 15, `sitemap must list 15+ routes, got ${urls.length}`);
-for (const want of ['/', '/donate', '/sw', '/verify', '/merchants', '/resources/field-kit']) {
+for (const want of ['/', '/donate', '/sw', '/sw/guide', '/verify', '/merchants', '/resources/field-kit']) {
   check(urls.some((u) => u.url === `https://bitcoin-kisumu.vercel.app${want === '/' ? '' : want}`), `sitemap missing ${want}`);
 }
 

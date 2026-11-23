@@ -31,6 +31,7 @@ export default function Merch() {
         <div className="wrap">
           <h2>Bitcoin Kisumu Originals — “The Catch” Lake Victoria Collection</h2>
           <p style={{ maxWidth: '48rem' }}>{MADE_TO_ORDER}. Designed with the lake, produced by local Kisumu artisans.</p>
+          <p><Link href="/resources#calculator">Work out the 10% sats discount →</Link></p>
           <div className="split" style={{ marginTop: 18 }}>
             {originals.map((item) => (
               <article key={item.name} className="card">
