@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint",
+    "lint": "eslint .",
     "test:rsvp": "node scripts/test-rsvp-concurrency.mjs",
     "test:ratelimit": "node scripts/test-rate-limit.mjs",
     "test:db": "node scripts/test-db-migrate.mjs",
@@ -20,17 +20,19 @@
     "test:pilot": "node scripts/test-pilot-metrics.mjs",
     "test:merchants-payouts": "node scripts/test-admin-merchants-payouts.mjs",
     "test:inflows": "node scripts/test-admin-inflows.mjs",
-    "test:verify": "node scripts/test-bitcoin-verify.mjs"
+    "test:verify": "node scripts/test-bitcoin-verify.mjs",
+    "test:metrics": "node scripts/test-public-metrics-api.mjs",
+    "test": "node scripts/run-tests.mjs"
   },
   "dependencies": {
     "@upstash/redis": "^1.41.0",
-    "next": "^14.2.35",
+    "next": "^16.4.6",
     "pg": "^8.23.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.35"
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.6"
   }
 }

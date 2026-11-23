@@ -14,6 +14,7 @@ const ROUTES = [
   '/partners',
   '/merch',
   '/sw',
+  '/verify',
   '/resources',
   '/executive-summary',
   '/stories',

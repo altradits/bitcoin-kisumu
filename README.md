@@ -24,7 +24,7 @@ npm start
 
 ## Repository structure
 
-- `app/` — Next.js 14 site (App Router, no external CSS framework). Pages, `app/api/` endpoints and `app/lib/` helpers.
+- `app/` — Next.js 16 site (App Router, no external CSS framework). Pages, `app/api/` endpoints and `app/lib/` helpers.
 - `app/api/` — contact, newsletter, events + RSVP endpoints backed by Upstash Redis on Vercel, `data/*.json` locally.
 - `content/` — Leaderboard drafts: bio, 250-word intro, executive summary, team, socials, donate, checklist.
 - `data/` — local dev storage for form submissions (git-ignored; Redis is used on Vercel).
@@ -36,7 +36,7 @@ npm start
 
 ## Pages
 
-Home (`/`), About (`/about`), Programs (`/programs`), Guide (`/guide`), Merchants (`/merchants`), Events + RSVP (`/events`), Team (`/team`), Donate (`/donate`, Lightning + Geyser), Treasury (`/treasury`), Pilot (`/pilot`), Partners (`/partners`), Merch (`/merch`), Resources (`/resources`), Executive Summary (`/executive-summary`), Contact (`/contact`).
+Home (`/`), About (`/about`), Programs (`/programs`), Guide (`/guide`), Merchants (`/merchants`), Events + RSVP (`/events`), Team (`/team`), Donate (`/donate`, Lightning + Geyser), Treasury (`/treasury`), Pilot (`/pilot`), Partners (`/partners`), Merch (`/merch`), Stories (`/stories`), Verify (`/verify`), Kiswahili (`/sw`), Resources (`/resources`), Executive Summary (`/executive-summary`), Contact (`/contact`). Machine-readable audit data at `/api/metrics`.
 
 ## Configure before launch
 

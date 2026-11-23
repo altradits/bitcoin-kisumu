@@ -44,10 +44,7 @@ npm run dev        # http://localhost:3000, works with zero credentials
 
 ```sh
 npm run lint && npm run build
-npm run test:rsvp && npm run test:ratelimit && npm run test:admin && npm run test:forms
-# With DATABASE_URL set, the DB suites also run:
-npm run test:db && npm run test:earners && npm run test:results && npm run test:export
-npm run test:pilot && npm run test:merchants-payouts && npm run test:inflows && npm run test:verify
+npm test   # all 13 suites; DB suites run when DATABASE_URL is set, else self-skip
 ```
 
 Deploy anywhere Node runs: `npm run build && npm start`. The same

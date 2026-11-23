@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 export default async function Merchants() {
-  const session = getAdminSession(headers().get('cookie'));
+  const session = getAdminSession((await headers()).get('cookie'));
   if (session.status !== 'ok') return <AdminGate session={session} configured={authConfigured()} />;
 
   if (!isDbConfigured()) {

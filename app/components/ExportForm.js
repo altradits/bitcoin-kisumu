@@ -13,6 +13,7 @@ export default function ExportForm() {
     if (from) params.set('from', from);
     if (to) params.set('to', to);
     if (role) params.set('role', role);
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- file download, not a page navigation
     window.location.assign(`/api/admin/export?${params.toString()}`);
   }
 

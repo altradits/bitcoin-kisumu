@@ -61,6 +61,7 @@ export default async function Treasury() {
           <div className="card" style={{ marginTop: 18, borderLeft: '6px solid var(--orange)' }}>
             <h3 style={{ fontSize: '1.15rem' }}>Day-0 status</h3>
             <p>{proofOfReserve.status}</p>
+            <p><Link href="/verify">Verify a settlement yourself →</Link></p>
             {proofOfReserve.descriptor && (
               <p><code className="addr">{proofOfReserve.descriptor}</code></p>
             )}

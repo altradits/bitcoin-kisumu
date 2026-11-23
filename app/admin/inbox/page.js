@@ -20,7 +20,7 @@ function Empty({ what }) {
 }
 
 export default async function Inbox() {
-  const session = getAdminSession(headers().get('cookie'));
+  const session = getAdminSession((await headers()).get('cookie'));
   if (session.status !== 'ok') return <AdminGate session={session} configured={authConfigured()} />;
 
   const [contact, newsletter, rsvps, inquiries] = await Promise.all([
