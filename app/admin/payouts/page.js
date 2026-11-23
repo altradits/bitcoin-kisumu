@@ -4,6 +4,7 @@ import { getAdminSession, authConfigured } from '../../lib/adminAuth';
 import { isDbConfigured, getPool } from '../../lib/db';
 import { ROLE_LABELS, PAYROLL_TIERS } from '../../lib/pilot';
 import AdminGate from '../../components/AdminGate';
+import CopyButton from '../../components/CopyButton';
 import { PayQR, PayoutForm } from '../../components/PayoutForm';
 
 export const metadata = {
@@ -76,7 +77,7 @@ export default async function Payouts() {
                 {r.lightning_address ? (
                   <div className="split" style={{ alignItems: 'center' }}>
                     <div>
-                      <p><code className="addr">{r.lightning_address}</code></p>
+                      <p><code className="addr">{r.lightning_address}</code> <CopyButton text={r.lightning_address} label="Copy" /></p>
                       <p><a className="btn btn-primary" href={`lightning:${r.lightning_address}`}>Open in my wallet</a></p>
                     </div>
                     <PayQR payload={`lightning:${r.lightning_address}`} />
