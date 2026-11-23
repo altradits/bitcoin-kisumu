@@ -11,7 +11,8 @@ const LINKS = [
   ['Maduka yanayokubali Bitcoin', '/merchants', 'Orodha ya maduka ya Kisumu.'],
   ['Bidhaa zetu', '/merch', 'Kila ununuzi hufadhili madarasa bure.'],
   ['Changia', '/donate', 'Sats kidogo hufanya darasa liwe bure.'],
-  ['Chapisha karatasi za darasani', '/resources/field-kit', 'Kadi za maneno ya siri na mwongozo wa maduka.']
+  ['Chapisha karatasi za darasani', '/resources/field-kit', 'Kadi za maneno ya siri na mwongozo wa maduka.'],
+  ['Mwongozo wa Kiuchumi', '/sw/guide', 'Mpango kamili: nguzo, mishahara, hazina, majaribio.']
 ];
 
 export default function Swahili() {

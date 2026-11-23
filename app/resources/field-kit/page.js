@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import PrintButton from '../../components/PrintButton';
 
 export const metadata = {
@@ -45,6 +46,7 @@ export default function FieldKit() {
           <div className="hero-actions">
             <PrintButton />
           </div>
+          <p style={{ marginTop: 16 }}><Link href="/sw/guide">Soma mwongozo kamili kwa Kiswahili →</Link></p>
         </div>
       </section>
 
