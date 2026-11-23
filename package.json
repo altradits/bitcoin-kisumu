@@ -23,6 +23,7 @@
     "test:verify": "node scripts/test-bitcoin-verify.mjs",
     "test:metrics": "node scripts/test-public-metrics-api.mjs",
     "test:smoke": "node scripts/test-smoke-routes.mjs",
+    "test:regressions": "node scripts/test-regressions.mjs",
     "test": "node scripts/run-tests.mjs"
   },
   "dependencies": {

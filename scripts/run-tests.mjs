@@ -19,7 +19,8 @@ const SUITES = [
   'test:merchants-payouts',
   'test:inflows',
   'test:metrics',
-  'test:smoke'
+  'test:smoke',
+  'test:regressions'
 ];
 
 if (!process.env.DATABASE_URL) {
