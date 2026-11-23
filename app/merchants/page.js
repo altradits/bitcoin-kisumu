@@ -64,6 +64,16 @@ export default async function Merchants() {
             exiting to fiat.
           </p>
           <p><Link href="/resources/field-kit">Print the counter quick-card →</Link></p>
+          <div className="card" style={{ marginTop: 22, borderLeft: '6px solid var(--teal-ink)', maxWidth: '48rem' }}>
+            <h3 style={{ fontSize: '1.15rem' }}>BTCMap verification standard</h3>
+            <p style={{ marginBottom: 0 }}>
+              Every merchant promoted to <strong>live</strong> (only after its first verified customer
+              Lightning payment) is submitted to{' '}
+              <a href={btcmapUrl} target="_blank" rel="noopener noreferrer">BTCMap.org</a>{' '}
+              with physical Kisumu/Dunga Beach coordinates and Lightning tags, so visitors and circular-economy
+              reviewers can independently verify on-the-ground acceptance.
+            </p>
+          </div>
         </div>
       </section>
     </>

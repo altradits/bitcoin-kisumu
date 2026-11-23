@@ -8,6 +8,43 @@ export const metadata = {
   description: 'Week-by-week verified pilot progress: active earners, verified results by role, and weekly notes from the lake.'
 };
 
+const FBCE_TIERS = [
+  [
+    'Tier 1 — Foundational',
+    'Complete',
+    'Lead Bitcoiners identified (Stanley, Ivy, Paul) and target jurisdiction locked on Dunga Beach & the Kisumu lakefront corridor.'
+  ],
+  [
+    'Tier 2 — Emerging BCE',
+    'Complete',
+    'Dedicated channels live (@bitcoinkisumu across X, Nostr NIP-05, YouTube, Instagram, TikTok, WhatsApp, GitHub), Blink Lightning rail active, My First Bitcoin curriculum, /sw Kiswahili starter and bilingual field kits published.'
+  ],
+  [
+    'Tier 3 — Active Circular Economy',
+    '90-day pilot target',
+    '10–15 interconnected Dunga Beach merchants + ≥3 upstream B2B suppliers live on /merchants and pinned on BTCMap.org, ≥70% 30-day active merchant retention, and ≥2.0 local velocity hops.'
+  ]
+];
+
+const CLOSED_LOOP = [
+  [
+    '1. Earn & bring sats in',
+    'Verified lakeside work (shop onboarding, peer teaching, Swahili/Dholuo storytelling, water-hyacinth clean-ups) plus external inflows from visitors, merch, local art and digital bounties.'
+  ],
+  [
+    '2. Safe non-custodial payout',
+    'Settled every Friday straight to earners’ own wallets under our graduated split (85/15 for starters, 70/30 once habits hold) — nobody gambles rent or food money.'
+  ],
+  [
+    '3. Spend in the Dunga cluster',
+    'Earners spend sats the same day at neighboring lakeside fish stalls, eateries, mama mbogas, craft weavers and boda-boda riders within walking distance.'
+  ],
+  [
+    '4. B2B supplier restock',
+    'Cluster shops pay local upstream suppliers (fish aggregators, solar cold-chain/ice hubs, water-hyacinth biogas kitchens, produce wholesalers) in sats so value hops locally instead of exiting to fiat.'
+  ]
+];
+
 export default async function Pilot() {
   const m = await getPilotMetrics();
   const live = m.source === 'live';
@@ -92,6 +129,42 @@ export default async function Pilot() {
       )}
 
       <section className={live ? 'section' : 'section section-wash'}>
+        <div className="wrap">
+          <h2>FBCE maturity progression</h2>
+          <p style={{ maxWidth: '48rem' }}>
+            Tracked against the Federation of Bitcoin Circular Economies (FBCE) Tier 1–5 framework.
+            Our education runs inside a commercial lakeside loop — never as isolated workshops.
+          </p>
+          <div style={{ display: 'grid', gap: 14, marginTop: 18 }}>
+            {FBCE_TIERS.map(([tier, status, detail]) => (
+              <article
+                key={tier}
+                className="card"
+                style={{ borderLeft: status === 'Complete' ? '6px solid var(--teal-ink)' : '6px solid var(--orange)' }}
+              >
+                <h3 style={{ fontSize: '1.15rem' }}>
+                  {tier} <span style={{ color: 'var(--teal-ink)', fontSize: '0.92rem' }}>• {status}</span>
+                </h3>
+                <p style={{ marginBottom: 0 }}>{detail}</p>
+              </article>
+            ))}
+          </div>
+
+          <h2 style={{ marginTop: 36 }}>Dunga Beach closed-loop flow</h2>
+          <p style={{ maxWidth: '48rem' }}>
+            How each satoshis hop stays circulating around Lake Victoria rather than dumping back to fiat after one payment:
+          </p>
+          <ol className="program-list" style={{ marginTop: 16 }}>
+            {CLOSED_LOOP.map(([step, desc]) => (
+              <li key={step}>
+                <strong>{step}</strong> — {desc}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className={live ? 'section section-wash' : 'section'}>
         <div className="wrap">
           <h2>Weekly notes</h2>
           {pilotNotes.notes.length === 0 ? (

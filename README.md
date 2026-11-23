@@ -36,7 +36,7 @@ npm start
 
 ## Pages
 
-Home (`/`), About (`/about`), Programs (`/programs`), Guide (`/guide`), Merchants (`/merchants`), Events + RSVP (`/events`), Team (`/team`), Donate (`/donate`, Lightning + Geyser), Treasury (`/treasury`), Pilot (`/pilot`), Partners (`/partners`), Merch (`/merch`), Stories (`/stories`), Verify (`/verify`), Kiswahili (`/sw`), Resources (`/resources`), Executive Summary (`/executive-summary`), Contact (`/contact`). Machine-readable audit data at `/api/metrics`.
+Home (`/`), About (`/about`), Programs (`/programs`), Guide (`/guide`), Merchants (`/merchants`), Events + RSVP (`/events`), Team (`/team`), Donate (`/donate`, Lightning + Geyser), Treasury (`/treasury`), Pilot (`/pilot`), Partners (`/partners`), Merch (`/merch`), Stories (`/stories`), Verify (`/verify`), Kiswahili (`/sw`), Resources (`/resources`, plus printable `/resources/field-kit`), Executive Summary (`/executive-summary`), Contact (`/contact`). Machine-readable audit data at `/api/metrics`.
 
 ## Configure before launch
 
