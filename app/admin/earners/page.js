@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import { getAdminSession, authConfigured } from '../../lib/adminAuth';
-import { isDbConfigured, getPool } from '../../lib/db';
+import { isDbConfigured, getPool, fmtPgDate } from '../../lib/db';
 import { ROLE_LABELS } from '../../lib/pilot';
 import AdminGate from '../../components/AdminGate';
 import { EarnerForm, DeactivateButton } from '../../components/EarnerForm';
@@ -15,11 +15,7 @@ export const metadata = {
 // pg DATE arrives as local-midnight; serialize the true calendar date before
 // crossing to the client (ISO strings would shift a day on UTC+ servers).
 function plainEarner(e) {
-  const d = (v) =>
-    v instanceof Date
-      ? `${v.getFullYear()}-${String(v.getMonth() + 1).padStart(2, '0')}-${String(v.getDate()).padStart(2, '0')}`
-      : v;
-  return { ...e, start_date: d(e.start_date), consent_date: d(e.consent_date) };
+  return { ...e, start_date: fmtPgDate(e.start_date), consent_date: fmtPgDate(e.consent_date) };
 }
 
 export default async function Earners() {

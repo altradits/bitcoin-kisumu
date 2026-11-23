@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin, requireDb } from '@/app/lib/adminApi';
-import { getPool } from '@/app/lib/db';
+import { getPool, fmtPgDate } from '@/app/lib/db';
 import { EARNER_ROLES } from '@/app/lib/pilot';
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
@@ -25,11 +25,8 @@ function isDate(s) {
   return DATE_RE.test(s) && !Number.isNaN(new Date(`${s}T00:00:00Z`).getTime());
 }
 
-// pg returns DATE as local-midnight; toISOString() would shift the calendar
-// day on UTC+ servers, so format local components. Timestamps stay ISO.
-const pad2 = (n) => String(n).padStart(2, '0');
-const fmtDate = (v) =>
-  v instanceof Date ? `${v.getFullYear()}-${pad2(v.getMonth() + 1)}-${pad2(v.getDate())}` : v || '';
+// Timestamps stay ISO; calendar dates use the shared local-day formatter.
+const fmtDate = (v) => fmtPgDate(v) || '';
 const fmtTs = (v) => (v instanceof Date ? v.toISOString() : v || '');
 
 async function payoutsCsv(pool, { from, to, role }) {
@@ -165,7 +162,7 @@ async function quarterlyCsv(pool, { from, to }) {
 }
 
 function todayStamp() {
-  return new Date().toISOString().slice(0, 10);
+  return fmtPgDate(new Date());
 }
 
 function csvResponse(filename, headers, rows) {

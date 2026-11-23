@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import { getAdminSession, authConfigured } from '../../lib/adminAuth';
-import { isDbConfigured, getPool } from '../../lib/db';
+import { isDbConfigured, getPool, fmtPgDate } from '../../lib/db';
 import AdminGate from '../../components/AdminGate';
 import InflowForm from '../../components/InflowForm';
 
@@ -10,11 +10,6 @@ export const metadata = {
   description: 'Admin grants and earned-revenue ledger.',
   robots: { index: false }
 };
-
-function fmtDay(v) {
-  if (!(v instanceof Date)) return v;
-  return `${v.getFullYear()}-${String(v.getMonth() + 1).padStart(2, '0')}-${String(v.getDate()).padStart(2, '0')}`;
-}
 
 export default async function Inflows() {
   const session = getAdminSession((await headers()).get('cookie'));
@@ -62,7 +57,7 @@ export default async function Inflows() {
               <tbody>
                 {inflows.map((r) => (
                   <tr key={r.id}>
-                    <td>{fmtDay(r.inflow_date)}</td>
+                    <td>{fmtPgDate(r.inflow_date)}</td>
                     <td>{r.category}</td>
                     <td>{r.origin}</td>
                     <td>{r.bucket}</td>

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin, requireDb, logAudit } from '@/app/lib/adminApi';
-import { getPool } from '@/app/lib/db';
+import { getPool, fmtPgDate } from '@/app/lib/db';
+import { safeRevalidate } from '@/app/lib/revalidate';
 import { merchantCategories } from '@/app/lib/merchants';
 
 const ACCEPTS = ['Lightning', 'On-Chain'];
@@ -82,6 +83,9 @@ export async function POST(req) {
     [v.clean.name, v.clean.category, v.clean.area, v.clean.accepts, v.clean.b2b_supplier_of, v.clean.btcmap_url, v.clean.status, v.clean.last_verified_payment_date]
   );
   await logAudit(pool, { actor: gate.session.login, action: 'merchant.create', entity: 'merchants', entityId: rows[0].id });
+  await safeRevalidate('/merchants');
+  await safeRevalidate('/pilot');
+  await safeRevalidate('/treasury');
   return NextResponse.json({ merchant: rows[0] }, { status: 201 });
 }
 
@@ -102,9 +106,7 @@ export async function PATCH(req) {
   const existing = await pool.query('SELECT * FROM merchants WHERE id = $1', [id]);
   if (!existing.rows.length) return NextResponse.json({ error: 'Unknown merchant.' }, { status: 404 });
   const merged = { ...existing.rows[0], ...body };
-  if (merged.last_verified_payment_date instanceof Date) {
-    merged.last_verified_payment_date = merged.last_verified_payment_date.toISOString().slice(0, 10);
-  }
+  merged.last_verified_payment_date = fmtPgDate(merged.last_verified_payment_date);
   const v = validateMerchant(merged);
   if (!v.ok) return NextResponse.json({ error: v.errors[0], errors: v.errors }, { status: 400 });
   const c = v.clean;
@@ -115,5 +117,8 @@ export async function PATCH(req) {
     [c.name, c.category, c.area, c.accepts, c.b2b_supplier_of, c.btcmap_url, c.status, c.last_verified_payment_date, id]
   );
   await logAudit(pool, { actor: gate.session.login, action: 'merchant.edit', entity: 'merchants', entityId: id });
+  await safeRevalidate('/merchants');
+  await safeRevalidate('/pilot');
+  await safeRevalidate('/treasury');
   return NextResponse.json({ merchant: rows[0] });
 }

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import { getAdminSession, authConfigured } from '../../lib/adminAuth';
-import { isDbConfigured, getPool } from '../../lib/db';
+import { isDbConfigured, getPool, fmtPgDate } from '../../lib/db';
 import AdminGate from '../../components/AdminGate';
 import MerchantForm from '../../components/MerchantForm';
 
@@ -35,10 +35,7 @@ export default async function Merchants() {
   );
   const merchants = rows.map((m) => ({
     ...m,
-    last_verified_payment_date:
-      m.last_verified_payment_date instanceof Date
-        ? m.last_verified_payment_date.toISOString().slice(0, 10)
-        : m.last_verified_payment_date
+    last_verified_payment_date: fmtPgDate(m.last_verified_payment_date)
   }));
 
   return (
