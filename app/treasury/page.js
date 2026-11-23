@@ -69,22 +69,24 @@ export default async function Treasury() {
           <div className="card" style={{ marginTop: 20, borderLeft: '6px solid var(--teal)' }}>
             <h3 style={{ fontSize: '1.15rem' }}>Live pilot numbers</h3>
             {live.source === 'live' ? (
-              <p>
-                <strong>{live.activeEarners}</strong> active earners • <strong>{live.verifiedResults}</strong> verified results.
-                {' '}<strong>{live.shopsLive}</strong> shops live (<strong>{live.shopsActive30d}</strong> active in 30 days).
-                {' '}<strong>{live.totalSatsPaidOut.toLocaleString('en-US')}</strong> sats paid out.
-              </p>
-              <p>
-                Earned-revenue ratio: <strong>{live.earnedRevenueRatio === null ? '—' : live.earnedRevenueRatio}</strong>
-                {' • '}Net sats inflow: <strong>{live.netSatsInflowRatio === null ? '—' : live.netSatsInflowRatio}</strong>
-                {' '}(targets ≥0.25 / &gt;1.0)
-              </p>
-              <p className="form-note">
-                Bucket actuals in: Runway {live.bucketInflows.runway.toLocaleString('en-US')} •
-                CapEx {live.bucketInflows.pilot_capex.toLocaleString('en-US')} •
-                Reserve {live.bucketInflows.reserve.toLocaleString('en-US')} sats.
-                {' '}<Link href="/pilot">Track the pilot week by week →</Link>
-              </p>
+              <>
+                <p>
+                  <strong>{live.activeEarners}</strong> active earners • <strong>{live.verifiedResults}</strong> verified results.
+                  {' '}<strong>{live.shopsLive}</strong> shops live (<strong>{live.shopsActive30d}</strong> active in 30 days).
+                  {' '}<strong>{live.totalSatsPaidOut.toLocaleString('en-US')}</strong> sats paid out.
+                </p>
+                <p>
+                  Earned-revenue ratio: <strong>{live.earnedRevenueRatio === null ? '—' : live.earnedRevenueRatio}</strong>
+                  {' • '}Net sats inflow: <strong>{live.netSatsInflowRatio === null ? '—' : live.netSatsInflowRatio}</strong>
+                  {' '}(targets ≥0.25 / &gt;1.0)
+                </p>
+                <p className="form-note">
+                  Bucket actuals in: Runway {live.bucketInflows.runway.toLocaleString('en-US')} •
+                  CapEx {live.bucketInflows.pilot_capex.toLocaleString('en-US')} •
+                  Reserve {live.bucketInflows.reserve.toLocaleString('en-US')} sats.
+                  {' '}<Link href="/pilot">Track the pilot week by week →</Link>
+                </p>
+              </>
             ) : (
               <p>Day-0 baseline: counting starts when the pilot opens. <Link href="/pilot">Pilot tracker →</Link></p>
             )}
