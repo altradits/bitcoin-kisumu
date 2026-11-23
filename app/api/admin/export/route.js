@@ -50,13 +50,13 @@ async function payoutsCsv(pool, { from, to, role }) {
   const where = conds.length ? `WHERE ${conds.join(' AND ')}` : '';
   const headers = [
     'date', 'earner_name', 'role', 'payroll_tier', 'lightning_address',
-    'sats_amount', 'kes_equivalent', 'bucket', 'payment_reference', 'verified_by', 'paid_by'
+    'sats_amount', 'kes_equivalent', 'bucket', 'payment_reference', 'verified_by', 'paid_by', 'proof_verified'
   ];
   const res = await pool.query(
     `SELECT p.paid_at::date AS date, e.name AS earner_name, e.role,
             p.payroll_tier_snapshot, p.lightning_address_snapshot,
             p.sats_amount, p.kes_equivalent, p.bucket, p.payment_reference,
-            r.verified_by, p.paid_by
+            r.verified_by, p.paid_by, p.proof_verified
      FROM payouts p
      JOIN earners e ON e.id = p.earner_id
      JOIN results r ON r.id = p.result_id
@@ -65,7 +65,7 @@ async function payoutsCsv(pool, { from, to, role }) {
   );
   const rows = res.rows.map((x) => [
     fmtDate(x.date), x.earner_name, x.role, x.payroll_tier_snapshot, x.lightning_address_snapshot,
-    x.sats_amount, x.kes_equivalent, x.bucket, x.payment_reference, x.verified_by, x.paid_by
+    x.sats_amount, x.kes_equivalent, x.bucket, x.payment_reference, x.verified_by, x.paid_by, x.proof_verified
   ]);
   const today = new Date().toISOString().slice(0, 10);
   return new NextResponse(toCsv(headers, rows), {

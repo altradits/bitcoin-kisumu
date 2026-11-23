@@ -24,7 +24,8 @@ export function baselineMetrics() {
     localSatsIn: 0,
     earnedRevenueRatio: null,
     netSatsInflowRatio: null,
-    bucketInflows: { runway: 0, pilot_capex: 0, reserve: 0 }
+    bucketInflows: { runway: 0, pilot_capex: 0, reserve: 0 },
+    verifiedCryptoProofs: 0
   };
 }
 
@@ -32,7 +33,7 @@ export async function getPilotMetrics() {
   if (!isDbConfigured()) return baselineMetrics();
   try {
     const pool = getPool();
-    const [earners, byRole, byType, weekly, shopsLive, shopsActive, satsPaid, flows] = await Promise.all([
+    const [earners, byRole, byType, weekly, shopsLive, shopsActive, satsPaid, flows, proofs] = await Promise.all([
       pool.query('SELECT COUNT(*)::int AS n FROM earners WHERE active'),
       pool.query(
         `SELECT e.role, COUNT(*)::int AS n FROM results r
@@ -65,7 +66,8 @@ export async function getPilotMetrics() {
                 COALESCE(SUM(sats_amount) FILTER (WHERE bucket = 'pilot_capex'), 0)::bigint AS b_capex,
                 COALESCE(SUM(sats_amount) FILTER (WHERE bucket = 'reserve'), 0)::bigint AS b_reserve
          FROM inflows`
-      )
+      ),
+      pool.query('SELECT COUNT(*)::int AS n FROM payouts WHERE proof_verified')
     ]);
     const verified = byRole.rows.reduce((s, r) => s + r.n, 0);
     const live = shopsLive.rows[0].n;
@@ -94,7 +96,8 @@ export async function getPilotMetrics() {
       localSatsIn: Number(f.local),
       earnedRevenueRatio: ratio(f.earned),
       netSatsInflowRatio: ratio(f.external),
-      bucketInflows: { runway: Number(f.b_runway), pilot_capex: Number(f.b_capex), reserve: Number(f.b_reserve) }
+      bucketInflows: { runway: Number(f.b_runway), pilot_capex: Number(f.b_capex), reserve: Number(f.b_reserve) },
+      verifiedCryptoProofs: proofs.rows[0].n
     };
   } catch {
     return baselineMetrics();

@@ -19,7 +19,8 @@
     "test:forms": "node scripts/test-public-forms.mjs",
     "test:pilot": "node scripts/test-pilot-metrics.mjs",
     "test:merchants-payouts": "node scripts/test-admin-merchants-payouts.mjs",
-    "test:inflows": "node scripts/test-admin-inflows.mjs"
+    "test:inflows": "node scripts/test-admin-inflows.mjs",
+    "test:verify": "node scripts/test-bitcoin-verify.mjs"
   },
   "dependencies": {
     "@upstash/redis": "^1.41.0",

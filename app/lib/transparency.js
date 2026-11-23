@@ -161,3 +161,12 @@ export const actualsDayZero = {
   satsSpent: 0,
   note: 'Day-0 real readings. Updates here only when money actually moves.'
 };
+
+// Proof-of-reserve publishes here at Day 0: a watch-only BIP-380 descriptor
+// (wsh(sortedmulti(2, ...xpubs))) plus derived treasury addresses. Private
+// extended keys are rejected by validation and can never appear here.
+export const proofOfReserve = {
+  status: 'Pending Day-0 2-of-3 hardware key ceremony — zero keys fabricated.',
+  descriptor: null,
+  addresses: []
+};

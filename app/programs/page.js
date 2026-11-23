@@ -51,7 +51,7 @@ export default function Programs() {
         </div>
         <div className="card" style={{ marginTop: 28, borderLeft: '6px solid var(--teal)' }}>
           <h2 style={{ fontSize: '1.4rem' }}>From free classes to livelihoods</h2>
-          <p style={{ maxWidth: '44rem' }}>Graduation is the middle, not the end. Our playbook lays out the revenue pillars, payroll standard and treasury policy that carry learners into paid lake-economy work — tracked openly, quarter by quarter.</p>
+          <p style={{ maxWidth: '44rem' }}>Graduation is the middle, not the end. Our playbook lays out the revenue pillars, payroll standard and treasury policy that carry learners into paid lake-economy work — tracked openly, quarter by quarter. Our Diploma cohorts adapt the open-source <a href="https://github.com/MyFirstBitcoin/mfb-curriculum">MyFirstBitcoin/mfb-curriculum</a> (8h+ modular course), and code-curious graduates level up at <a href="/events">BitDevs Kisumu</a> evenings.</p>
           <div className="hero-actions">
             <Link className="btn btn-dark" href="/guide">The playbook</Link>
             <Link className="btn btn-dark" href="/merchants">Merchant directory</Link>
