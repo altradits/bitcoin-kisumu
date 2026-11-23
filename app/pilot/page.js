@@ -3,6 +3,8 @@ import { getPilotMetrics } from '../lib/pilotMetrics';
 import { ROLE_LABELS } from '../lib/pilot';
 import pilotNotes from '../../content/pilot.json';
 
+export const revalidate = 60;
+
 export const metadata = {
   title: 'Pilot | Bitcoin Kisumu',
   description: 'Week-by-week verified pilot progress: active earners, verified results by role, and weekly notes from the lake.'

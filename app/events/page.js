@@ -2,6 +2,8 @@ import { events } from '../lib/site';
 import { store } from '../lib/store';
 import RsvpForm from '../components/RsvpForm';
 
+export const revalidate = 60;
+
 export const metadata = {
   title: 'Events & RSVP | Bitcoin Kisumu',
   description: 'Open meetups, hands-on workshops and cohort intakes in Kisumu. RSVP for seating and printouts.'
