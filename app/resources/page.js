@@ -193,6 +193,7 @@ export default function Resources() {
             <h3>Safety note</h3>
             <p>Nobody from Bitcoin Kisumu will ever ask for your seed words or offer to double your bitcoin. Anyone who does is a scammer — including accounts that copy our logo.</p>
             <p style={{ marginTop: 12 }}><Link className="btn btn-dark" href="/events">Practice at a meetup</Link></p>
+            <p><Link href="/verify">Verify a proof yourself →</Link></p>
           </div>
         </div>
       </section>

@@ -42,4 +42,5 @@ jobs:
       - run: npm run test:merchants-payouts
       - run: npm run test:inflows
       - run: npm run test:verify
+      - run: npm run test:metrics
       - run: npm audit --audit-level=high

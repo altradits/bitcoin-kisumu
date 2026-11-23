@@ -299,6 +299,7 @@ export default function Guide() {
             <h3 style={{ fontSize: '1.15rem' }}>3-bucket multi-sig treasury</h3>
             <p>Every sat lives in one of three buckets — Operating Runway &amp; Free Education (35%), Productive Lake CapEx &amp; Circular Pilot (45%), Sovereign BTC Reserve &amp; Compliance (20%) — proposed targets to be ratified at Day 0, under 2-of-3 hardware custody with zero single-key control.</p>
             <p><Link className="btn btn-dark" href="/treasury">See the public treasury &amp; audit</Link></p>
+            <p><Link href="/verify">Or verify a cryptographic proof yourself →</Link></p>
           </div>
         </div>
       </section>

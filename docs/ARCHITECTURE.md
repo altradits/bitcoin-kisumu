@@ -1,6 +1,6 @@
 # Architecture
 
-Bitcoin Kisumu is a MIT-licensed Next.js 14 community site: free Bitcoin
+Bitcoin Kisumu is a MIT-licensed Next.js 16 community site: free Bitcoin
 education, a merchant directory, a public treasury, and an admin backend for
 running a circular-economy pilot. This doc is for developers forking or
 auditing it.
@@ -31,7 +31,8 @@ own licensed entity (see `/guide`).
 | Public pages | Copy, links, team | Static, no PII |
 | Forms (contact, newsletter, RSVP, inquiries) | Sign-ups | Upstash Redis lists, or `data/*.json` locally |
 | Pilot records (earners, results, merchants, payouts, inflows) | Operations | Postgres (Neon), `db/migrations/*.sql` |
-| Public metrics | Counts only | `app/lib/pilotMetrics.js` (aggregates, zero PII) |
+| Public metrics | Counts only | `app/lib/pilotMetrics.js` (aggregates, zero PII), served at `/api/metrics` |
+| Browser verifier | User-supplied proofs only | `/verify` (client-side SHA-256/BOLT11/descriptor checks, works offline) |
 
 Redis writes are atomic (`RPUSH`/`LRANGE`, Lua for RSVP capacity). The file
 fallback uses serialized locks + atomic renames. On Vercel without Redis,
