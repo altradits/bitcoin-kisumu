@@ -24,6 +24,7 @@
     "test:metrics": "node scripts/test-public-metrics-api.mjs",
     "test:smoke": "node scripts/test-smoke-routes.mjs",
     "test:regressions": "node scripts/test-regressions.mjs",
+    "test:math": "node scripts/test-split-math.mjs",
     "test": "node scripts/run-tests.mjs"
   },
   "dependencies": {

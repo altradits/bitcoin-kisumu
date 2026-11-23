@@ -185,6 +185,7 @@ export default function Guide() {
     <>
       <section className="section">
         <div className="wrap">
+          <p><Link href="/sw/guide">Soma kwa Kiswahili →</Link></p>
           <h1>Lake Victoria Sustainable Circular Economy Playbook</h1>
           <p style={{ fontSize: '1.1rem', maxWidth: '44rem' }}>
             How we turn free Bitcoin education into Lake Victoria livelihoods — and how the work
@@ -272,6 +273,7 @@ export default function Guide() {
         <div className="wrap">
           <h2>Graduated Bitcoin payroll standard</h2>
           <p>Earners climb tiers only as their safety habits prove out. The tier, not the person, decides the split.</p>
+          <p><Link href="/resources#calculator">Try the payroll calculator →</Link></p>
           <div style={{ display: 'grid', gap: 14, marginTop: 18 }}>
             {PAYROLL.map(([tier, rule, why]) => (
               <div key={tier}>
